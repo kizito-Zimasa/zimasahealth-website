@@ -23,7 +23,12 @@ export default function MobileMenu() {
         <Menu size={24} />
       </button>
       {open && (
-        <div className="fixed inset-0 bg-white z-50 flex flex-col p-6">
+        <div
+          className="fixed inset-0 bg-white z-50 flex flex-col p-6"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setOpen(false)
+          }}
+        >
           <div className="flex justify-between items-center mb-8">
             <Link href="/" onClick={() => setOpen(false)}>
               <img src="/images/logo.svg" alt="Zimasa" className="h-8" />
