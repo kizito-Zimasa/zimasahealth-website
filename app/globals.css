@@ -49,7 +49,7 @@ body {
 
 h1, h2, h5 {
   font-family: var(--font-display);
-  color: var(--color-dark);
+  /* Color set in specific contexts (hero sections set white via classes) */
 }
 
 h3, h4, h6 {
