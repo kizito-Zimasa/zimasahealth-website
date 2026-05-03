@@ -49,10 +49,10 @@ export default function Header() {
         </nav>
 
         <div className="hidden lg:flex items-center gap-3">
-          <Link href="/get-started/" className="btn-secondary text-sm px-6 py-2">
+          <Link href="/get-started/" className="btn-secondary">
             Get Started
           </Link>
-          <Link href="/book-demo/" className="btn-primary text-sm px-6 py-2">
+          <Link href="/book-demo/" className="btn-primary">
             Book Demo
           </Link>
         </div>
