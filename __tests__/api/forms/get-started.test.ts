@@ -13,7 +13,56 @@ jest.mock('resend', () => ({
   })),
 }));
 
+jest.mock('@/lib/rate-limit', () => ({
+  rateLimit: jest.fn().mockResolvedValue({ success: true, remaining: 9 }),
+}));
+
 describe('/api/forms/get-started', () => {
+  test('returns 400 for invalid path', async () => {
+    const request = new NextRequest('http://localhost:3000/api/forms/get-started', {
+      method: 'POST',
+      body: JSON.stringify({
+        path: 'admin', // Invalid path
+        name: 'Test',
+        email: 'test@example.com',
+      }),
+    });
+
+    const response = await POST(request);
+    expect(response.status).toBe(400);
+  });
+
+  test('member path returns 400 for invalid email', async () => {
+    const request = new NextRequest('http://localhost:3000/api/forms/get-started', {
+      method: 'POST',
+      body: JSON.stringify({
+        path: 'member',
+        name: 'Test User',
+        email: 'invalid-email',
+        honeypot: '',
+      }),
+    });
+
+    const response = await POST(request);
+    expect(response.status).toBe(400);
+  });
+
+  test('employer path returns 400 for invalid email', async () => {
+    const request = new NextRequest('http://localhost:3000/api/forms/get-started', {
+      method: 'POST',
+      body: JSON.stringify({
+        path: 'employer',
+        orgName: 'Test Org',
+        email: 'invalid-email',
+        workforceSize: '100-500',
+        honeypot: '',
+      }),
+    });
+
+    const response = await POST(request);
+    expect(response.status).toBe(400);
+  });
+
   test('member path redirects to app.zimasahealth.com', async () => {
     const request = new NextRequest('http://localhost:3000/api/forms/get-started', {
       method: 'POST',

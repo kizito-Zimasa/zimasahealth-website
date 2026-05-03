@@ -13,6 +13,10 @@ jest.mock('resend', () => ({
   })),
 }));
 
+jest.mock('@/lib/rate-limit', () => ({
+  rateLimit: jest.fn().mockResolvedValue({ success: true, remaining: 9 }),
+}));
+
 describe('/api/forms/book-demo', () => {
   test('returns 400 if honeypot is filled', async () => {
     const request = new NextRequest('http://localhost:3000/api/forms/book-demo', {
@@ -45,6 +49,50 @@ describe('/api/forms/book-demo', () => {
 
     const response = await POST(request);
     expect(response.status).toBe(400);
+  });
+
+  test('returns 400 for invalid email format', async () => {
+    const request = new NextRequest('http://localhost:3000/api/forms/book-demo', {
+      method: 'POST',
+      body: JSON.stringify({
+        name: 'Test',
+        email: 'invalid-email', // Missing @ and domain
+        company: 'Test Co',
+        phone: '555-0000',
+        role: 'HR',
+        solutionInterest: 'ZHEP',
+        timeline: '30 days',
+        honeypot: '',
+      }),
+    });
+
+    const response = await POST(request);
+    expect(response.status).toBe(400);
+    const data = await response.json();
+    expect(data.details?.email).toBeDefined();
+  });
+
+  test('returns 429 when rate limit exceeded', async () => {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { rateLimit } = require('@/lib/rate-limit');
+    rateLimit.mockResolvedValueOnce({ success: false, remaining: 0 });
+
+    const request = new NextRequest('http://localhost:3000/api/forms/book-demo', {
+      method: 'POST',
+      body: JSON.stringify({
+        name: 'Test User',
+        email: 'test@example.com',
+        company: 'Test Co',
+        phone: '555-0000',
+        role: 'HR Director',
+        solutionInterest: 'ZHEP',
+        timeline: '30 days',
+        honeypot: '',
+      }),
+    });
+
+    const response = await POST(request);
+    expect(response.status).toBe(429);
   });
 
   test('returns 200 on successful submission', async () => {

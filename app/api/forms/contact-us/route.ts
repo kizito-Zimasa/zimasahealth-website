@@ -1,55 +1,52 @@
 // app/api/forms/contact-us/route.ts
 // Contact Us form handler with rate limiting, validation, and email delivery
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { Resend } from 'resend';
-import { rateLimit } from '@/lib/rate-limit';
+import {
+  checkRateLimit,
+  checkHoneypot,
+  validateFields,
+  buildSuccessResponse,
+  buildErrorResponse,
+  buildServerErrorResponse,
+  createSanitizer,
+} from '@/lib/form-handlers';
+import { isValidEmail } from '@/lib/validators';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
   try {
-    // Rate limit check (10 requests per hour per IP)
-    const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
-    const rateLimitResult = await rateLimit(ip, 'contact-us', 10, 3600);
+    // Rate limit
+    const rateLimitError = await checkRateLimit(request, 'contact-us');
+    if (rateLimitError) return rateLimitError;
 
-    if (!rateLimitResult.success) {
-      return NextResponse.json(
-        { error: 'Too many requests. Please try again later.' },
-        { status: 429 }
-      );
-    }
-
-    // Parse request body
+    // Parse body
     const body = await request.json();
     const { name, email, company, message, inquiryType, honeypot } = body;
 
-    // Honeypot check
-    if (honeypot) {
-      return NextResponse.json(
-        { error: 'Invalid submission.' },
-        { status: 400 }
-      );
-    }
+    // Honeypot
+    const honeypotError = checkHoneypot(honeypot);
+    if (honeypotError) return honeypotError;
 
     // Validate required fields
-    const errors: Record<string, string> = {};
-    if (!name || typeof name !== 'string' || name.trim().length === 0) errors.name = 'Name is required.';
-    if (!email || typeof email !== 'string' || !email.includes('@')) errors.email = 'Valid email is required.';
-    if (!company || typeof company !== 'string' || company.trim().length === 0) errors.company = 'Company is required.';
-    if (!message || typeof message !== 'string' || message.trim().length === 0) errors.message = 'Message is required.';
-    if (!inquiryType || typeof inquiryType !== 'string' || inquiryType.trim().length === 0) errors.inquiryType = 'Inquiry type is required.';
+    const fieldErrors = validateFields(
+      { name, email, company, message, inquiryType },
+      ['name', 'email', 'company', 'message', 'inquiryType']
+    );
+    if (fieldErrors)
+      return buildErrorResponse('Validation failed.', fieldErrors);
 
-    if (Object.keys(errors).length > 0) {
-      return NextResponse.json(
-        { error: 'Validation failed.', details: errors },
-        { status: 400 }
-      );
+    // Validate email format
+    if (!isValidEmail(email)) {
+      return buildErrorResponse('Validation failed.', {
+        email: 'Valid email is required.',
+      });
     }
 
     // Sanitize inputs
-    const sanitize = (str: string) => str.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] || c);
-
+    const sanitize = createSanitizer();
     const sanitizedName = sanitize(name.trim().substring(0, 100));
     const sanitizedEmail = sanitize(email.trim().substring(0, 254));
     const sanitizedCompany = sanitize(company.trim().substring(0, 100));
@@ -75,21 +72,16 @@ export async function POST(request: NextRequest) {
 
     if (!emailResult.data?.id) {
       console.error('[contact-us] Resend error:', emailResult.error);
-      return NextResponse.json(
-        { error: 'Failed to send email. Please try again later.' },
-        { status: 500 }
+      return buildServerErrorResponse(
+        'Failed to send email. Please try again later.'
       );
     }
 
-    return NextResponse.json(
-      { success: true, message: 'Your message has been received. We\'ll get back to you soon.' },
-      { status: 200 }
+    return buildSuccessResponse(
+      "Your message has been received. We'll get back to you soon."
     );
   } catch (error) {
     console.error('[contact-us] Error:', error);
-    return NextResponse.json(
-      { error: 'An unexpected error occurred. Please try again later.' },
-      { status: 500 }
-    );
+    return buildServerErrorResponse();
   }
 }

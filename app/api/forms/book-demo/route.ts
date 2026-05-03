@@ -1,58 +1,61 @@
 // app/api/forms/book-demo/route.ts
 // Book Demo form handler with rate limiting, validation, and email delivery
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { Resend } from 'resend';
-import { rateLimit } from '@/lib/rate-limit';
+import {
+  checkRateLimit,
+  checkHoneypot,
+  validateFields,
+  buildSuccessResponse,
+  buildErrorResponse,
+  buildServerErrorResponse,
+  createSanitizer,
+} from '@/lib/form-handlers';
+import { isValidEmail } from '@/lib/validators';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
   try {
-    // Rate limit check (10 requests per hour per IP)
-    const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
-    const rateLimitResult = await rateLimit(ip, 'book-demo', 10, 3600);
+    // Rate limit
+    const rateLimitError = await checkRateLimit(request, 'book-demo');
+    if (rateLimitError) return rateLimitError;
 
-    if (!rateLimitResult.success) {
-      return NextResponse.json(
-        { error: 'Too many requests. Please try again later.' },
-        { status: 429 }
-      );
-    }
-
-    // Parse request body
+    // Parse body
     const body = await request.json();
-    const { name, email, company, phone, role, solutionInterest, timeline, honeypot } = body;
+    const {
+      name,
+      email,
+      company,
+      phone,
+      role,
+      solutionInterest,
+      timeline,
+      honeypot,
+    } = body;
 
-    // Honeypot: reject if honeypot field is filled
-    if (honeypot) {
-      return NextResponse.json(
-        { error: 'Invalid submission.' },
-        { status: 400 }
-      );
-    }
+    // Honeypot
+    const honeypotError = checkHoneypot(honeypot);
+    if (honeypotError) return honeypotError;
 
     // Validate required fields
-    const errors: Record<string, string> = {};
-    if (!name || typeof name !== 'string' || name.trim().length === 0) errors.name = 'Name is required.';
-    if (!email || typeof email !== 'string' || !email.includes('@')) errors.email = 'Valid email is required.';
-    if (!company || typeof company !== 'string' || company.trim().length === 0) errors.company = 'Company is required.';
-    if (!phone || typeof phone !== 'string' || phone.trim().length === 0) errors.phone = 'Phone is required.';
-    if (!role || typeof role !== 'string' || role.trim().length === 0) errors.role = 'Role is required.';
-    if (!solutionInterest || typeof solutionInterest !== 'string' || solutionInterest.trim().length === 0) errors.solutionInterest = 'Solution interest is required.';
-    if (!timeline || typeof timeline !== 'string' || timeline.trim().length === 0) errors.timeline = 'Timeline is required.';
+    const fieldErrors = validateFields(
+      { name, email, company, phone, role, solutionInterest, timeline },
+      ['name', 'email', 'company', 'phone', 'role', 'solutionInterest', 'timeline']
+    );
+    if (fieldErrors)
+      return buildErrorResponse('Validation failed.', fieldErrors);
 
-    // Return validation errors
-    if (Object.keys(errors).length > 0) {
-      return NextResponse.json(
-        { error: 'Validation failed.', details: errors },
-        { status: 400 }
-      );
+    // Validate email format
+    if (!isValidEmail(email)) {
+      return buildErrorResponse('Validation failed.', {
+        email: 'Valid email is required.',
+      });
     }
 
-    // Sanitize inputs (escape HTML to prevent XSS)
-    const sanitize = (str: string) => str.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] || c);
-
+    // Sanitize
+    const sanitize = createSanitizer();
     const sanitizedName = sanitize(name.trim().substring(0, 100));
     const sanitizedEmail = sanitize(email.trim().substring(0, 254));
     const sanitizedCompany = sanitize(company.trim().substring(0, 100));
@@ -61,7 +64,7 @@ export async function POST(request: NextRequest) {
     const sanitizedSolution = sanitize(solutionInterest.trim().substring(0, 50));
     const sanitizedTimeline = sanitize(timeline.trim().substring(0, 50));
 
-    // Send email via Resend
+    // Send email
     const emailResult = await resend.emails.send({
       from: 'noreply@zimasahealth.com',
       to: 'sales@zimasahealth.com',
@@ -79,27 +82,18 @@ export async function POST(request: NextRequest) {
       `,
     });
 
-    // Check email send result
     if (!emailResult.data?.id) {
       console.error('[book-demo] Resend error:', emailResult.error);
-      return NextResponse.json(
-        { error: 'Failed to send email. Please try again later.' },
-        { status: 500 }
+      return buildServerErrorResponse(
+        'Failed to send email. Please try again later.'
       );
     }
 
-    // Track event in GA4 (return success without awaiting)
-    // Form component will handle GA4 tracking on success response
-
-    return NextResponse.json(
-      { success: true, message: 'Demo request received. Our team will contact you soon.' },
-      { status: 200 }
+    return buildSuccessResponse(
+      'Demo request received. Our team will contact you soon.'
     );
   } catch (error) {
     console.error('[book-demo] Error:', error);
-    return NextResponse.json(
-      { error: 'An unexpected error occurred. Please try again later.' },
-      { status: 500 }
-    );
+    return buildServerErrorResponse();
   }
 }
