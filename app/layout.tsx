@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import { StructuredData, organizationSchema } from '@/components/seo/StructuredData'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -34,6 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <StructuredData data={organizationSchema} />
         <script dangerouslySetInnerHTML={{ __html: `
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}

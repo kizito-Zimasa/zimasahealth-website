@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { getBlogCategories, getBlogPostsByCategory, getBlogPost, getCategoryLabel } from '@/lib/blog'
+import Breadcrumbs from '@/components/seo/Breadcrumbs'
+import { StructuredData, createArticleSchema } from '@/components/seo/StructuredData'
 
 interface BlogPostPageProps {
   params: Promise<{ category: string; slug: string }>
@@ -96,14 +98,29 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     )
   }
 
+  const articleSchema = createArticleSchema({
+    title: post.title,
+    description: post.excerpt,
+    image: `/images/og-blog.jpg`,
+    datePublished: post.date,
+    author: post.author,
+    url: `https://www.zimasahealth.com/blog/${category}/${slug}/`,
+  })
+
   return (
     <main>
+      <StructuredData data={articleSchema} />
       {/* Header */}
       <section className="section-padding border-t-8 border-green bg-surface">
         <div className="section-container max-w-narrow mx-auto">
-          <Link href={`/blog/${category}/`} className="text-green hover:underline text-sm font-medium mb-4 inline-block">
-            ← {getCategoryLabel(category)}
-          </Link>
+          <Breadcrumbs
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Blog', href: '/blog' },
+              { label: getCategoryLabel(category), href: `/blog/${category}/` },
+              { label: post.title, href: '#', current: true },
+            ]}
+          />
 
           <h1 className="font-display text-h1 text-dark mb-4">
             {post.title}
