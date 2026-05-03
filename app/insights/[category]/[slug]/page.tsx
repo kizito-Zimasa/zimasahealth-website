@@ -1,15 +1,15 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { MDXRemote } from 'next-mdx-remote/rsc'
-import { getBlogCategories, getBlogPostsByCategory, getBlogPost, getCategoryLabel } from '@/lib/blog'
+import { getBlogCategories, getBlogPostsByCategory, getBlogPost, getCategoryLabel } from '@/lib/insights'
 import Breadcrumbs from '@/components/seo/Breadcrumbs'
 import { StructuredData, createArticleSchema } from '@/components/seo/StructuredData'
 
-interface BlogPostPageProps {
+interface InsightsPostPageProps {
   params: Promise<{ category: string; slug: string }>
 }
 
-export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: InsightsPostPageProps): Promise<Metadata> {
   const { category, slug } = await params
   const post = getBlogPost(category, slug)
 
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     description: post.excerpt,
     openGraph: {
       type: 'article',
-      url: `https://www.zimasahealth.com/blog/${category}/${slug}/`,
+      url: `https://www.zimasahealth.com/insights/${category}/${slug}/`,
       title: post.title,
       description: post.excerpt,
       images: [{ url: '/images/og-blog.jpg', width: 1200, height: 630 }],
@@ -78,7 +78,7 @@ const components = {
   td: (props: any) => <td className="px-4 py-2 text-body" {...props} />,
 }
 
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
+export default async function BlogPostPage({ params }: InsightsPostPageProps) {
   const { category, slug } = await params
   const post = getBlogPost(category, slug)
 
@@ -89,7 +89,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <div className="section-container max-w-narrow mx-auto text-center py-12">
             <h1 className="font-display text-h2 text-dark mb-4">Post Not Found</h1>
             <p className="text-body-lg text-body mb-8">Sorry, we couldn't find that article.</p>
-            <Link href="/blog/" className="text-green hover:underline font-medium">
+            <Link href="/insights/" className="text-green hover:underline font-medium">
               Back to Blog
             </Link>
           </div>
@@ -104,7 +104,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     image: `/images/og-blog.jpg`,
     datePublished: post.date,
     author: post.author,
-    url: `https://www.zimasahealth.com/blog/${category}/${slug}/`,
+    url: `https://www.zimasahealth.com/insights/${category}/${slug}/`,
   })
 
   return (
@@ -117,7 +117,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             items={[
               { label: 'Home', href: '/' },
               { label: 'Blog', href: '/blog' },
-              { label: getCategoryLabel(category), href: `/blog/${category}/` },
+              { label: getCategoryLabel(category), href: `/insights/${category}/` },
               { label: post.title, href: '#', current: true },
             ]}
           />
@@ -151,7 +151,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="section-container max-w-narrow mx-auto">
           <div className="text-center">
             <h3 className="font-heading text-h3 text-dark mb-6">Read More</h3>
-            <Link href="/blog/" className="inline-block text-green hover:underline font-medium">
+            <Link href="/insights/" className="inline-block text-green hover:underline font-medium">
               View All Articles →
             </Link>
           </div>

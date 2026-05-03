@@ -37,12 +37,12 @@ export default {
       changefreq = 'monthly';
     }
 
-    if (path === '/blog') {
+    if (path === '/insights') {
       priority = 0.8;
       changefreq = 'weekly';
     }
 
-    if (path.startsWith('/blog/')) {
+    if (path.startsWith('/insights/')) {
       priority = 0.7;
       changefreq = 'monthly';
     }

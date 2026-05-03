@@ -20,11 +20,11 @@ const nextConfig = {
       { source: '/wp-json/:path*', destination: '/', permanent: true },
       { source: '/wordpress/:path*', destination: '/', permanent: true },
 
-      // Legacy blog paths to new blog structure
-      { source: '/blog/:slug', destination: '/blog/playbook/:slug', permanent: true },
-      { source: '/post/:slug', destination: '/blog/playbook/:slug', permanent: true },
-      { source: '/insights/:slug', destination: '/blog/playbook/:slug', permanent: true },
-      { source: '/article/:slug', destination: '/blog/playbook/:slug', permanent: true },
+      // Legacy blog paths to new insights structure
+      { source: '/blog/:slug', destination: '/insights/playbook/:slug', permanent: true },
+      { source: '/post/:slug', destination: '/insights/playbook/:slug', permanent: true },
+      { source: '/article/:slug', destination: '/insights/playbook/:slug', permanent: true },
+      { source: '/blog/:path*', destination: '/insights/:path*', permanent: true },
 
       // Product/solution aliases
       { source: '/platform', destination: '/solutions', permanent: true },

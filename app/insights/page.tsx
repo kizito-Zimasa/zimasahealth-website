@@ -1,21 +1,21 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { getAllBlogPosts, getBlogCategories, getCategoryLabel } from '@/lib/blog'
+import { getAllBlogPosts, getBlogCategories, getCategoryLabel } from '@/lib/insights'
 import Button from '@/components/ui/Button'
 
 export const metadata: Metadata = {
-  title: 'Insights & Blog — Zimasa',
+  title: 'Insights & Zimasa Blog — Latest Articles on Health Engagement',
   description: 'Read the latest insights on health engagement, member activation, and building wellness programs for African markets. Articles from the Zimasa team.',
   openGraph: {
     type: 'website',
-    url: 'https://www.zimasahealth.com/blog/',
-    title: 'Insights & Blog — Zimasa',
+    url: 'https://www.zimasahealth.com/insights/',
+    title: 'Insights & Zimasa Blog — Latest Articles on Health Engagement',
     description: 'Read the latest insights on health engagement, member activation, and building wellness programs for African markets.',
-    images: [{ url: '/images/og-blog.jpg', width: 1200, height: 630 }],
+    images: [{ url: '/images/og-insights.jpg', width: 1200, height: 630 }],
   },
 }
 
-export default function BlogPage() {
+export default function InsightsPage() {
   const allPosts = getAllBlogPosts()
   const categories = getBlogCategories()
 
@@ -38,13 +38,13 @@ export default function BlogPage() {
       <section className="section-padding bg-white">
         <div className="section-container">
           <div className="flex flex-wrap gap-3 mb-12">
-            <Link href="/blog/" className="inline-flex">
+            <Link href="/insights/" className="inline-flex">
               <Button variant="outline" className={allPosts.length > 0 ? 'bg-green text-white border-green hover:bg-green/90' : ''}>
                 All Articles
               </Button>
             </Link>
             {categories.map(category => (
-              <Link key={category} href={`/blog/${category}/`} className="inline-flex">
+              <Link key={category} href={`/insights/${category}/`} className="inline-flex">
                 <Button variant="outline">
                   {getCategoryLabel(category)}
                 </Button>
@@ -57,7 +57,7 @@ export default function BlogPage() {
             {allPosts.map(post => (
               <Link
                 key={`${post.category}-${post.slug}`}
-                href={`/blog/${post.category}/${post.slug}/`}
+                href={`/insights/${post.category}/${post.slug}/`}
                 className="group"
               >
                 <article className="card h-full flex flex-col hover:shadow-lg transition-shadow">
