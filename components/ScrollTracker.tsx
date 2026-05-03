@@ -25,9 +25,12 @@ export default function ScrollTracker({ slug, threshold = 75 }: ScrollTrackerPro
     }
 
     const handleScroll = () => {
+      // Guard against very short pages with no scrollable height
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (docHeight <= 0) return;
+
       // Calculate scroll depth
       const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       const scrollPercent = (scrollTop / docHeight) * 100;
 
       // Fire event when threshold is crossed
