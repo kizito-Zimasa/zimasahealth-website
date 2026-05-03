@@ -1,26 +1,144 @@
-@import "tailwindcss";
+/* app/globals.css */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;700&family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Colours */
+  --color-green:         #0A6E38;
+  --color-green-dark:    #085C2F;
+  --color-green-light:   #0D8444;
+  --color-navy:          #0D2133;
+  --color-orange:        #F04F0D;
+  --color-blue:          #0A406E;
+  --color-light-green:   #82B540;
+  --color-pale-green:    #ABCF7A;
+  --color-cream:         #FFFBFA;
+  --color-dark:          #222429;
+  --color-body:          #686666;
+  --color-muted:         #9E9C9C;
+  --color-white:         #FFFFFF;
+
+  /* Typography */
+  --font-display:    "Montserrat Alternates", sans-serif;
+  --font-heading:    Montserrat, sans-serif;
+  --font-ui:         "DM Sans", sans-serif;
+
+  /* Spacing */
+  --spacing-section:  80px;
+  --spacing-hero:     120px;
+  --spacing-card:     32px;
+
+  /* Radius */
+  --radius-btn:   4px;
+  --radius-card:  8px;
+  --radius-input: 6px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Base styles */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-heading);
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--color-body);
+  background-color: var(--color-white);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h5 {
+  font-family: var(--font-display);
+  color: var(--color-dark);
+}
+
+h3, h4, h6 {
+  font-family: var(--font-heading);
+  color: var(--color-dark);
+}
+
+h6 {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-green);
+}
+
+a {
+  color: var(--color-green);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-blue);
+}
+
+@layer components {
+
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-10 py-[14px] bg-orange text-white font-ui text-label-sm font-semibold uppercase tracking-wider rounded-btn transition-all duration-200 hover:brightness-90 active:brightness-85 focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-10 py-[14px] bg-light-green text-white font-ui text-label-sm font-semibold uppercase tracking-wider rounded-btn transition-all duration-200 hover:brightness-90;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center px-10 py-[14px] bg-transparent border-2 border-green text-green font-ui text-label-sm font-semibold uppercase tracking-wider rounded-btn transition-all duration-200 hover:bg-green hover:text-white;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center px-10 py-[14px] bg-transparent border-2 border-white text-white font-ui text-label-sm font-semibold uppercase tracking-wider rounded-btn transition-all duration-200 hover:bg-white hover:text-dark;
+  }
+
+  .btn-b2b {
+    @apply inline-flex items-center justify-center px-10 py-[14px] bg-blue text-white font-ui text-label-sm font-semibold uppercase tracking-wider rounded-btn transition-all duration-200 hover:brightness-90;
+  }
+
+  /* Section containers */
+  .section-container {
+    @apply max-w-content mx-auto px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-section;
+  }
+
+  .section-padding-sm {
+    @apply py-section-sm;
+  }
+
+  /* Cards */
+  .card {
+    @apply bg-white rounded-card shadow-card p-card transition-all duration-200 hover:shadow-card-hover hover:-translate-y-0.5;
+  }
+
+  /* Eyebrow labels */
+  .eyebrow {
+    @apply font-heading text-h6 font-bold text-green uppercase tracking-widest mb-3;
+  }
+
+  /* Form inputs */
+  .form-input {
+    @apply w-full border border-gray-200 rounded-input px-4 py-3 font-ui text-body text-dark placeholder-muted transition-all duration-200 focus:outline-none focus:border-green focus:ring-2 focus:ring-green/20;
+  }
+
+  .form-label {
+    @apply block font-ui text-body-sm font-semibold text-dark mb-1.5;
+  }
+
+  /* Hero section */
+  .hero-section {
+    @apply relative pt-hero pb-[100px] bg-hero-green text-white overflow-hidden;
+  }
+
+  /* Dark CTA band */
+  .cta-band {
+    @apply py-cta-band bg-green text-white text-center;
+  }
+
+  /* B2B section */
+  .section-b2b {
+    @apply bg-blue text-white;
+  }
 }
