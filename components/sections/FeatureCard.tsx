@@ -12,7 +12,7 @@ interface FeatureCardProps {
 export default function FeatureCard({ icon: Icon, eyebrow, headline, body, cta }: FeatureCardProps) {
   return (
     <div className="card">
-      <div className="w-[60px] h-[60px] rounded-icon bg-green/10 flex items-center justify-center mb-6">
+      <div className="w-[60px] h-[60px] rounded-full bg-green/10 flex items-center justify-center mb-6">
         <Icon size={32} className="text-green" />
       </div>
       {eyebrow && <p className="eyebrow">{eyebrow}</p>}

@@ -1,4 +1,5 @@
 // components/sections/Hero.tsx
+import { cn } from '@/lib/utils'
 import Button from '@/components/ui/Button'
 
 interface HeroProps {
@@ -19,7 +20,7 @@ export default function Hero({
   backgroundVariant = 'green',
 }: HeroProps) {
   return (
-    <section className={`hero-section bg-${backgroundVariant === 'navy' ? 'hero-navy' : 'hero-green'}`}>
+    <section className={cn('hero-section', backgroundVariant === 'navy' ? 'bg-hero-navy' : 'bg-hero-green')}>
       <div className="section-container text-center">
         {eyebrow && <p className="eyebrow text-pale-green">{eyebrow}</p>}
         <h1 className="font-display text-display text-white max-w-narrow mx-auto mb-6">
