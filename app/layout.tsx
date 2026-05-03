@@ -48,11 +48,6 @@ export default function RootLayout({
         <Header />
         {children}
         <Footer />
-        <script
-          src="https://cdn.cookieyes.com/client_data/[YOUR_ID]/script.js"
-          type="text/javascript"
-          async
-        />
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID!} />
       </body>
     </html>
