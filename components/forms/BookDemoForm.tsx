@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from '@/components/ui/Button';
 import { trackDemoFormSubmit } from '@/lib/analytics';
 
@@ -29,6 +29,13 @@ export default function BookDemoForm() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+
+  useEffect(() => {
+    if (successMessage) {
+      const timer = setTimeout(() => setSuccessMessage(''), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [successMessage]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.currentTarget;
@@ -76,8 +83,6 @@ export default function BookDemoForm() {
         honeypot: '',
       });
 
-      // Clear success message after 5 seconds
-      setTimeout(() => setSuccessMessage(''), 5000);
     } catch (error) {
       console.error('Form submission error:', error);
       setErrors({ name: 'Failed to submit. Please try again.' });
@@ -90,13 +95,13 @@ export default function BookDemoForm() {
     return (
       <div className="rounded-card bg-pale-green p-card text-center">
         <h3 className="text-h4 font-bold text-green mb-3">{successMessage}</h3>
-        <p className="text-body text-body">We'll be in touch soon!</p>
+        <p className="text-body text-body">We&apos;ll be in touch soon!</p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6" noValidate>
       {/* Name */}
       <div>
         <label htmlFor="name" className="form-label">
@@ -109,10 +114,11 @@ export default function BookDemoForm() {
           value={formData.name}
           onChange={handleChange}
           className="form-input"
+          aria-describedby={errors.name ? "name-error" : undefined}
           disabled={isLoading}
           required
         />
-        {errors.name && <p className="mt-1 text-body-sm text-orange">{errors.name}</p>}
+        {errors.name && <p id="name-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.name}</p>}
       </div>
 
       {/* Email */}
@@ -127,10 +133,11 @@ export default function BookDemoForm() {
           value={formData.email}
           onChange={handleChange}
           className="form-input"
+          aria-describedby={errors.email ? "email-error" : undefined}
           disabled={isLoading}
           required
         />
-        {errors.email && <p className="mt-1 text-body-sm text-orange">{errors.email}</p>}
+        {errors.email && <p id="email-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.email}</p>}
       </div>
 
       {/* Company */}
@@ -145,10 +152,11 @@ export default function BookDemoForm() {
           value={formData.company}
           onChange={handleChange}
           className="form-input"
+          aria-describedby={errors.company ? "company-error" : undefined}
           disabled={isLoading}
           required
         />
-        {errors.company && <p className="mt-1 text-body-sm text-orange">{errors.company}</p>}
+        {errors.company && <p id="company-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.company}</p>}
       </div>
 
       {/* Phone */}
@@ -163,10 +171,11 @@ export default function BookDemoForm() {
           value={formData.phone}
           onChange={handleChange}
           className="form-input"
+          aria-describedby={errors.phone ? "phone-error" : undefined}
           disabled={isLoading}
           required
         />
-        {errors.phone && <p className="mt-1 text-body-sm text-orange">{errors.phone}</p>}
+        {errors.phone && <p id="phone-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.phone}</p>}
       </div>
 
       {/* Role */}
@@ -181,11 +190,12 @@ export default function BookDemoForm() {
           value={formData.role}
           onChange={handleChange}
           className="form-input"
+          aria-describedby={errors.role ? "role-error" : undefined}
           disabled={isLoading}
           placeholder="e.g., HR Director, Benefits Manager"
           required
         />
-        {errors.role && <p className="mt-1 text-body-sm text-orange">{errors.role}</p>}
+        {errors.role && <p id="role-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.role}</p>}
       </div>
 
       {/* Solution Interest */}
@@ -199,6 +209,7 @@ export default function BookDemoForm() {
           value={formData.solutionInterest}
           onChange={handleChange}
           className="form-input"
+          aria-describedby={errors.solutionInterest ? "solutionInterest-error" : undefined}
           disabled={isLoading}
           required
         >
@@ -206,7 +217,7 @@ export default function BookDemoForm() {
           <option value="ZPS">ZPS - Payer Solution</option>
           <option value="Both">Both Solutions</option>
         </select>
-        {errors.solutionInterest && <p className="mt-1 text-body-sm text-orange">{errors.solutionInterest}</p>}
+        {errors.solutionInterest && <p id="solutionInterest-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.solutionInterest}</p>}
       </div>
 
       {/* Timeline */}
@@ -220,6 +231,7 @@ export default function BookDemoForm() {
           value={formData.timeline}
           onChange={handleChange}
           className="form-input"
+          aria-describedby={errors.timeline ? "timeline-error" : undefined}
           disabled={isLoading}
           required
         >
@@ -228,7 +240,7 @@ export default function BookDemoForm() {
           <option value="90 days">Within 90 days</option>
           <option value="Not sure">Not sure yet</option>
         </select>
-        {errors.timeline && <p className="mt-1 text-body-sm text-orange">{errors.timeline}</p>}
+        {errors.timeline && <p id="timeline-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.timeline}</p>}
       </div>
 
       {/* Honeypot (hidden) */}
@@ -246,7 +258,7 @@ export default function BookDemoForm() {
         disabled={isLoading}
         className="w-full"
       >
-        {isLoading ? 'Sending...' : 'Request Demo'}
+        {isLoading ? "Sending..." : "Request Demo"}
       </Button>
     </form>
   );

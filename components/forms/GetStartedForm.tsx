@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Button from '@/components/ui/Button';
 import { trackMemberSignup, trackEmployerSignup } from '@/lib/analytics';
 
@@ -16,8 +15,6 @@ interface FormErrors {
 }
 
 export default function GetStartedForm() {
-  const router = useRouter();
-  const [path, setPath] = useState<FormPath>('member');
   const [formData, setFormData] = useState({
     path: 'member' as FormPath,
     name: '',
@@ -32,7 +29,6 @@ export default function GetStartedForm() {
   const [isLoading, setIsLoading] = useState(false);
 
   const handlePathChange = (newPath: FormPath) => {
-    setPath(newPath);
     setFormData(prev => ({
       ...prev,
       path: newPath,
@@ -77,7 +73,7 @@ export default function GetStartedForm() {
       }
 
       // Success: Track analytics and redirect
-      if (path === 'member') {
+      if (formData.path === 'member') {
         trackMemberSignup();
       } else {
         trackEmployerSignup();
@@ -103,28 +99,28 @@ export default function GetStartedForm() {
           type="button"
           onClick={() => handlePathChange('member')}
           className={`pb-2 font-semibold transition-colors ${
-            path === 'member'
+            formData.path === 'member'
               ? 'border-b-2 border-green text-green'
               : 'text-body hover:text-dark'
           }`}
         >
-          I'm an Individual
+          I&apos;m an Individual
         </button>
         <button
           type="button"
           onClick={() => handlePathChange('employer')}
           className={`pb-2 font-semibold transition-colors ${
-            path === 'employer'
+            formData.path === 'employer'
               ? 'border-b-2 border-green text-green'
               : 'text-body hover:text-dark'
           }`}
         >
-          I'm an Employer
+          I&apos;m an Employer
         </button>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {path === 'member' ? (
+      <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+        {formData.path === 'member' ? (
           <>
             {/* Member: Name */}
             <div>
@@ -138,10 +134,11 @@ export default function GetStartedForm() {
                 value={formData.name}
                 onChange={handleChange}
                 className="form-input"
+                aria-describedby={errors.name ? "name-error" : undefined}
                 disabled={isLoading}
                 required
               />
-              {errors.name && <p className="mt-1 text-body-sm text-orange">{errors.name}</p>}
+              {errors.name && <p id="name-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.name}</p>}
             </div>
 
             {/* Member: Email */}
@@ -156,10 +153,11 @@ export default function GetStartedForm() {
                 value={formData.email}
                 onChange={handleChange}
                 className="form-input"
+                aria-describedby={errors.email ? "email-error" : undefined}
                 disabled={isLoading}
                 required
               />
-              {errors.email && <p className="mt-1 text-body-sm text-orange">{errors.email}</p>}
+              {errors.email && <p id="email-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.email}</p>}
             </div>
 
             {/* Member: Employer Code (optional) */}
@@ -174,13 +172,14 @@ export default function GetStartedForm() {
                 value={formData.employerCode}
                 onChange={handleChange}
                 className="form-input"
+                aria-describedby={errors.employerCode ? "employerCode-error" : undefined}
                 disabled={isLoading}
                 placeholder="Ask your HR team for this code"
               />
               <p className="mt-2 text-body-sm text-muted">
                 If your employer provides a code, you can link your account to their programme.
               </p>
-              {errors.employerCode && <p className="mt-1 text-body-sm text-orange">{errors.employerCode}</p>}
+              {errors.employerCode && <p id="employerCode-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.employerCode}</p>}
             </div>
           </>
         ) : (
@@ -197,10 +196,11 @@ export default function GetStartedForm() {
                 value={formData.orgName}
                 onChange={handleChange}
                 className="form-input"
+                aria-describedby={errors.orgName ? "orgName-error" : undefined}
                 disabled={isLoading}
                 required
               />
-              {errors.orgName && <p className="mt-1 text-body-sm text-orange">{errors.orgName}</p>}
+              {errors.orgName && <p id="orgName-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.orgName}</p>}
             </div>
 
             {/* Employer: Email */}
@@ -215,10 +215,11 @@ export default function GetStartedForm() {
                 value={formData.email}
                 onChange={handleChange}
                 className="form-input"
+                aria-describedby={errors.email ? "email-error" : undefined}
                 disabled={isLoading}
                 required
               />
-              {errors.email && <p className="mt-1 text-body-sm text-orange">{errors.email}</p>}
+              {errors.email && <p id="email-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.email}</p>}
             </div>
 
             {/* Employer: Workforce Size */}
@@ -232,6 +233,7 @@ export default function GetStartedForm() {
                 value={formData.workforceSize}
                 onChange={handleChange}
                 className="form-input"
+                aria-describedby={errors.workforceSize ? "workforceSize-error" : undefined}
                 disabled={isLoading}
                 required
               >
@@ -241,7 +243,7 @@ export default function GetStartedForm() {
                 <option value="100-500">100-500 employees</option>
                 <option value="500+">500+ employees</option>
               </select>
-              {errors.workforceSize && <p className="mt-1 text-body-sm text-orange">{errors.workforceSize}</p>}
+              {errors.workforceSize && <p id="workforceSize-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.workforceSize}</p>}
             </div>
           </>
         )}
@@ -261,11 +263,11 @@ export default function GetStartedForm() {
           disabled={isLoading}
           className="w-full"
         >
-          {isLoading ? 'Processing...' : 'Get Started Free'}
+          {isLoading ? "Processing..." : "Get Started Free"}
         </Button>
 
         <p className="text-center text-body-sm text-muted">
-          We'll never share your information. Privacy policy{' '}
+          We&apos;ll never share your information. Privacy policy{' '}
           <a href="/privacy-centre/" className="text-green hover:text-blue">
             here
           </a>

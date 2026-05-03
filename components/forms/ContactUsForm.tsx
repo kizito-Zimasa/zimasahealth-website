@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from '@/components/ui/Button';
 import { trackContactFormSubmit } from '@/lib/analytics';
 
@@ -25,6 +25,13 @@ export default function ContactUsForm() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+
+  useEffect(() => {
+    if (successMessage) {
+      const timer = setTimeout(() => setSuccessMessage(''), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [successMessage]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.currentTarget;
@@ -68,8 +75,6 @@ export default function ContactUsForm() {
         inquiryType: 'general',
         honeypot: '',
       });
-
-      setTimeout(() => setSuccessMessage(''), 5000);
     } catch (error) {
       console.error('Form submission error:', error);
       setErrors({ name: 'Failed to submit. Please try again.' });
@@ -82,13 +87,13 @@ export default function ContactUsForm() {
     return (
       <div className="rounded-card bg-pale-green p-card text-center">
         <h3 className="text-h4 font-bold text-green mb-3">{successMessage}</h3>
-        <p className="text-body text-body">We'll respond as soon as possible.</p>
+        <p className="text-body text-body">We&apos;ll respond as soon as possible.</p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6" noValidate>
       {/* Name */}
       <div>
         <label htmlFor="name" className="form-label">
@@ -101,10 +106,11 @@ export default function ContactUsForm() {
           value={formData.name}
           onChange={handleChange}
           className="form-input"
+          aria-describedby={errors.name ? "name-error" : undefined}
           disabled={isLoading}
           required
         />
-        {errors.name && <p className="mt-1 text-body-sm text-orange">{errors.name}</p>}
+        {errors.name && <p id="name-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.name}</p>}
       </div>
 
       {/* Email */}
@@ -119,10 +125,11 @@ export default function ContactUsForm() {
           value={formData.email}
           onChange={handleChange}
           className="form-input"
+          aria-describedby={errors.email ? "email-error" : undefined}
           disabled={isLoading}
           required
         />
-        {errors.email && <p className="mt-1 text-body-sm text-orange">{errors.email}</p>}
+        {errors.email && <p id="email-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.email}</p>}
       </div>
 
       {/* Company */}
@@ -137,10 +144,11 @@ export default function ContactUsForm() {
           value={formData.company}
           onChange={handleChange}
           className="form-input"
+          aria-describedby={errors.company ? "company-error" : undefined}
           disabled={isLoading}
           required
         />
-        {errors.company && <p className="mt-1 text-body-sm text-orange">{errors.company}</p>}
+        {errors.company && <p id="company-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.company}</p>}
       </div>
 
       {/* Inquiry Type */}
@@ -154,6 +162,7 @@ export default function ContactUsForm() {
           value={formData.inquiryType}
           onChange={handleChange}
           className="form-input"
+          aria-describedby={errors.inquiryType ? "inquiryType-error" : undefined}
           disabled={isLoading}
           required
         >
@@ -162,7 +171,7 @@ export default function ContactUsForm() {
           <option value="partnership">Partnership Opportunity</option>
           <option value="other">Other</option>
         </select>
-        {errors.inquiryType && <p className="mt-1 text-body-sm text-orange">{errors.inquiryType}</p>}
+        {errors.inquiryType && <p id="inquiryType-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.inquiryType}</p>}
       </div>
 
       {/* Message */}
@@ -177,11 +186,12 @@ export default function ContactUsForm() {
           onChange={handleChange}
           className="form-input"
           rows={5}
+          aria-describedby={errors.message ? "message-error" : undefined}
           disabled={isLoading}
           placeholder="Tell us how we can help..."
           required
         />
-        {errors.message && <p className="mt-1 text-body-sm text-orange">{errors.message}</p>}
+        {errors.message && <p id="message-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.message}</p>}
       </div>
 
       {/* Honeypot */}
@@ -199,7 +209,7 @@ export default function ContactUsForm() {
         disabled={isLoading}
         className="w-full"
       >
-        {isLoading ? 'Sending...' : 'Send Message'}
+        {isLoading ? "Sending..." : "Send Message"}
       </Button>
     </form>
   );
