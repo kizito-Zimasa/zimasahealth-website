@@ -1,6 +1,21 @@
 import type { Metadata } from 'next'
 import Breadcrumbs from '@/components/seo/Breadcrumbs'
 
+/*
+ * FOUNDER-REVIEW (Terms of Service, content refresh 2026-10):
+ * Changed or removed pending legal review against Health Data Doctrine v1.2 (S10, F11):
+ *   - Removed "Zimasa does not store protected health information (PHI) and complies with the
+ *     Kenya Data Protection Act 2019" (clause 7). Replaced with the approved data and compliance lines.
+ *   - Clause 6: "increase preventive care utilisation" (implied outcome) replaced with
+ *     "make follow-through measurable".
+ *   - "Last updated" set to 7 October 2026; effective date left at 3 May 2026. Legal advisers to
+ *     confirm both dates.
+ *   - Clause 7 refers to a "Privacy Policy" that does not exist as a page. Legal advisers to confirm
+ *     whether it should point to the Privacy Centre or a new Privacy Policy page.
+ *   - Clause 1 "Active Day" definition differs from Vault §6 wording; not changed here (legal clause).
+ * No unverified security controls (TLS, AES, pen testing, MFA, DPO, SLAs, member portal) appear on this page.
+ */
+
 export const metadata: Metadata = {
   title: 'Terms of Service — Zimasa Health Engagement Platform',
   description: 'Terms of Service for Zimasa Health Engagement Platform. Read our full terms, member obligations, provider requirements, and dispute resolution.',
@@ -25,7 +40,10 @@ export default function TermsPage() {
               These Terms of Service govern your use of the Zimasa Health Engagement Platform ("Platform"). By accessing or using the Platform, you agree to these terms. If you do not agree, please do not use the Platform.
             </p>
             <p className="text-body text-muted mt-4 text-sm">
-              Last updated: May 3, 2026. Effective date: May 3, 2026.
+              Last updated: 7 October 2026. Effective date: 3 May 2026.
+            </p>
+            <p className="text-body text-muted mt-2 text-sm">
+              This page is being reviewed by our legal advisers.
             </p>
           </div>
         </div>
@@ -61,7 +79,7 @@ export default function TermsPage() {
                 As a Member, you agree to:
               </p>
               <ul className="text-body text-body space-y-3 ml-6">
-                <li>• Provide accurate and complete information during enrollment</li>
+                <li>• Provide accurate and complete information during enrolment</li>
                 <li>• Use the Platform only for your own health and wellness purposes</li>
                 <li>• Comply with all applicable laws and regulations</li>
                 <li>• Respect the intellectual property rights of Zimasa and its partners</li>
@@ -96,7 +114,7 @@ export default function TermsPage() {
             <div>
               <h2 className="font-display text-h2 text-dark mb-6">4. Payment & Refunds</h2>
               <p className="text-body-lg text-body mb-4">
-                <strong>Member Payments:</strong> Members may make payments through the Platform for services, rewards, or programme fees using the payment methods available in their region (MPESA, card, etc.). All payments are processed securely and subject to the payment processor's terms.
+                <strong>Member Payments:</strong> Members may make payments through the Platform for services, rewards, or programme fees using the payment methods available in their region (M-Pesa, card, etc.). All payments are processed securely and subject to the payment processor's terms.
               </p>
               <p className="text-body-lg text-body mb-4">
                 <strong>Refund Policy:</strong> Refunds are issued on a case-by-case basis. Contact support at <a href="mailto:hello@zimasahealth.com" className="text-green hover:underline">hello@zimasahealth.com</a> to request a refund.
@@ -139,7 +157,7 @@ export default function TermsPage() {
                 <li>• Treat or cure any medical condition</li>
               </ul>
               <p className="text-body-lg text-body mt-4">
-                Always consult with a licensed healthcare provider for medical advice. The Platform is designed to encourage healthier behaviours and increase preventive care utilisation.
+                Always consult with a licensed healthcare provider for medical advice. The Platform is designed to encourage healthier behaviours and make follow-through measurable.
               </p>
             </div>
 
@@ -151,7 +169,7 @@ export default function TermsPage() {
                 Your use of the Platform is governed by our Privacy Policy. By using the Platform, you consent to our collection, use, and disclosure of your data as described in the Privacy Policy.
               </p>
               <p className="text-body-lg text-body">
-                Zimasa does not store protected health information (PHI) and complies with the Kenya Data Protection Act 2019.
+                Zimasa is privacy-governed by design. In employer, payer and freemium contexts, Zimasa stores verification of engagement events, not clinical data. Provider contexts may handle regulated health data only under governance conditions. Aligned with the Kenya Data Protection Act, 2019. Zimasa is registered with the Office of the Data Protection Commissioner (ODPC) as a Data Controller and Data Processor. Aggregate reporting only, with a minimum cohort of 25. Individual results never go to employers.
               </p>
             </div>
 

@@ -13,13 +13,13 @@ export async function generateMetadata({ params }: InsightsCategoryPageProps): P
   const label = getCategoryLabel(category)
 
   return {
-    title: `${label} — Zimasa Blog`,
-    description: `Articles from the Zimasa blog about ${label.toLowerCase()}. Insights on health engagement and member activation.`,
+    title: `${label} — Zimasa Insights`,
+    description: `Zimasa Insights articles on ${label.toLowerCase()}: health engagement, member activation and measurable follow-through.`,
     openGraph: {
       type: 'website',
       url: `https://www.zimasahealth.com/insights/${category}/`,
-      title: `${label} — Zimasa Blog`,
-      description: `Articles about ${label.toLowerCase()}`,
+      title: `${label} — Zimasa Insights`,
+      description: `Zimasa Insights articles on ${label.toLowerCase()}.`,
     },
   }
 }
@@ -102,7 +102,7 @@ export default async function BlogCategoryPage({ params }: InsightsCategoryPageP
                     <div className="flex items-center justify-between text-sm text-muted">
                       <span>{post.author}</span>
                       <time dateTime={post.date}>
-                        {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                        {new Date(post.date).toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' })}
                       </time>
                     </div>
                   </div>

@@ -58,13 +58,13 @@ export async function POST(request: NextRequest) {
       from: 'noreply@zimasahealth.com',
       to: 'support@zimasahealth.com',
       replyTo: sanitizedEmail,
-      subject: `New Inquiry from ${sanitizedName}`,
+      subject: `New Enquiry from ${sanitizedName}`,
       html: `
         <h2>New Contact Form Submission</h2>
         <p><strong>Name:</strong> ${sanitizedName}</p>
         <p><strong>Email:</strong> ${sanitizedEmail}</p>
         <p><strong>Company:</strong> ${sanitizedCompany}</p>
-        <p><strong>Inquiry Type:</strong> ${sanitizedInquiryType}</p>
+        <p><strong>Enquiry Type:</strong> ${sanitizedInquiryType}</p>
         <p><strong>Message:</strong></p>
         <p>${sanitizedMessage.replace(/\n/g, '<br>')}</p>
       `,

@@ -1,16 +1,15 @@
 import type { Metadata } from 'next'
-import { User, Building2 } from 'lucide-react'
 import GetStartedForm from '@/components/forms/GetStartedForm'
 import Breadcrumbs from '@/components/seo/Breadcrumbs'
 
 export const metadata: Metadata = {
-  title: 'Get Started Free — Zimasa Go for Members & Employers | Zimasa',
-  description: 'Sign up for Zimasa Go — free for individual members. HR teams can register their organisation and get a free employer-lite dashboard. No credit card required.',
+  title: 'Get Started Free — Zimasa GO for Members & Employers',
+  description: 'Sign up for Zimasa GO — free to start for individual members. HR teams can share Zimasa GO with their workforce, free. No credit card required.',
   openGraph: {
     type: 'website',
     url: 'https://www.zimasahealth.com/get-started/',
-    title: 'Get Started Free — Zimasa Go for Members & Employers | Zimasa',
-    description: 'Sign up for Zimasa Go — free for individual members. HR teams can register their organisation and get a free employer-lite dashboard. No credit card required.',
+    title: 'Get Started Free — Zimasa GO for Members & Employers | Zimasa',
+    description: 'Sign up for Zimasa GO — free to start for individual members. HR teams can share Zimasa GO with their workforce, free. No credit card required.',
   },
 }
 
@@ -26,7 +25,7 @@ export default function GetStartedPage() {
       <section className="section-padding bg-hero-green">
         <div className="section-container text-center">
           <h1 className="font-display text-h2 text-white mb-3">Start Free. No Contract. No Credit Card.</h1>
-          <p className="text-body-lg text-white/80">Zimasa Go is free for members and employers. Choose your path below.</p>
+          <p className="text-body-lg text-white/80">Zimasa GO is free to start for members, and free for employers to share with their team. Choose your path below.</p>
         </div>
       </section>
 
@@ -34,6 +33,10 @@ export default function GetStartedPage() {
       <section className="section-padding bg-white">
         <div className="section-container max-w-4xl">
           <GetStartedForm />
+          {/* DRAFT-COPY 2026-10: Founder review */}
+          <p className="text-center text-body-sm text-muted mt-8">
+            Looking for a full programme with Health Tracks, provider access and aggregate reporting? Full programmes are available through your insurer, broker or scheme.
+          </p>
         </div>
       </section>
     </main>

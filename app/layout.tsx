@@ -9,15 +9,17 @@ import './globals.css'
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.zimasahealth.com'),
   title: {
-    default: 'Zimasa | Health Engagement OS for Payers & Employers',
+    default: 'Zimasa | Health that shows up.',
     template: '%s | Zimasa',
   },
-  description: 'Built for Africa. White-label ready. Measurable results. The Health Engagement OS connecting payers and employers to a vetted healthcare provider network.',
+  description: 'Zimasa is the Health Engagement OS for insurers, TPAs and providers in East Africa — activating members, making follow-through measurable, and proving engagement with verified Active Days.',
   openGraph: {
     type: 'website',
     locale: 'en_KE',
     url: 'https://www.zimasahealth.com',
     siteName: 'Zimasa',
+    title: 'Zimasa | Health that shows up.',
+    description: 'Zimasa is the Health Engagement OS for insurers, TPAs and providers in East Africa — activating members, making follow-through measurable, and proving engagement with verified Active Days.',
   },
   twitter: {
     card: 'summary_large_image',

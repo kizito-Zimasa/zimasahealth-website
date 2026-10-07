@@ -4,8 +4,9 @@ import Link from 'next/link'
 import { ChevronDown } from 'lucide-react'
 
 const solutions = [
-  { label: 'ZHEP', subtitle: 'Health Engagement Platform', href: '/solutions/zhep/' },
-  { label: 'ZPS', subtitle: 'Zimasa Payer Solution', href: '/solutions/zps/' },
+  { label: 'ZHEP', subtitle: 'Health Engagement Platform — incl. ZCare care continuity', href: '/solutions/zhep/', secondary: false },
+  { label: 'ZCare', subtitle: 'Care continuity on ZHEP', href: '/solutions/zhep/zcare/', secondary: true },
+  { label: 'ZPS', subtitle: 'Zimasa Payer Solution', href: '/solutions/zps/', secondary: false },
 ]
 
 export default function NavDropdown() {
@@ -36,9 +37,9 @@ export default function NavDropdown() {
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className="block px-5 py-3 hover:bg-cream transition-colors duration-150"
+              className={`block py-3 hover:bg-cream transition-colors duration-150 ${item.secondary ? 'ml-5 pl-4 pr-5 border-l-2 border-green/40' : 'px-5'}`}
             >
-              <p className="font-ui text-[14px] font-semibold text-dark">{item.label}</p>
+              <p className={`font-ui font-semibold text-dark ${item.secondary ? 'text-[13px]' : 'text-[14px]'}`}>{item.label}</p>
               <p className="font-ui text-[12px] text-body">{item.subtitle}</p>
             </Link>
           ))}

@@ -80,6 +80,10 @@ export default function GetStartedForm() {
       }
 
       // Redirect to appropriate app
+      // FOUNDER-REVIEW: the employer path redirect comes from app/api/forms/get-started/route.ts and
+      // currently points to https://dashboard.zimasahealth.com/setup. Zimasa GO has no employer
+      // dashboard or employer admin — confirm the correct redirect target (and that the URL exists)
+      // before launch. Behaviour intentionally unchanged in the October 2026 content refresh.
       if (data.redirect) {
         window.location.href = data.redirect;
       }
@@ -184,10 +188,10 @@ export default function GetStartedForm() {
           </>
         ) : (
           <>
-            {/* Employer: Organization Name */}
+            {/* Employer: Organisation Name */}
             <div>
               <label htmlFor="orgName" className="form-label">
-                Organization Name *
+                Organisation Name *
               </label>
               <input
                 id="orgName"
@@ -267,9 +271,9 @@ export default function GetStartedForm() {
         </Button>
 
         <p className="text-center text-body-sm text-muted">
-          We&apos;ll never share your information. Privacy policy{' '}
+          We handle your information as set out in our{' '}
           <a href="/privacy-centre/" className="text-green hover:text-blue">
-            here
+            Privacy Centre
           </a>
           .
         </p>

@@ -18,12 +18,12 @@ export async function generateMetadata({ params }: InsightsPostPageProps): Promi
   if (!post) {
     return {
       title: 'Not Found — Zimasa',
-      description: 'Blog post not found',
+      description: 'Article not found',
     }
   }
 
   return {
-    title: `${post.title} — Zimasa Blog`,
+    title: `${post.title} — Zimasa Insights`,
     description: post.excerpt,
     openGraph: {
       type: 'article',
@@ -91,7 +91,7 @@ export default async function BlogPostPage({ params }: InsightsPostPageProps) {
             <h1 className="font-display text-h2 text-dark mb-4">Post Not Found</h1>
             <p className="text-body-lg text-body mb-8">Sorry, we couldn't find that article.</p>
             <Link href="/insights/" className="text-green hover:underline font-medium">
-              Back to Blog
+              Back to Insights
             </Link>
           </div>
         </section>
@@ -99,13 +99,17 @@ export default async function BlogPostPage({ params }: InsightsPostPageProps) {
     )
   }
 
+  const postUrl = `https://www.zimasahealth.com/insights/${category}/${slug}/`
   const articleSchema = createArticleSchema({
     title: post.title,
     description: post.excerpt,
-    image: post.heroImage || `/images/og-blog.jpg`,
+    // Hero image if set; otherwise this post's generated Open Graph image (./opengraph-image.tsx).
+    image: post.heroImage
+      ? new URL(post.heroImage, 'https://www.zimasahealth.com').toString()
+      : `${postUrl}opengraph-image`,
     datePublished: post.date,
     author: post.author,
-    url: `https://www.zimasahealth.com/insights/${category}/${slug}/`,
+    url: postUrl,
   })
 
   return (
@@ -118,7 +122,7 @@ export default async function BlogPostPage({ params }: InsightsPostPageProps) {
           <Breadcrumbs
             items={[
               { label: 'Home', href: '/' },
-              { label: 'Blog', href: '/blog' },
+              { label: 'Insights', href: '/insights/' },
               { label: getCategoryLabel(category), href: `/insights/${category}/` },
               { label: post.title, href: '#', current: true },
             ]}
@@ -146,7 +150,7 @@ export default async function BlogPostPage({ params }: InsightsPostPageProps) {
           <div className="flex items-center gap-6 text-sm text-muted">
             <span>{post.author}</span>
             <time dateTime={post.date}>
-              {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+              {new Date(post.date).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}
             </time>
           </div>
         </div>

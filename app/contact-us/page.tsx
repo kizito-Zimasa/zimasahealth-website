@@ -2,18 +2,27 @@ import type { Metadata } from 'next'
 import ContactUsForm from '@/components/forms/ContactUsForm'
 import Breadcrumbs from '@/components/seo/Breadcrumbs'
 
+// FOUNDER-REVIEW: "We respond within 24 business hours" removed from metadata and page copy (unverified response SLA). Confirm a commitment before restoring.
+
 export const metadata: Metadata = {
-  title: 'Contact Us — Let\'s Talk | Zimasa',
-  description: 'Get in touch with the Zimasa team. We\'ll respond within 24 business hours. Sales, partnerships, press, and general inquiries welcome.',
+  title: 'Contact Us — Let\'s Talk',
+  description: 'Get in touch with the Zimasa team. Sales, provider network, partnerships, press and general enquiries welcome.',
   openGraph: {
     type: 'website',
     url: 'https://www.zimasahealth.com/contact-us/',
     title: 'Contact Us — Let\'s Talk | Zimasa',
-    description: 'Get in touch with the Zimasa team. We\'ll respond within 24 business hours. Sales, partnerships, press, and general inquiries welcome.',
+    description: 'Get in touch with the Zimasa team. Sales, provider network, partnerships, press and general enquiries welcome.',
   },
 }
 
-export default function ContactUsPage() {
+export default async function ContactUsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ enquiry?: string | string[] }>
+}) {
+  const { enquiry } = await searchParams
+  const initialEnquiry = typeof enquiry === 'string' ? enquiry : undefined
+
   return (
     <main>
       <section className="section-padding bg-white">
@@ -23,8 +32,8 @@ export default function ContactUsPage() {
             <div className="lg:col-span-2">
               <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Contact Us', href: '/contact-us/', current: true }]} className="mb-4" />
               <h1 className="font-display text-h2 text-dark mb-3">Get in Touch</h1>
-              <p className="text-body-lg text-body mb-8">Tell us about your project, question, or partnership opportunity. We respond within 24 business hours.</p>
-              <ContactUsForm />
+              <p className="text-body-lg text-body mb-8">Tell us about your question, partnership or provider enquiry, and the right person on our team will get back to you.</p>
+              <ContactUsForm initialEnquiry={initialEnquiry} />
             </div>
 
             {/* Right Column - Contact Details */}
@@ -37,7 +46,7 @@ export default function ContactUsPage() {
                   <p className="text-body text-body">
                     <a href="mailto:hello@zimasahealth.com" className="text-green hover:underline">hello@zimasahealth.com</a>
                   </p>
-                  <p className="text-body text-muted text-sm mt-2">General inquiries and partnerships</p>
+                  <p className="text-body text-muted text-sm mt-2">General enquiries and partnerships</p>
                 </div>
 
                 <div>
@@ -64,9 +73,8 @@ export default function ContactUsPage() {
                 </div>
 
                 <div>
-                  <h4 className="font-heading text-dark mb-4">Response Time</h4>
+                  <h4 className="font-heading text-dark mb-4">Office Hours</h4>
                   <p className="text-body text-body">Monday–Friday, 9am–5pm EAT</p>
-                  <p className="text-body text-muted text-sm mt-2">We respond within 24 business hours</p>
                 </div>
               </div>
             </div>

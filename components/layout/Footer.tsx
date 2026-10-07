@@ -8,7 +8,7 @@ export default function Footer() {
         {/* Logo & Tagline */}
         <div className="mb-12 pb-12 border-b border-white/10">
           <Image src="/images/logo-white.svg" alt="Zimasa" width={140} height={69} style={{ height: 'auto' }} className="mb-3" />
-          <p className="text-body-sm text-white/80 max-w-sm">Turn Wellness Spending Into Verified Active Days</p>
+          <p className="text-body-sm text-white/80 max-w-sm">Health that shows up.</p>
         </div>
 
         {/* Footer Grid */}
@@ -18,10 +18,9 @@ export default function Footer() {
             <h3 className="font-heading text-h5 mb-4">Who We Serve</h3>
             <ul className="space-y-2">
               <li><Link href="/insurers-tpas/" className="text-white/70 hover:text-white transition-colors">Insurers & TPAs</Link></li>
-              <li><Link href="/employers/" className="text-white/70 hover:text-white transition-colors">Employers</Link></li>
-              <li><Link href="/zimasa-go/" className="text-white/70 hover:text-white transition-colors">Members / Zimasa Go</Link></li>
               <li><Link href="/healthcare-providers/" className="text-white/70 hover:text-white transition-colors">Providers</Link></li>
-              <li><Link href="/who-we-help/" className="text-white/70 hover:text-white transition-colors">Who We Help</Link></li>
+              <li><Link href="/employers/" className="text-white/70 hover:text-white transition-colors">Employers</Link></li>
+              <li><Link href="/zimasa-go/" className="text-white/70 hover:text-white transition-colors">Members / Zimasa GO</Link></li>
             </ul>
           </div>
 
@@ -30,9 +29,9 @@ export default function Footer() {
             <h3 className="font-heading text-h5 mb-4">Solutions</h3>
             <ul className="space-y-2">
               <li><Link href="/solutions/zhep/" className="text-white/70 hover:text-white transition-colors">ZHEP</Link></li>
+              <li className="pl-3"><Link href="/solutions/zhep/zcare/" className="text-white/70 hover:text-white transition-colors">ZCare — care continuity</Link></li>
               <li><Link href="/solutions/zps/" className="text-white/70 hover:text-white transition-colors">ZPS</Link></li>
-              <li><Link href="/solutions/" className="text-white/70 hover:text-white transition-colors">Solutions Hub</Link></li>
-              <li><Link href="/get-started/" className="text-white/70 hover:text-white transition-colors">Get Started</Link></li>
+              <li><Link href="/get-started/" className="text-white/70 hover:text-white transition-colors">Get Started Free</Link></li>
             </ul>
           </div>
 
@@ -42,7 +41,8 @@ export default function Footer() {
             <ul className="space-y-2">
               <li><Link href="/about/" className="text-white/70 hover:text-white transition-colors">About</Link></li>
               <li><Link href="/insights/" className="text-white/70 hover:text-white transition-colors">Insights</Link></li>
-              <li><Link href="/book-demo/" className="text-white/70 hover:text-white transition-colors">Book Demo</Link></li>
+              <li><Link href="/book-demo/" className="text-white/70 hover:text-white transition-colors">Book a Demo</Link></li>
+              <li><Link href="/contact-us/" className="text-white/70 hover:text-white transition-colors">Contact Us</Link></li>
             </ul>
           </div>
 
@@ -50,7 +50,7 @@ export default function Footer() {
           <div>
             <h3 className="font-heading text-h5 mb-4">Contact</h3>
             <ul className="space-y-2">
-              <li><a href="mailto:support@zimasahealth.com" className="text-white/70 hover:text-white transition-colors">support@zimasahealth.com</a></li>
+              <li><a href="mailto:hello@zimasahealth.com" className="text-white/70 hover:text-white transition-colors">hello@zimasahealth.com</a></li>
               <li><a href="tel:+254710241892" className="text-white/70 hover:text-white transition-colors">+254710241892</a></li>
             </ul>
           </div>

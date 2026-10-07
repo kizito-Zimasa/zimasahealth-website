@@ -12,7 +12,7 @@ import {
   buildServerErrorResponse,
   createSanitizer,
 } from '@/lib/form-handlers';
-import { isValidEmail } from '@/lib/validators';
+import { isValidEmail, isValidOrganisationType } from '@/lib/validators';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -28,6 +28,7 @@ export async function POST(request: NextRequest) {
       name,
       email,
       company,
+      organisationType,
       phone,
       role,
       solutionInterest,
@@ -41,8 +42,8 @@ export async function POST(request: NextRequest) {
 
     // Validate required fields
     const fieldErrors = validateFields(
-      { name, email, company, phone, role, solutionInterest, timeline },
-      ['name', 'email', 'company', 'phone', 'role', 'solutionInterest', 'timeline']
+      { name, email, company, organisationType, phone, role, solutionInterest, timeline },
+      ['name', 'email', 'company', 'organisationType', 'phone', 'role', 'solutionInterest', 'timeline']
     );
     if (fieldErrors)
       return buildErrorResponse('Validation failed.', fieldErrors);
@@ -54,11 +55,19 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    // Validate organisation type against the allowed list
+    if (!isValidOrganisationType(organisationType)) {
+      return buildErrorResponse('Validation failed.', {
+        organisationType: 'Please select your organisation type.',
+      });
+    }
+
     // Sanitize
     const sanitize = createSanitizer();
     const sanitizedName = sanitize(name.trim().substring(0, 100));
     const sanitizedEmail = sanitize(email.trim().substring(0, 254));
     const sanitizedCompany = sanitize(company.trim().substring(0, 100));
+    const sanitizedOrganisationType = sanitize(organisationType);
     const sanitizedPhone = sanitize(phone.trim().substring(0, 20));
     const sanitizedRole = sanitize(role.trim().substring(0, 100));
     const sanitizedSolution = sanitize(solutionInterest.trim().substring(0, 50));
@@ -69,12 +78,13 @@ export async function POST(request: NextRequest) {
       from: 'noreply@zimasahealth.com',
       to: 'sales@zimasahealth.com',
       replyTo: sanitizedEmail,
-      subject: `New Demo Request from ${sanitizedName}`,
+      subject: `New Demo Request (${sanitizedOrganisationType}) from ${sanitizedName}`,
       html: `
         <h2>New Book Demo Request</h2>
         <p><strong>Name:</strong> ${sanitizedName}</p>
         <p><strong>Email:</strong> ${sanitizedEmail}</p>
         <p><strong>Company:</strong> ${sanitizedCompany}</p>
+        <p><strong>Organisation Type:</strong> ${sanitizedOrganisationType}</p>
         <p><strong>Phone:</strong> ${sanitizedPhone}</p>
         <p><strong>Role:</strong> ${sanitizedRole}</p>
         <p><strong>Solution Interest:</strong> ${sanitizedSolution}</p>

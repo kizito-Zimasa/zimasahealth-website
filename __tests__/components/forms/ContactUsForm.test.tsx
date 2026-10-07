@@ -18,8 +18,15 @@ describe('ContactUsForm', () => {
     expect(screen.getByLabelText(/Full Name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Email Address/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Company/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Inquiry Type/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Enquiry Type/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Message/i)).toBeInTheDocument();
+  });
+
+  test('warns against sharing health information and shows the privacy notice', () => {
+    render(<ContactUsForm />);
+    expect(screen.getByText(/Please don't include health or medical information./i)).toBeInTheDocument();
+    expect(screen.getByText(/We use these details only to respond to your request/i)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Privacy Centre/i })).toHaveAttribute('href', '/privacy-centre/');
   });
 
   test('submits form successfully', async () => {

@@ -5,13 +5,13 @@ import Button from '@/components/ui/Button'
 import Breadcrumbs from '@/components/seo/Breadcrumbs'
 
 export const metadata: Metadata = {
-  title: 'Insights & Zimasa Blog — Latest Articles on Health Engagement',
-  description: 'Read the latest insights on health engagement, member activation, and building wellness programs for African markets. Articles from the Zimasa team.',
+  title: 'Zimasa Insights — Articles on Health Engagement',
+  description: 'Insights on health engagement from the Zimasa team: activating members and making follow-through measurable for insurers, TPAs and providers.',
   openGraph: {
     type: 'website',
     url: 'https://www.zimasahealth.com/insights/',
-    title: 'Insights & Zimasa Blog — Latest Articles on Health Engagement',
-    description: 'Read the latest insights on health engagement, member activation, and building wellness programs for African markets.',
+    title: 'Zimasa Insights — Articles on Health Engagement',
+    description: 'Insights on health engagement from the Zimasa team: activating members and making follow-through measurable for insurers, TPAs and providers.',
   },
 }
 
@@ -29,7 +29,7 @@ export default function InsightsPage() {
             <p className="eyebrow mb-4">Insights</p>
             <h1 className="font-display text-h2 text-dark mb-6">Zimasa Insights</h1>
             <p className="text-body-lg text-body">
-              Research, guides, and insights on health engagement from the Zimasa team. Learn how to design member activation programmes, measure engagement, and build sustainable wellness at scale.
+              Guides and perspectives on health engagement from the Zimasa team: activating members and making follow-through measurable for insurers, TPAs and providers.
             </p>
           </div>
         </div>
@@ -77,7 +77,7 @@ export default function InsightsPage() {
                     <div className="flex items-center justify-between text-sm text-muted">
                       <span>{post.author}</span>
                       <time dateTime={post.date}>
-                        {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                        {new Date(post.date).toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' })}
                       </time>
                     </div>
                   </div>

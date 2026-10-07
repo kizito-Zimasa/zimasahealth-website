@@ -1,5 +1,5 @@
 interface StructuredDataProps {
-  data: Record<string, any>
+  data: Record<string, unknown>
 }
 
 export function StructuredData({ data }: StructuredDataProps) {
@@ -17,8 +17,9 @@ export const organizationSchema = {
   '@type': 'Organization',
   name: 'Zimasa',
   url: 'https://www.zimasahealth.com',
-  logo: 'https://www.zimasahealth.com/logo.png',
-  description: 'Zimasa is a Nairobi-based health engagement technology company that builds the engagement infrastructure connecting payers, employers, and members to measurable health outcomes.',
+  logo: 'https://www.zimasahealth.com/images/logo.svg',
+  slogan: 'Health that shows up.',
+  description: 'Zimasa is a Nairobi-based Health Engagement OS for insurers, TPAs and providers in East Africa — activating members, making follow-through measurable, and proving engagement with verified Active Days.',
   sameAs: [
     'https://www.linkedin.com/company/zimasa',
     'https://twitter.com/zimasahealth',
@@ -49,7 +50,8 @@ export function createArticleSchema(article: {
     '@type': 'BlogPosting',
     headline: article.title,
     description: article.description,
-    image: article.image || 'https://www.zimasahealth.com/images/og-blog.jpg',
+    // Default to the site-level generated Open Graph image (app/opengraph-image.tsx).
+    image: article.image || 'https://www.zimasahealth.com/opengraph-image',
     datePublished: article.datePublished,
     author: {
       '@type': 'Organization',
@@ -60,36 +62,13 @@ export function createArticleSchema(article: {
       name: 'Zimasa',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://www.zimasahealth.com/logo.png',
+        url: 'https://www.zimasahealth.com/images/logo.svg',
       },
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': article.url,
     },
-  }
-}
-
-export function createLocalBusinessSchema() {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    name: 'Zimasa',
-    description: 'Health Engagement Platform for African Markets',
-    image: 'https://www.zimasahealth.com/images/og-zimasa.jpg',
-    url: 'https://www.zimasahealth.com',
-    telephone: '+254-700-000-000',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: 'Nairobi',
-      addressCountry: 'KE',
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: -1.286389,
-      longitude: 36.817223,
-    },
-    priceRange: '$$$',
   }
 }
 

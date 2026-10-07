@@ -24,7 +24,6 @@ export default {
     } else if ([
       '/about',
       '/solutions',
-      '/who-we-help',
       '/book-demo',
       '/contact-us',
       '/get-started',
@@ -36,6 +35,7 @@ export default {
       '/insurers-tpas',
       '/healthcare-providers',
       '/solutions/zhep',
+      '/solutions/zhep/zcare',
       '/solutions/zps',
       '/zimasa-go',
     ].includes(path)) {
@@ -69,6 +69,12 @@ export default {
     '/_error',
     '/_document',
     '/api/*',
+    // Who We Help removed (S7) and redirected to /insurers-tpas/.
+    '/who-we-help*',
+    // Generated metadata routes (OG images, icons) are not pages.
+    '*opengraph-image*',
+    '/icon.svg*',
+    '/apple-icon*',
   ],
 
   robotsTxtOptions: {

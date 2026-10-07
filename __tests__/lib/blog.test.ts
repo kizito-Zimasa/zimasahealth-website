@@ -1,4 +1,5 @@
 import { getAllPosts, getPostsByCategory, getPost } from '@/lib/blog';
+import { getBlogCategories, getCategoryLabel, CATEGORY_ORDER } from '@/lib/insights';
 
 describe('Blog utilities', () => {
   describe('getAllPosts', () => {
@@ -28,6 +29,17 @@ describe('Blog utilities', () => {
         expect(typeof post.readingTime).toBe('number');
       });
     });
+
+    test('removed AI-drafted posts are not published', async () => {
+      const slugs = (await getAllPosts()).map(p => p.slug);
+      [
+        'launch-announcement',
+        'active-days-metric',
+        'cohort-design-renewal',
+        'workforce-wellness-activation',
+        'engagement-mechanics-101',
+      ].forEach(slug => expect(slugs).not.toContain(slug));
+    });
   });
 
   describe('getPostsByCategory', () => {
@@ -43,6 +55,28 @@ describe('Blog utilities', () => {
     test('returns null for non-existent post', async () => {
       const post = await getPost('playbook', 'non-existent-slug');
       expect(post).toBeNull();
+    });
+
+    test('returns the migrated providers post', async () => {
+      const post = await getPost('providers', 'empowering-africas-health-providers');
+      expect(post).not.toBeNull();
+      expect(post?.date).toBe('2025-12-15');
+    });
+  });
+
+  describe('categories', () => {
+    test('only lists categories that contain posts, in payer/provider-first order', async () => {
+      const categories = getBlogCategories();
+      for (const category of categories) {
+        expect((await getPostsByCategory(category)).length).toBeGreaterThan(0);
+      }
+      const known = categories.filter(c => CATEGORY_ORDER.includes(c));
+      const expected = CATEGORY_ORDER.filter(c => known.includes(c));
+      expect(known).toEqual(expected);
+    });
+
+    test('labels the providers category', () => {
+      expect(getCategoryLabel('providers')).toBe('For Providers');
     });
   });
 });

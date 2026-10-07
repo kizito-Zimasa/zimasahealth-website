@@ -53,18 +53,20 @@ const nextConfig = {
       { source: '/our-solutions/', destination: '/solutions/', permanent: true },
       { source: '/zimasa-health-engagement-platform/', destination: '/solutions/zhep/', permanent: true },
       { source: '/zhep/', destination: '/solutions/zhep/', permanent: true },
-      { source: '/payers-solution/', destination: '/insurers-tpas/', permanent: true },
+      { source: '/payers-solution/', destination: '/solutions/zps/', permanent: true },
       { source: '/gym-management/', destination: '/solutions/', permanent: true },
-      { source: '/care-disease-management/', destination: '/solutions/', permanent: true },
+      { source: '/gym-movement-management/', destination: '/solutions/', permanent: true },
+      { source: '/care-disease-management/', destination: '/solutions/zhep/zcare/', permanent: true },
       { source: '/hr-solution/', destination: '/employers/', permanent: true },
       // Defensive solution aliases
       { source: '/platform/', destination: '/solutions/', permanent: true },
       { source: '/zhep-platform/', destination: '/solutions/zhep/', permanent: true },
       { source: '/health-engagement-os/', destination: '/solutions/zhep/', permanent: true },
 
-      // ─── Who We Help & audience aliases ────────────────────────
-      { source: '/who-we-serve/', destination: '/who-we-help/', permanent: true },
-      { source: '/for-employers/', destination: '/who-we-help/', permanent: true },
+      // ─── Who We Help (page removed, S7/F4) & audience aliases ──
+      { source: '/who-we-help/', destination: '/insurers-tpas/', permanent: true },
+      { source: '/who-we-serve/', destination: '/insurers-tpas/', permanent: true },
+      { source: '/for-employers/', destination: '/employers/', permanent: true },
       { source: '/for-payers/', destination: '/insurers-tpas/', permanent: true },
       { source: '/for-insurers/', destination: '/insurers-tpas/', permanent: true },
       { source: '/for-providers/', destination: '/healthcare-providers/', permanent: true },
@@ -113,7 +115,7 @@ const nextConfig = {
       },
       {
         source: '/insights/empowering-africas-health-and-wellness-providers/',
-        destination: '/insights/playbook/',
+        destination: '/insights/providers/empowering-africas-health-providers/',
         permanent: true,
       },
 
@@ -140,16 +142,25 @@ const nextConfig = {
       },
       {
         source: '/health-engagement-playbook/empowering-africas-health-and-wellness-providers/',
-        destination: '/insights/playbook/',
+        destination: '/insights/providers/empowering-africas-health-providers/',
         permanent: true,
       },
+
+      // ─── Blog: removed AI-drafted posts (S13) and their emptied categories ──
+      { source: '/insights/zimasa-updates/launch-announcement/', destination: '/insights/', permanent: true },
+      { source: '/insights/zimasa-updates/active-days-metric/', destination: '/insights/', permanent: true },
+      { source: '/insights/payers-schemes/cohort-design-renewal/', destination: '/insights/', permanent: true },
+      { source: '/insights/employers-hr/workforce-wellness-activation/', destination: '/insights/', permanent: true },
+      { source: '/insights/playbook/engagement-mechanics-101/', destination: '/insights/', permanent: true },
+      { source: '/insights/payers-schemes/', destination: '/insights/', permanent: true },
+      { source: '/insights/employers-hr/', destination: '/insights/', permanent: true },
 
       // ─── Blog: WP category & author archives ───────────────────
       { source: '/category/health-engagement-series/', destination: '/insights/', permanent: true },
       { source: '/category/health-engagement-playbook/', destination: '/insights/playbook/', permanent: true },
-      { source: '/category/employers-n-hr/', destination: '/insights/employers-hr/', permanent: true },
-      { source: '/category/payers-n-schemes/', destination: '/insights/payers-schemes/', permanent: true },
-      { source: '/category/providers/', destination: '/insights/playbook/', permanent: true },
+      { source: '/category/employers-n-hr/', destination: '/insights/', permanent: true },
+      { source: '/category/payers-n-schemes/', destination: '/insights/', permanent: true },
+      { source: '/category/providers/', destination: '/insights/providers/', permanent: true },
       { source: '/author/kizito-makatiani/', destination: '/insights/', permanent: true },
       { source: '/author/eunice-muthoni/', destination: '/insights/', permanent: true },
     ];

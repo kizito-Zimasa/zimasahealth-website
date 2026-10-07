@@ -10,6 +10,10 @@ export interface BlogPost {
   date: string
   author: string
   heroImage?: string
+  /** Editorial review flag, e.g. "pending-founder-review-2026-10". Not rendered. */
+  reviewStatus?: string
+  /** Optional internal note for reviewers. Not rendered. */
+  reviewNote?: string
   content: string
 }
 
@@ -19,15 +23,78 @@ export interface BlogFrontmatter {
   date: string
   author: string
   heroImage?: string
+  reviewStatus?: string
+  reviewNote?: string
 }
 
 const BLOG_DIR = path.join(process.cwd(), 'content', 'blog')
 
+/**
+ * Display order for Insights categories (payers and providers first).
+ * Categories not listed here are appended alphabetically.
+ */
+export const CATEGORY_ORDER: readonly string[] = [
+  'payers-schemes',
+  'providers',
+  'playbook',
+  'zimasa-updates',
+  'employers-hr',
+]
+
+const CATEGORY_LABELS: Record<string, string> = {
+  'payers-schemes': 'For Payers & Schemes',
+  providers: 'For Providers',
+  playbook: 'Playbook',
+  'zimasa-updates': 'Zimasa Updates',
+  'employers-hr': 'For Employers & HR',
+}
+
+function sortCategories(categories: string[]): string[] {
+  return [...categories].sort((a, b) => {
+    const ia = CATEGORY_ORDER.indexOf(a)
+    const ib = CATEGORY_ORDER.indexOf(b)
+    if (ia !== -1 && ib !== -1) return ia - ib
+    if (ia !== -1) return -1
+    if (ib !== -1) return 1
+    return a.localeCompare(b)
+  })
+}
+
+function countPosts(category: string): number {
+  const categoryPath = path.join(BLOG_DIR, category)
+  if (!fs.existsSync(categoryPath)) return 0
+  return fs.readdirSync(categoryPath).filter(f => f.endsWith('.mdx')).length
+}
+
+/**
+ * Categories that currently contain at least one post, in display order.
+ * Used for navigation and generateStaticParams, so empty categories are
+ * never linked or pre-rendered. A direct visit to a known but empty category
+ * still renders the category page's "No articles in this category yet" state.
+ */
 export function getBlogCategories(): string[] {
+  if (!fs.existsSync(BLOG_DIR)) return []
   const categories = fs.readdirSync(BLOG_DIR, { withFileTypes: true })
     .filter(d => d.isDirectory())
     .map(d => d.name)
-  return categories.sort()
+    .filter(name => countPosts(name) > 0)
+  return sortCategories(categories)
+}
+
+function toPost(category: string, slug: string, fileContents: string): BlogPost {
+  const { data, content } = matter(fileContents)
+  return {
+    slug,
+    category,
+    title: data.title || '',
+    excerpt: data.excerpt || '',
+    date: data.date || '',
+    author: data.author || '',
+    heroImage: data.heroImage || undefined,
+    reviewStatus: data.reviewStatus || undefined,
+    reviewNote: data.reviewNote || undefined,
+    content,
+  }
 }
 
 export function getBlogPostsByCategory(category: string): BlogPost[] {
@@ -45,18 +112,7 @@ export function getBlogPostsByCategory(category: string): BlogPost[] {
   return files.map(file => {
     const filePath = path.join(categoryPath, file)
     const fileContents = fs.readFileSync(filePath, 'utf8')
-    const { data, content } = matter(fileContents)
-
-    return {
-      slug: file.replace('.mdx', ''),
-      category,
-      title: data.title || '',
-      excerpt: data.excerpt || '',
-      date: data.date || '',
-      author: data.author || '',
-      heroImage: data.heroImage || undefined,
-      content,
-    }
+    return toPost(category, file.replace('.mdx', ''), fileContents)
   })
 }
 
@@ -81,26 +137,9 @@ export function getBlogPost(category: string, slug: string): BlogPost | null {
   }
 
   const fileContents = fs.readFileSync(filePath, 'utf8')
-  const { data, content } = matter(fileContents)
-
-  return {
-    slug,
-    category,
-    title: data.title || '',
-    excerpt: data.excerpt || '',
-    date: data.date || '',
-    author: data.author || '',
-    heroImage: data.heroImage || undefined,
-    content,
-  }
+  return toPost(category, slug, fileContents)
 }
 
 export function getCategoryLabel(category: string): string {
-  const labels: Record<string, string> = {
-    playbook: 'Playbook',
-    'zimasa-updates': 'Zimasa Updates',
-    'payers-schemes': 'For Payers & Schemes',
-    'employers-hr': 'For Employers & HR',
-  }
-  return labels[category] || category
+  return CATEGORY_LABELS[category] || category
 }

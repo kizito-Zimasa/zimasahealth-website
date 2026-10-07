@@ -25,6 +25,7 @@ describe('/api/forms/book-demo', () => {
         name: 'Test',
         email: 'test@example.com',
         company: 'Test Co',
+        organisationType: 'Insurer or TPA',
         phone: '555-0000',
         role: 'HR',
         solutionInterest: 'ZHEP',
@@ -58,6 +59,7 @@ describe('/api/forms/book-demo', () => {
         name: 'Test',
         email: 'invalid-email', // Missing @ and domain
         company: 'Test Co',
+        organisationType: 'Insurer or TPA',
         phone: '555-0000',
         role: 'HR',
         solutionInterest: 'ZHEP',
@@ -72,6 +74,49 @@ describe('/api/forms/book-demo', () => {
     expect(data.details?.email).toBeDefined();
   });
 
+  test('returns 400 if organisation type is not an allowed value', async () => {
+    const request = new NextRequest('http://localhost:3000/api/forms/book-demo', {
+      method: 'POST',
+      body: JSON.stringify({
+        name: 'Test User',
+        email: 'test@example.com',
+        company: 'Test Co',
+        organisationType: 'Reseller',
+        phone: '555-0000',
+        role: 'Scheme Manager',
+        solutionInterest: 'ZHEP',
+        timeline: '30 days',
+        honeypot: '',
+      }),
+    });
+
+    const response = await POST(request);
+    expect(response.status).toBe(400);
+    const data = await response.json();
+    expect(data.details?.organisationType).toBeDefined();
+  });
+
+  test('returns 400 if organisation type is missing', async () => {
+    const request = new NextRequest('http://localhost:3000/api/forms/book-demo', {
+      method: 'POST',
+      body: JSON.stringify({
+        name: 'Test User',
+        email: 'test@example.com',
+        company: 'Test Co',
+        phone: '555-0000',
+        role: 'Scheme Manager',
+        solutionInterest: 'ZHEP',
+        timeline: '30 days',
+        honeypot: '',
+      }),
+    });
+
+    const response = await POST(request);
+    expect(response.status).toBe(400);
+    const data = await response.json();
+    expect(data.details?.organisationType).toBeDefined();
+  });
+
   test('returns 429 when rate limit exceeded', async () => {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { rateLimit } = require('@/lib/rate-limit');
@@ -83,6 +128,7 @@ describe('/api/forms/book-demo', () => {
         name: 'Test User',
         email: 'test@example.com',
         company: 'Test Co',
+        organisationType: 'Insurer or TPA',
         phone: '555-0000',
         role: 'HR Director',
         solutionInterest: 'ZHEP',
@@ -102,6 +148,7 @@ describe('/api/forms/book-demo', () => {
         name: 'Test User',
         email: 'test@example.com',
         company: 'Test Co',
+        organisationType: 'Insurer or TPA',
         phone: '555-0000',
         role: 'HR Director',
         solutionInterest: 'ZHEP',

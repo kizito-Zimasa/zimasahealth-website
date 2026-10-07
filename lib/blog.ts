@@ -1,102 +1,40 @@
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
+/**
+ * Legacy blog module. The site reads posts through `@/lib/insights`; this file
+ * re-exports that module (single source of truth for categories, ordering and
+ * frontmatter) and keeps the async helper names used by the test suite.
+ */
+import {
+  getAllBlogPosts,
+  getBlogPostsByCategory,
+  getBlogPost,
+  type BlogPost,
+} from './insights'
 
-export interface BlogPost {
-  slug: string
-  category: string
-  title: string
-  excerpt: string
-  date: string
-  author: string
-  content: string
+export * from './insights'
+
+export interface BlogPostWithReadingTime extends BlogPost {
+  /** Estimated reading time in minutes (200 words per minute, minimum 1). */
+  readingTime: number
 }
 
-export interface BlogFrontmatter {
-  title: string
-  excerpt: string
-  date: string
-  author: string
+export function calculateReadingTime(content: string): number {
+  const words = content.trim().split(/\s+/).filter(Boolean).length
+  return Math.max(1, Math.ceil(words / 200))
 }
 
-const BLOG_DIR = path.join(process.cwd(), 'content', 'blog')
-
-export function getBlogCategories(): string[] {
-  const categories = fs.readdirSync(BLOG_DIR, { withFileTypes: true })
-    .filter(d => d.isDirectory())
-    .map(d => d.name)
-  return categories.sort()
+function withReadingTime(post: BlogPost): BlogPostWithReadingTime {
+  return { ...post, readingTime: calculateReadingTime(post.content) }
 }
 
-export function getBlogPostsByCategory(category: string): BlogPost[] {
-  const categoryPath = path.join(BLOG_DIR, category)
-
-  if (!fs.existsSync(categoryPath)) {
-    return []
-  }
-
-  const files = fs.readdirSync(categoryPath)
-    .filter(f => f.endsWith('.mdx'))
-    .sort()
-    .reverse()
-
-  return files.map(file => {
-    const filePath = path.join(categoryPath, file)
-    const fileContents = fs.readFileSync(filePath, 'utf8')
-    const { data, content } = matter(fileContents)
-
-    return {
-      slug: file.replace('.mdx', ''),
-      category,
-      title: data.title || '',
-      excerpt: data.excerpt || '',
-      date: data.date || '',
-      author: data.author || '',
-      content,
-    }
-  })
+export async function getAllPosts(): Promise<BlogPostWithReadingTime[]> {
+  return getAllBlogPosts().map(withReadingTime)
 }
 
-export function getAllBlogPosts(): BlogPost[] {
-  const categories = getBlogCategories()
-  const allPosts: BlogPost[] = []
-
-  categories.forEach(category => {
-    const posts = getBlogPostsByCategory(category)
-    allPosts.push(...posts)
-  })
-
-  return allPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+export async function getPostsByCategory(category: string): Promise<BlogPostWithReadingTime[]> {
+  return getBlogPostsByCategory(category).map(withReadingTime)
 }
 
-export function getBlogPost(category: string, slug: string): BlogPost | null {
-  const categoryPath = path.join(BLOG_DIR, category)
-  const filePath = path.join(categoryPath, `${slug}.mdx`)
-
-  if (!fs.existsSync(filePath)) {
-    return null
-  }
-
-  const fileContents = fs.readFileSync(filePath, 'utf8')
-  const { data, content } = matter(fileContents)
-
-  return {
-    slug,
-    category,
-    title: data.title || '',
-    excerpt: data.excerpt || '',
-    date: data.date || '',
-    author: data.author || '',
-    content,
-  }
-}
-
-export function getCategoryLabel(category: string): string {
-  const labels: Record<string, string> = {
-    playbook: 'Playbook',
-    'zimasa-updates': 'Zimasa Updates',
-    'payers-schemes': 'For Payers & Schemes',
-    'employers-hr': 'For Employers & HR',
-  }
-  return labels[category] || category
+export async function getPost(category: string, slug: string): Promise<BlogPostWithReadingTime | null> {
+  const post = getBlogPost(category, slug)
+  return post ? withReadingTime(post) : null
 }

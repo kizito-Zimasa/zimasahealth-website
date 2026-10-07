@@ -1,21 +1,42 @@
 import type { Metadata } from 'next'
-import { BadgeCheck, BarChart2, CheckCircle } from 'lucide-react'
+import { Network, Route, Stethoscope, Microscope, Apple, Brain, Activity, Dumbbell, BadgeCheck, Lock } from 'lucide-react'
 import Hero from '@/components/sections/Hero'
 import SectionHeader from '@/components/sections/SectionHeader'
+import FeatureCard from '@/components/sections/FeatureCard'
 import CtaBand from '@/components/sections/CtaBand'
-import Button from '@/components/ui/Button'
 import Breadcrumbs from '@/components/seo/Breadcrumbs'
 
 export const metadata: Metadata = {
-  title: 'Healthcare Providers — Join the Zimasa Network | Zimasa',
-  description: 'Join the Zimasa vetted provider network. Receive verified member referrals from payer and employer programmes. Gyms, dietitians, therapists, physios, and labs welcome.',
+  title: 'Healthcare Providers — Provider Network & ZCare Care Continuity',
+  description: 'Join Zimasa\'s curated provider network and use ZCare to keep members on agreed care pathways between visits — with follow-through you can see.',
   openGraph: {
     type: 'website',
     url: 'https://www.zimasahealth.com/healthcare-providers/',
-    title: 'Healthcare Providers — Join the Zimasa Network | Zimasa',
-    description: 'Join the Zimasa vetted provider network. Receive verified member referrals from payer and employer programmes. Gyms, dietitians, therapists, physios, and labs welcome.',
+    title: 'Healthcare Providers — Provider Network & ZCare Care Continuity | Zimasa',
+    description: 'Join Zimasa\'s curated provider network and use ZCare to keep members on agreed care pathways between visits — with follow-through you can see.',
   },
 }
+
+// "Apply to Join the Network" preselects the "Provider Network" enquiry type on the contact form.
+// A dedicated provider application form can replace this later.
+const APPLY_HREF = '/contact-us/?enquiry=provider'
+const ZCARE_HREF = '/solutions/zhep/zcare/'
+
+const providerCategories = [
+  { icon: Stethoscope, title: 'Clinics and Doctors', desc: 'Primary care clinics and doctors delivering consultations and follow-through sessions for members of Zimasa programmes.' },
+  { icon: Microscope, title: 'Diagnostics and Screening', desc: 'Laboratories and screening providers delivering wellness checks and preventive screening packages.' },
+  { icon: Apple, title: 'Dietitians and Nutrition', desc: 'Registered dietitians and nutritionists supporting the NOURISH Track and agreed care pathways.' },
+  { icon: Brain, title: 'Mental Health', desc: 'Licensed therapists and counsellors delivering sessions within the CARE Track.' },
+  { icon: Activity, title: 'Physiotherapy', desc: 'Registered physiotherapists supporting movement, recovery and follow-through sessions.' },
+  { icon: Dumbbell, title: 'Gyms and Movement', desc: 'Gyms, fitness centres and movement providers delivering the MOVE Track.' },
+]
+
+const steps = [
+  { n: '1', colour: 'text-green', title: 'Apply', desc: 'Tell us about your practice or facility, your credentials and the services you offer.' },
+  { n: '2', colour: 'text-orange', title: 'Agreement', desc: 'We verify licences and credentials, and agree the services you will deliver and the standards we work to.' },
+  { n: '3', colour: 'text-blue', title: 'Onboarding', desc: 'We set up your services on the platform, including bookings and check-in verification.' },
+  { n: '4', colour: 'text-navy', title: 'Bookings', desc: 'Members of Zimasa programmes book your services through the platform, and completed sessions are verified.' },
+]
 
 export default function HealthcareProvidersPage() {
   return (
@@ -23,173 +44,144 @@ export default function HealthcareProvidersPage() {
       <div className="section-container py-3">
         <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Healthcare Providers', href: '/healthcare-providers/', current: true }]} className="mb-0" />
       </div>
+
+      {/* DRAFT-COPY 2026-10: Founder review */}
       <Hero
         eyebrow="For Healthcare Providers"
-        headline="Receive Members Who Are Ready to Engage"
-        subheadline="Zimasa sends verified, pre-engaged members from employer and payer health programmes to network providers. No cold acquisition. No referral fees. Members arrive through structured MOVE, NOURISH, CARE, and LEARN tracks."
-        primaryCta={{ label: 'Join the Network', href: '/contact-us/' }}
-        secondaryCta={{ label: 'Learn How It Works', href: '#how-it-works' }}
+        headline="Be the provider members keep coming back to."
+        subheadline="Join Zimasa's curated provider network and use ZCare to keep members on agreed care pathways between visits — with follow-through you can see."
+        primaryCta={{ label: 'Apply to Join the Network', href: APPLY_HREF }}
+        secondaryCta={{ label: 'Explore ZCare', href: ZCARE_HREF }}
         backgroundVariant="green"
       />
 
-      <section id="how-it-works" className="section-padding bg-white">
+      {/* DRAFT-COPY 2026-10: Founder review */}
+      <section id="two-ways" className="section-padding bg-white">
         <div className="section-container">
           <SectionHeader
-            eyebrow="Why Join"
-            headline="Qualified Referrals. Verified Engagement. Predictable Volume."
+            eyebrow="Two Ways to Work with Zimasa"
+            headline="Join the Network. Keep Care Continuous."
             align="center"
           />
-          <p className="text-body-lg text-body text-center mb-12">
-            Most healthcare providers spend money acquiring patients through word-of-mouth or social media. Zimasa offers a different model: structured referrals from employer and payer wellness programmes, with pre-engaged members who have already committed to a health track.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="card">
-              <BadgeCheck size={40} className="text-green mb-4" />
-              <h4 className="font-heading text-h4 text-dark mb-3">Verified Referrals</h4>
-              <p className="text-body text-body">Members in the Zimasa network arrive through structured health tracks — not cold acquisition. They have already onboarded, selected their health interests, and activated their engagement programme.</p>
-            </div>
-
-            <div className="card">
-              <BarChart2 size={40} className="text-orange mb-4" />
-              <h4 className="font-heading text-h4 text-dark mb-3">Predictable Volume</h4>
-              <p className="text-body text-body">Payer and employer programmes generate consistent monthly member flow. Providers in high-demand tracks see predictable booking volumes.</p>
-            </div>
-
-            <div className="card">
-              <CheckCircle size={40} className="text-blue mb-4" />
-              <h4 className="font-heading text-h4 text-dark mb-3">No Referral Fees</h4>
-              <p className="text-body text-body">Zimasa does not charge per-referral fees to providers. Network membership is based on vetting and quality standards. Member payment flows are handled through the platform.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="section-padding bg-surface">
-        <div className="section-container">
-          <SectionHeader
-            eyebrow="Who Qualifies"
-            headline="Four Tracks. Multiple Provider Categories."
-            align="center"
-          />
-          <p className="text-body-lg text-body text-center mb-12">
-            The Zimasa provider network is structured around the four ZHEP health tracks. We accept verified providers in each category:
-          </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="card bg-white">
-              <h4 className="font-heading text-h4 text-green mb-4">MOVE Track Providers</h4>
-              <ul className="text-body text-body space-y-2">
-                <li>✓ Accredited gyms and fitness centres</li>
-                <li>✓ Group fitness instructors (in-person and live-stream)</li>
-                <li>✓ Personal training studios</li>
-                <li>✓ Run clubs and sports organisations</li>
-              </ul>
-            </div>
-
-            <div className="card bg-white">
-              <h4 className="font-heading text-h4 text-light-green mb-4">NOURISH Track Providers</h4>
-              <ul className="text-body text-body space-y-2">
-                <li>✓ Registered dietitians</li>
-                <li>✓ Certified nutritionists</li>
-                <li>✓ Meal planning services</li>
-                <li>✓ Food education practitioners</li>
-              </ul>
-            </div>
-
-            <div className="card bg-white">
-              <h4 className="font-heading text-h4 text-blue mb-4">CARE Track Providers</h4>
-              <ul className="text-body text-body space-y-2">
-                <li>✓ Licensed mental health therapists and counsellors</li>
-                <li>✓ Registered physiotherapists</li>
-                <li>✓ Accredited diagnostic labs (preventive screening packages)</li>
-                <li>✓ Specialist referral partners</li>
-              </ul>
-            </div>
-
-            <div className="card bg-white">
-              <h4 className="font-heading text-h4 text-navy mb-4">LEARN Track Providers</h4>
-              <ul className="text-body text-body space-y-2">
-                <li>✓ Accredited health education content creators</li>
-                <li>✓ Wellness practitioners running evidence-based programmes</li>
-              </ul>
-            </div>
+            <FeatureCard
+              icon={Network}
+              eyebrow="1 — Provider Network"
+              headline="Deliver services to members of Zimasa programmes"
+              body="Deliver screenings, consultations, follow-through sessions and wellness services to members of Zimasa programmes. Bookings and verification run through the platform."
+              cta={{ label: 'Apply to Join the Network', href: APPLY_HREF }}
+            />
+            <FeatureCard
+              icon={Route}
+              eyebrow="2 — Care Continuity with ZCare"
+              headline="Keep members on agreed care pathways"
+              body="ZCare operationalises agreed care pathways and makes follow-through measurable — between visits, after screening, across the care team. It supports your clinical judgement and the payer's medical team; it does not replace them, and it does not diagnose, treat or prescribe."
+              cta={{ label: 'Learn About ZCare', href: ZCARE_HREF }}
+            />
           </div>
         </div>
       </section>
 
-      <section className="section-padding bg-white">
-        <div className="section-container">
-          <SectionHeader
-            eyebrow="Quality Standards"
-            headline="Every Provider Is Vetted Before Going Live"
-            align="center"
-          />
-
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6 max-w-5xl mx-auto">
-            <div className="card text-center">
-              <p className="font-display text-h3 text-green mb-2">1</p>
-              <h5 className="font-heading text-dark mb-2">Application</h5>
-              <p className="text-body text-body text-sm">Submit your provider profile, credentials, and service offering.</p>
-            </div>
-
-            <div className="card text-center">
-              <p className="font-display text-h3 text-orange mb-2">2</p>
-              <h5 className="font-heading text-dark mb-2">Verification</h5>
-              <p className="text-body text-body text-sm">Zimasa verifies licences and certifications. 5–7 business days.</p>
-            </div>
-
-            <div className="card text-center">
-              <p className="font-display text-h3 text-blue mb-2">3</p>
-              <h5 className="font-heading text-dark mb-2">Onboarding</h5>
-              <p className="text-body text-body text-sm">QR check-in setup, booking integration, and dashboard access.</p>
-            </div>
-
-            <div className="card text-center">
-              <p className="font-display text-h3 text-navy mb-2">4</p>
-              <h5 className="font-heading text-dark mb-2">Go Live</h5>
-              <p className="text-body text-body text-sm">Your facility becomes discoverable to members in relevant tracks.</p>
-            </div>
-
-            <div className="card text-center">
-              <p className="font-display text-h3 text-green mb-2">5</p>
-              <h5 className="font-heading text-dark mb-2">Monitoring</h5>
-              <p className="text-body text-body text-sm">Zimasa monitors member satisfaction and engagement quality.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      {/* DRAFT-COPY 2026-10: Founder review */}
       <section className="section-padding bg-surface">
         <div className="section-container">
           <SectionHeader
-            eyebrow="The Network Offer"
-            headline="More Than Referrals"
+            eyebrow="ZCare — Care Continuity on ZHEP"
+            headline="Follow-Through You Can See"
+            subheadline="ZCare is part of ZHEP, the Zimasa Health Engagement Platform. It lets your team:"
             align="center"
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { title: 'Member Volume', desc: 'Structured member flow from payer and employer programmes — not one-off bookings.' },
-              { title: 'Booking Management', desc: 'Simple booking flow integrated with ZHEP. No extra software required.' },
-              { title: 'Verified Check-In', desc: 'QR or PIN-based check-in system. Each check-in is automatically recorded as an engagement event.' },
-              { title: 'Provider Dashboard', desc: 'Monthly summary of member visits, track activity, and satisfaction ratings.' },
-              { title: 'Network Visibility', desc: 'Listed on the Zimasa provider directory — visible to all member-facing programmes using ZHEP.' },
-              { title: 'Programme Integration', desc: 'Featured in specific 90-day programme designs for payer and employer clients.' },
-            ].map((benefit, i) => (
-              <div key={i} className="card">
-                <h5 className="font-heading text-dark mb-2">{benefit.title}</h5>
-                <p className="text-body text-body text-sm">{benefit.desc}</p>
+              { title: 'Agreed Care Pathways', desc: 'Put the care plan agreed in the clinic into practice, step by step, between visits.' },
+              { title: 'Reminders and Bookings', desc: 'Prompt members towards their next agreed step and let them book it through the platform.' },
+              { title: 'Follow-Through Sessions', desc: 'Deliver follow-through sessions after screening or a consultation, verified on completion.' },
+              { title: 'Care-Team Visibility', desc: 'See members’ progress on their programme, with member consent.' },
+              { title: 'Measurable Follow-Through', desc: 'Know which agreed next steps were taken — not just which appointments were booked.' },
+            ].map((item) => (
+              <div key={item.title} className="card bg-white">
+                <h5 className="font-heading text-dark mb-2">{item.title}</h5>
+                <p className="text-body text-body text-sm">{item.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* DRAFT-COPY 2026-10: Founder review */}
+      <section className="section-padding bg-white">
+        <div className="section-container">
+          <SectionHeader
+            eyebrow="Who We Work With"
+            headline="Providers Across the Care Journey"
+            align="center"
+          />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {providerCategories.map(({ icon: Icon, title, desc }) => (
+              <div key={title} className="card">
+                <Icon size={40} className="text-green mb-4" />
+                <h4 className="font-heading text-h4 text-dark mb-3">{title}</h4>
+                <p className="text-body text-body">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* DRAFT-COPY 2026-10: Founder review */}
+      <section id="how-it-works" className="section-padding bg-surface">
+        <div className="section-container">
+          <SectionHeader
+            eyebrow="How It Works"
+            headline="From Application to First Booking"
+            align="center"
+          />
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            {steps.map((step) => (
+              <div key={step.n} className="card text-center bg-white">
+                <p className={`font-display text-h3 ${step.colour} mb-2`}>{step.n}</p>
+                <h5 className="font-heading text-dark mb-2">{step.title}</h5>
+                <p className="text-body text-body text-sm">{step.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* DRAFT-COPY 2026-10: Founder review */}
+      <section className="section-padding bg-white">
+        <div className="section-container">
+          <SectionHeader
+            eyebrow="Curated, Not an Open Marketplace"
+            headline="Every Provider Is Vetted Before Going Live"
+            align="center"
+          />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="card">
+              <BadgeCheck size={40} className="text-green mb-4" />
+              <h4 className="font-heading text-h4 text-dark mb-3">A Curated Network</h4>
+              <p className="text-body text-body">Zimasa&apos;s provider network is curated, not an open marketplace. We verify every provider before they go live, and quality review continues after onboarding — so insurers and members can trust where a booking leads.</p>
+            </div>
+
+            <div className="card">
+              <Lock size={40} className="text-blue mb-4" />
+              <h4 className="font-heading text-h4 text-dark mb-3">Privacy-Governed by Design</h4>
+              <p className="text-body text-body">In employer, payer and freemium contexts, Zimasa stores verification of engagement events, not clinical data. Provider contexts may handle regulated health data only under governance conditions. Aligned with the Kenya Data Protection Act, 2019. Zimasa is registered with the Office of the Data Protection Commissioner (ODPC) as a Data Controller and Data Processor.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <CtaBand
         headline="Ready to Join the Network?"
-        subtext="Tell us about your practice or facility. Our provider team will review your application and be in touch within 5–7 business days."
-        primaryCta={{ label: 'Apply to Join', href: '/contact-us/' }}
+        subtext="Tell us about your practice or facility. Our provider team will review your application and be in touch."
+        primaryCta={{ label: 'Apply to Join the Network', href: APPLY_HREF }}
+        secondaryCta={{ label: 'Explore ZCare', href: ZCARE_HREF }}
       />
     </main>
   )

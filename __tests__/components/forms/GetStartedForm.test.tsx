@@ -28,7 +28,7 @@ describe('GetStartedForm', () => {
   test('switches to employer path when clicked', () => {
     render(<GetStartedForm />);
     fireEvent.click(screen.getByText(/I'm an Employer/i));
-    expect(screen.getByLabelText(/Organization Name/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Organisation Name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Workforce Size/i)).toBeInTheDocument();
   });
 
@@ -70,7 +70,7 @@ describe('GetStartedForm', () => {
 
     render(<GetStartedForm />);
     fireEvent.click(screen.getByText(/I'm an Employer/i));
-    fireEvent.change(screen.getByLabelText(/Organization Name/i), { target: { value: 'Acme Inc' } });
+    fireEvent.change(screen.getByLabelText(/Organisation Name/i), { target: { value: 'Acme Inc' } });
     fireEvent.change(screen.getByLabelText(/Work Email Address/i), { target: { value: 'john@example.com' } });
     fireEvent.change(screen.getByLabelText(/Workforce Size/i), { target: { value: '100-500' } });
     fireEvent.click(screen.getByText(/Get Started Free/i));

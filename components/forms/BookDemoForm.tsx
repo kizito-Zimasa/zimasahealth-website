@@ -1,13 +1,16 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import Button from '@/components/ui/Button';
+import { ORGANISATION_TYPES } from '@/lib/validators';
 import { trackDemoFormSubmit } from '@/lib/analytics';
 
 interface FormErrors {
   name?: string;
   email?: string;
   company?: string;
+  organisationType?: string;
   phone?: string;
   role?: string;
   solutionInterest?: string;
@@ -19,6 +22,7 @@ export default function BookDemoForm() {
     name: '',
     email: '',
     company: '',
+    organisationType: '',
     phone: '',
     role: '',
     solutionInterest: 'ZHEP',
@@ -76,6 +80,7 @@ export default function BookDemoForm() {
         name: '',
         email: '',
         company: '',
+        organisationType: '',
         phone: '',
         role: '',
         solutionInterest: 'ZHEP',
@@ -159,6 +164,29 @@ export default function BookDemoForm() {
         {errors.company && <p id="company-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.company}</p>}
       </div>
 
+      {/* Organisation Type (lead routing) */}
+      <div>
+        <label htmlFor="organisationType" className="form-label">
+          Organisation Type *
+        </label>
+        <select
+          id="organisationType"
+          name="organisationType"
+          value={formData.organisationType}
+          onChange={handleChange}
+          className="form-input"
+          aria-describedby={errors.organisationType ? "organisationType-error" : undefined}
+          disabled={isLoading}
+          required
+        >
+          <option value="" disabled>Select your organisation type</option>
+          {ORGANISATION_TYPES.map((type) => (
+            <option key={type} value={type}>{type}</option>
+          ))}
+        </select>
+        {errors.organisationType && <p id="organisationType-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.organisationType}</p>}
+      </div>
+
       {/* Phone */}
       <div>
         <label htmlFor="phone" className="form-label">
@@ -192,7 +220,7 @@ export default function BookDemoForm() {
           className="form-input"
           aria-describedby={errors.role ? "role-error" : undefined}
           disabled={isLoading}
-          placeholder="e.g., HR Director, Benefits Manager"
+          placeholder="e.g., Head of Wellness, Scheme Manager, Clinic Director"
           required
         />
         {errors.role && <p id="role-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.role}</p>}
@@ -213,9 +241,9 @@ export default function BookDemoForm() {
           disabled={isLoading}
           required
         >
-          <option value="ZHEP">ZHEP - Engagement Platform</option>
-          <option value="ZPS">ZPS - Payer Solution</option>
-          <option value="Both">Both Solutions</option>
+          <option value="ZHEP">ZHEP — Health Engagement Platform (incl. ZCare care continuity)</option>
+          <option value="ZPS">ZPS — Zimasa Payer Solution (payer administration)</option>
+          <option value="Both">Both ZHEP and ZPS</option>
         </select>
         {errors.solutionInterest && <p id="solutionInterest-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.solutionInterest}</p>}
       </div>
@@ -250,6 +278,12 @@ export default function BookDemoForm() {
         value={formData.honeypot}
         onChange={handleChange}
       />
+
+      {/* Privacy notice (C-26) */}
+      <p className="text-body-sm text-muted">
+        We use these details only to respond to your request. See our{' '}
+        <Link href="/privacy-centre/" className="text-green hover:underline">Privacy Centre</Link>.
+      </p>
 
       {/* Submit Button */}
       <Button

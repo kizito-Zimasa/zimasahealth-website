@@ -1,14 +1,37 @@
 import type { Metadata } from 'next'
 import Breadcrumbs from '@/components/seo/Breadcrumbs'
 
+/*
+ * FOUNDER-REVIEW (Privacy Centre, content refresh 2026-10):
+ * The following statements were removed from visible copy pending verification
+ * by the Technology Lead. Restore any of them only once evidenced.
+ *   - "Encryption in transit (TLS 1.3) and at rest (AES-256)"
+ *   - "Regular security audits and penetration testing"
+ *   - "Multi-factor authentication for all team access"
+ *   - "Secure data deletion upon request or programme end" (as a stated security control)
+ *   - "Data Protection Officer" title and "Response time: 24 business hours"
+ *     (DPO appointment and response SLA unconfirmed; contact now shown as "Privacy Team")
+ *   - "All requests are processed within 30 days" (request SLA)
+ *   - "via their member portal" (member portal not confirmed)
+ *   - Portability reworded from "Download their data" to "Request their data" (self-service download not confirmed)
+ * Also removed as unsupported (not for restoration): NHIF compliance claim; HIPAA best-practice
+ * claim; "PHI-avoidant" / "we don't store PHI" statements; "White-Label Data" bullet.
+ * C-04: "therapy sessions" removed from the engagement-event examples. Confirm Doctrine tier
+ * treatment before naming any mental-health service type.
+ * Whole page is under legal review against Health Data Doctrine v1.2 (S10, F11).
+ */
+
+const pageDescription =
+  'Privacy-governed by design. In employer, payer and freemium contexts, Zimasa stores verification of engagement events, not clinical data. Aligned with the Kenya Data Protection Act, 2019.'
+
 export const metadata: Metadata = {
-  title: 'Privacy Centre — Your Data, Your Control | Zimasa',
-  description: 'Zimasa\'s privacy-first approach. We don\'t store protected health information. Full transparency on data handling, member control, and compliance standards.',
+  title: 'Privacy Centre — Your Data, Your Control',
+  description: pageDescription,
   openGraph: {
     type: 'website',
     url: 'https://www.zimasahealth.com/privacy-centre/',
     title: 'Privacy Centre — Your Data, Your Control | Zimasa',
-    description: 'Zimasa\'s privacy-first approach. We don\'t store protected health information. Full transparency on data handling, member control, and compliance standards.',
+    description: pageDescription,
   },
 }
 
@@ -22,7 +45,10 @@ export default function PrivacyCentrePage() {
             <p className="eyebrow mb-4">Privacy & Data</p>
             <h1 className="font-display text-h2 text-dark mb-6">Privacy Centre</h1>
             <p className="text-body-lg text-body">
-              Zimasa is built on a simple principle: members control their data. We don't store protected health information, and every member can request access to, correction of, or deletion of their data at any time.
+              Zimasa is built on a simple principle: members control their data. Privacy-governed by design: in employer, payer and freemium contexts, Zimasa stores verification of engagement events, not clinical data. Every member can request access to, correction of, or deletion of their data at any time.
+            </p>
+            <p className="text-body text-muted mt-4 text-sm">
+              This page is being reviewed by our legal advisers.
             </p>
           </div>
         </div>
@@ -34,9 +60,12 @@ export default function PrivacyCentrePage() {
 
           <div className="space-y-8 mb-12">
             <div>
-              <h3 className="font-heading text-h3 text-dark mb-4">PHI-Avoidant Architecture</h3>
+              <h3 className="font-heading text-h3 text-dark mb-4">Privacy-Governed Architecture</h3>
               <p className="text-body-lg text-body mb-4">
-                Zimasa is designed to measure engagement and activation without collecting, storing, or processing protected health information (PHI). We do not access:
+                Privacy-governed by design. In employer, payer and freemium contexts, Zimasa stores verification of engagement events, not clinical data. Provider contexts may handle regulated health data only under governance conditions.
+              </p>
+              <p className="text-body-lg text-body mb-4">
+                In employer, payer and freemium contexts, Zimasa does not store:
               </p>
               <ul className="text-body text-body space-y-2 ml-6 mb-6">
                 <li>• Medical diagnoses or treatment history</li>
@@ -46,7 +75,7 @@ export default function PrivacyCentrePage() {
                 <li>• Lab results or clinical test outcomes</li>
               </ul>
               <p className="text-body-lg text-body">
-                What we do track: verified engagement events (gym visits, dietitian appointments, therapy sessions, educational content completion) and member-selected health goals.
+                What we do record: verification that an engagement event took place (for example, a class attended, a booked session completed, or educational content completed) and member-selected health goals.
               </p>
             </div>
 
@@ -55,17 +84,17 @@ export default function PrivacyCentrePage() {
             <div>
               <h3 className="font-heading text-h3 text-dark mb-4">Member Data Rights</h3>
               <p className="text-body-lg text-body mb-4">
-                Under the Kenya Data Protection Act 2019, members have the right to:
+                Under the Kenya Data Protection Act, 2019, members have the right to:
               </p>
               <ul className="text-body text-body space-y-2 ml-6 mb-6">
                 <li>• <strong>Access</strong> — Request a copy of all personal data Zimasa holds about them</li>
                 <li>• <strong>Correction</strong> — Update inaccurate or incomplete information</li>
                 <li>• <strong>Deletion</strong> — Request deletion of personal data (subject to legal retention requirements)</li>
-                <li>• <strong>Portability</strong> — Download their data in portable format</li>
+                <li>• <strong>Portability</strong> — Request their data in a portable format</li>
                 <li>• <strong>Objection</strong> — Opt out of specific data processing activities</li>
               </ul>
               <p className="text-body-lg text-body">
-                All requests are processed within 30 days. Members can submit requests via their member portal or by emailing <a href="mailto:privacy@zimasahealth.com" className="text-green hover:underline">privacy@zimasahealth.com</a>.
+                Members can submit requests by emailing <a href="mailto:privacy@zimasahealth.com" className="text-green hover:underline">privacy@zimasahealth.com</a>.
               </p>
             </div>
 
@@ -78,8 +107,8 @@ export default function PrivacyCentrePage() {
               </p>
               <ul className="text-body text-body space-y-2 ml-6 mb-6">
                 <li>• <strong>Identity</strong> — Name, phone, email, date of birth, gender (for demographic tracking)</li>
-                <li>• <strong>Enrollment</strong> — Programme affiliation, employer or scheme membership</li>
-                <li>• <strong>Health Goals</strong> — Member-selected wellness interests (e.g., "improve fitness", "manage nutrition")</li>
+                <li>• <strong>Enrolment</strong> — Programme affiliation, employer or scheme membership</li>
+                <li>• <strong>Health Goals</strong> — Member-selected wellness interests (e.g., &ldquo;improve fitness&rdquo;, &ldquo;manage nutrition&rdquo;)</li>
                 <li>• <strong>Engagement Events</strong> — Verified visits to providers, classes attended, content completed</li>
                 <li>• <strong>Preferences</strong> — Notification settings, communication preferences, reward preferences</li>
               </ul>
@@ -90,14 +119,13 @@ export default function PrivacyCentrePage() {
             <div>
               <h3 className="font-heading text-h3 text-dark mb-4">Data Security</h3>
               <p className="text-body-lg text-body mb-4">
-                Zimasa implements industry-standard security controls:
+                Zimasa protects member data with these controls:
               </p>
               <ul className="text-body text-body space-y-2 ml-6 mb-6">
-                <li>• Encryption in transit (TLS 1.3) and at rest (AES-256)</li>
-                <li>• Role-based access control (RBAC) limiting who can view member data</li>
-                <li>• Regular security audits and penetration testing</li>
-                <li>• Secure data deletion upon request or programme end</li>
-                <li>• Multi-factor authentication for all team access</li>
+                <li>• Role-based access controls limiting who can view member data</li>
+                <li>• Audit trails recording access to member data</li>
+                <li>• Consent management, so members decide what is shared</li>
+                <li>• Data minimisation: we collect only what a programme needs</li>
               </ul>
             </div>
 
@@ -106,13 +134,8 @@ export default function PrivacyCentrePage() {
             <div>
               <h3 className="font-heading text-h3 text-dark mb-4">Compliance</h3>
               <p className="text-body-lg text-body mb-4">
-                Zimasa complies with all applicable data protection regulations:
+                Aligned with the Kenya Data Protection Act, 2019. Zimasa is registered with the Office of the Data Protection Commissioner (ODPC) as a Data Controller and Data Processor.
               </p>
-              <ul className="text-body text-body space-y-2 ml-6 mb-6">
-                <li>• <strong>Kenya Data Protection Act 2019</strong> — Full compliance with KDPA requirements</li>
-                <li>• <strong>NHIF Regulations</strong> — Compliance with NHIF data handling standards for health schemes</li>
-                <li>• <strong>HIPAA-Adjacent Practices</strong> — While HIPAA does not apply in Kenya, we follow HIPAA best practices for health data security</li>
-              </ul>
             </div>
 
             <hr className="my-8" />
@@ -123,8 +146,7 @@ export default function PrivacyCentrePage() {
                 For payers and employers, Zimasa provides:
               </p>
               <ul className="text-body text-body space-y-2 ml-6 mb-6">
-                <li>• <strong>Aggregated Reporting</strong> — Cohort-level activation, not individual member health data</li>
-                <li>• <strong>White-Label Data</strong> — Payers/employers control their own member-facing brand and communication</li>
+                <li>• <strong>Aggregate Reporting</strong> — Aggregate reporting only, with a minimum cohort of 25. Individual results never go to employers.</li>
                 <li>• <strong>No Third-Party Sale</strong> — Zimasa does not sell or share payer/employer data with third parties</li>
               </ul>
             </div>
@@ -137,9 +159,8 @@ export default function PrivacyCentrePage() {
                 Questions about privacy, data handling, or data rights? Reach out:
               </p>
               <p className="text-body text-body">
-                <strong>Data Protection Officer</strong><br />
-                Email: <a href="mailto:privacy@zimasahealth.com" className="text-green hover:underline">privacy@zimasahealth.com</a><br />
-                Response time: 24 business hours
+                <strong>Privacy Team</strong><br />
+                Email: <a href="mailto:privacy@zimasahealth.com" className="text-green hover:underline">privacy@zimasahealth.com</a>
               </p>
             </div>
           </div>

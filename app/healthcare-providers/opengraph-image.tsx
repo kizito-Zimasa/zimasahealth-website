@@ -1,6 +1,7 @@
 import { renderOgImage } from '@/lib/og'
+export const alt = 'Zimasa — Healthcare Providers'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 export default function OG() {
-  return renderOgImage({ title: 'Healthcare Providers', eyebrow: 'Join the Network', theme: 'green' })
+  return renderOgImage({ title: 'Healthcare Providers', eyebrow: 'Provider Network & ZCare', theme: 'green' })
 }

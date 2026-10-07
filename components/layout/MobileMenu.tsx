@@ -3,12 +3,13 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
 
-const navLinks = [
+const navLinks: { label: string; href: string; secondary?: boolean }[] = [
   { label: 'Insurers & TPAs', href: '/insurers-tpas/' },
+  { label: 'Providers', href: '/healthcare-providers/' },
   { label: 'Employers', href: '/employers/' },
   { label: 'Members', href: '/zimasa-go/' },
-  { label: 'Providers', href: '/healthcare-providers/' },
   { label: 'ZHEP', href: '/solutions/zhep/' },
+  { label: 'ZCare — care continuity on ZHEP', href: '/solutions/zhep/zcare/', secondary: true },
   { label: 'ZPS', href: '/solutions/zps/' },
   { label: 'Insights', href: '/insights/' },
   { label: 'About', href: '/about/' },
@@ -43,18 +44,18 @@ export default function MobileMenu() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="font-heading text-[20px] font-semibold text-dark text-center"
+                className={link.secondary ? 'font-heading text-[16px] font-medium text-body text-center -mt-3' : 'font-heading text-[20px] font-semibold text-dark text-center'}
               >
                 {link.label}
               </Link>
             ))}
           </nav>
           <div className="mt-auto flex flex-col gap-3">
-            <Link href="/get-started/" onClick={() => setOpen(false)} className="btn-primary text-center">
-              Get Started Free
+            <Link href="/book-demo/" onClick={() => setOpen(false)} className="btn-primary text-center">
+              Book a Demo
             </Link>
-            <Link href="/book-demo/" onClick={() => setOpen(false)} className="btn-outline text-center">
-              Book Demo
+            <Link href="/get-started/" onClick={() => setOpen(false)} className="btn-outline text-center">
+              Get Started Free
             </Link>
           </div>
         </div>

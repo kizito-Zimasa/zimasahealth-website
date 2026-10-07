@@ -76,7 +76,7 @@ export function renderOgImage({ title, theme = 'green', eyebrow }: RenderOgImage
             src={`data:image/svg+xml;utf8,${encodeURIComponent(WHITE_LOGO_SVG)}`}
             width={40}
             height={42}
-            alt=""
+            alt="Zimasa logo"
           />
           <span
             style={{

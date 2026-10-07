@@ -7,9 +7,9 @@ import MobileMenu from './MobileMenu'
 
 const primaryLinks = [
   { label: 'Insurers & TPAs', href: '/insurers-tpas/' },
+  { label: 'Providers', href: '/healthcare-providers/' },
   { label: 'Employers', href: '/employers/' },
   { label: 'Members', href: '/zimasa-go/' },
-  { label: 'Providers', href: '/healthcare-providers/' },
 ]
 
 const secondaryLinks = [
@@ -50,10 +50,10 @@ export default function Header() {
 
         <div className="hidden lg:flex items-center gap-3">
           <Link href="/get-started/" className="btn-secondary">
-            Get Started
+            Get Started Free
           </Link>
           <Link href="/book-demo/" className="btn-primary">
-            Book Demo
+            Book a Demo
           </Link>
         </div>
 

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import Button from '@/components/ui/Button';
 import { trackContactFormSubmit } from '@/lib/analytics';
 
@@ -12,13 +13,26 @@ interface FormErrors {
   inquiryType?: string;
 }
 
-export default function ContactUsForm() {
+// Enquiry types; the Contact page passes `?enquiry=<value>` through as `initialEnquiry`
+// (e.g. /contact-us/?enquiry=provider preselects "Provider Network").
+export const ENQUIRY_TYPES = [
+  { value: 'general', label: 'General Enquiry' },
+  { value: 'provider', label: 'Provider Network' },
+  { value: 'partnership', label: 'Partnership Opportunity' },
+  { value: 'support', label: 'Technical Support' },
+  { value: 'other', label: 'Other' },
+];
+
+export default function ContactUsForm({ initialEnquiry }: { initialEnquiry?: string } = {}) {
+  const startingEnquiry =
+    initialEnquiry && ENQUIRY_TYPES.some((t) => t.value === initialEnquiry) ? initialEnquiry : 'general';
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     company: '',
     message: '',
-    inquiryType: 'general',
+    inquiryType: startingEnquiry,
     honeypot: '',
   });
 
@@ -151,10 +165,10 @@ export default function ContactUsForm() {
         {errors.company && <p id="company-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.company}</p>}
       </div>
 
-      {/* Inquiry Type */}
+      {/* Enquiry Type */}
       <div>
         <label htmlFor="inquiryType" className="form-label">
-          Inquiry Type *
+          Enquiry Type *
         </label>
         <select
           id="inquiryType"
@@ -166,10 +180,9 @@ export default function ContactUsForm() {
           disabled={isLoading}
           required
         >
-          <option value="general">General Inquiry</option>
-          <option value="support">Technical Support</option>
-          <option value="partnership">Partnership Opportunity</option>
-          <option value="other">Other</option>
+          {ENQUIRY_TYPES.map((type) => (
+            <option key={type.value} value={type.value}>{type.label}</option>
+          ))}
         </select>
         {errors.inquiryType && <p id="inquiryType-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.inquiryType}</p>}
       </div>
@@ -186,11 +199,12 @@ export default function ContactUsForm() {
           onChange={handleChange}
           className="form-input"
           rows={5}
-          aria-describedby={errors.message ? "message-error" : undefined}
+          aria-describedby={errors.message ? "message-hint message-error" : "message-hint"}
           disabled={isLoading}
-          placeholder="Tell us how we can help..."
+          placeholder="Tell us how we can help. Please don't include health or medical information."
           required
         />
+        <p id="message-hint" className="mt-1 text-body-sm text-muted">Please don&apos;t include health or medical information.</p>
         {errors.message && <p id="message-error" className="mt-1 text-body-sm text-orange" role="alert">{errors.message}</p>}
       </div>
 
@@ -201,6 +215,12 @@ export default function ContactUsForm() {
         value={formData.honeypot}
         onChange={handleChange}
       />
+
+      {/* Privacy notice (C-26) */}
+      <p className="text-body-sm text-muted">
+        We use these details only to respond to your request. See our{' '}
+        <Link href="/privacy-centre/" className="text-green hover:underline">Privacy Centre</Link>.
+      </p>
 
       {/* Submit Button */}
       <Button
