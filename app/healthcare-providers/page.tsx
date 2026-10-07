@@ -4,6 +4,7 @@ import Hero from '@/components/sections/Hero'
 import SectionHeader from '@/components/sections/SectionHeader'
 import CtaBand from '@/components/sections/CtaBand'
 import Button from '@/components/ui/Button'
+import Breadcrumbs from '@/components/seo/Breadcrumbs'
 
 export const metadata: Metadata = {
   title: 'Healthcare Providers — Join the Zimasa Network | Zimasa',
@@ -13,13 +14,15 @@ export const metadata: Metadata = {
     url: 'https://www.zimasahealth.com/healthcare-providers/',
     title: 'Healthcare Providers — Join the Zimasa Network | Zimasa',
     description: 'Join the Zimasa vetted provider network. Receive verified member referrals from payer and employer programmes. Gyms, dietitians, therapists, physios, and labs welcome.',
-    images: [{ url: '/images/og-providers.jpg', width: 1200, height: 630 }],
   },
 }
 
 export default function HealthcareProvidersPage() {
   return (
     <main>
+      <div className="section-container py-3">
+        <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Healthcare Providers', href: '/healthcare-providers/', current: true }]} className="mb-0" />
+      </div>
       <Hero
         eyebrow="For Healthcare Providers"
         headline="Receive Members Who Are Ready to Engage"

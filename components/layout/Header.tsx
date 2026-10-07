@@ -30,7 +30,7 @@ export default function Header() {
     <header className={`sticky top-0 z-40 h-[72px] bg-white border-b border-black/5 transition-shadow duration-200 ${scrolled ? 'shadow-nav' : ''}`}>
       <div className="section-container h-full flex items-center justify-between gap-6">
         <Link href="/" className="shrink-0">
-          <Image src="/images/logo.svg" alt="Zimasa" width={140} height={36} priority />
+          <Image src="/images/logo.svg" alt="Zimasa" width={140} height={69} style={{ height: 'auto' }} priority />
         </Link>
 
         {/* Desktop nav */}

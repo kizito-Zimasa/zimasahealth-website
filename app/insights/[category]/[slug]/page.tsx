@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { getBlogCategories, getBlogPostsByCategory, getBlogPost, getCategoryLabel } from '@/lib/insights'
 import Breadcrumbs from '@/components/seo/Breadcrumbs'
 import { StructuredData, createArticleSchema } from '@/components/seo/StructuredData'
+import ScrollTracker from '@/components/blog/ScrollTracker'
 
 interface InsightsPostPageProps {
   params: Promise<{ category: string; slug: string }>
@@ -28,7 +30,6 @@ export async function generateMetadata({ params }: InsightsPostPageProps): Promi
       url: `https://www.zimasahealth.com/insights/${category}/${slug}/`,
       title: post.title,
       description: post.excerpt,
-      images: [{ url: '/images/og-blog.jpg', width: 1200, height: 630 }],
       publishedTime: post.date,
       authors: [post.author],
     },
@@ -101,7 +102,7 @@ export default async function BlogPostPage({ params }: InsightsPostPageProps) {
   const articleSchema = createArticleSchema({
     title: post.title,
     description: post.excerpt,
-    image: `/images/og-blog.jpg`,
+    image: post.heroImage || `/images/og-blog.jpg`,
     datePublished: post.date,
     author: post.author,
     url: `https://www.zimasahealth.com/insights/${category}/${slug}/`,
@@ -110,6 +111,7 @@ export default async function BlogPostPage({ params }: InsightsPostPageProps) {
   return (
     <main>
       <StructuredData data={articleSchema} />
+      <ScrollTracker slug={slug} category={category} />
       {/* Header */}
       <section className="section-padding border-t-8 border-green bg-surface">
         <div className="section-container max-w-narrow mx-auto">
@@ -121,6 +123,17 @@ export default async function BlogPostPage({ params }: InsightsPostPageProps) {
               { label: post.title, href: '#', current: true },
             ]}
           />
+
+          {post.heroImage && (
+            <Image
+              src={post.heroImage}
+              alt={post.title}
+              width={1100}
+              height={550}
+              className="rounded-card mb-8 w-full object-cover"
+              priority
+            />
+          )}
 
           <h1 className="font-display text-h1 text-dark mb-4">
             {post.title}

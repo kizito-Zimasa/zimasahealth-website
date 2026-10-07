@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 
 export default function Footer() {
@@ -6,7 +7,7 @@ export default function Footer() {
       <div className="section-container">
         {/* Logo & Tagline */}
         <div className="mb-12 pb-12 border-b border-white/10">
-          <img src="/images/logo-white.svg" alt="Zimasa" className="h-8 mb-3" />
+          <Image src="/images/logo-white.svg" alt="Zimasa" width={140} height={69} style={{ height: 'auto' }} className="mb-3" />
           <p className="text-body-sm text-white/80 max-w-sm">Turn Wellness Spending Into Verified Active Days</p>
         </div>
 

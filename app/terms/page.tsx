@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Breadcrumbs from '@/components/seo/Breadcrumbs'
 
 export const metadata: Metadata = {
   title: 'Terms of Service — Zimasa Health Engagement Platform',
@@ -8,7 +9,6 @@ export const metadata: Metadata = {
     url: 'https://www.zimasahealth.com/terms/',
     title: 'Terms of Service — Zimasa Health Engagement Platform',
     description: 'Terms of Service for Zimasa Health Engagement Platform. Read our full terms, member obligations, provider requirements, and dispute resolution.',
-    images: [{ url: '/images/og-terms.jpg', width: 1200, height: 630 }],
   },
 }
 
@@ -17,6 +17,7 @@ export default function TermsPage() {
     <main>
       <section className="section-padding border-t-8 border-navy bg-surface">
         <div className="section-container max-w-narrow mx-auto">
+          <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Terms of Service', href: '/terms/', current: true }]} className="mb-4" />
           <div className="mb-8">
             <p className="eyebrow mb-4">Legal</p>
             <h1 className="font-display text-h2 text-dark mb-6">Terms of Service</h1>

@@ -18,7 +18,6 @@ export const metadata: Metadata = {
     locale: 'en_KE',
     url: 'https://www.zimasahealth.com',
     siteName: 'Zimasa',
-    images: [{ url: '/images/og-default.jpg', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -45,6 +44,15 @@ export default function RootLayout({
             wait_for_update: 500,
           });
         `}} />
+        {/* CookieYes consent manager — replace COOKIEYES_ID with the live Site ID from app.cookieyes.com */}
+        {process.env.NEXT_PUBLIC_COOKIEYES_ID && (
+          <script
+            id="cookieyes"
+            type="text/javascript"
+            src={`https://cdn-cookieyes.com/client_data/${process.env.NEXT_PUBLIC_COOKIEYES_ID}/script.js`}
+            async
+          />
+        )}
       </head>
       <body>
         <Header />

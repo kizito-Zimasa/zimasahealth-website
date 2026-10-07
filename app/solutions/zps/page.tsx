@@ -5,6 +5,7 @@ import SectionHeader from '@/components/sections/SectionHeader'
 import CtaBand from '@/components/sections/CtaBand'
 import Button from '@/components/ui/Button'
 import Badge from '@/components/ui/Badge'
+import Breadcrumbs from '@/components/seo/Breadcrumbs'
 
 export const metadata: Metadata = {
   title: 'ZPS — Zimasa Payer Solution for Insurers & TPAs | Zimasa',
@@ -14,13 +15,15 @@ export const metadata: Metadata = {
     url: 'https://www.zimasahealth.com/solutions/zps/',
     title: 'ZPS — Zimasa Payer Solution for Insurers & TPAs | Zimasa',
     description: 'The Zimasa Payer Solution gives health schemes and TPAs 30/60/90-day cohort dashboards, white-label member programmes, and renewal-ready engagement data — without PHI.',
-    images: [{ url: '/images/og-zps.jpg', width: 1200, height: 630 }],
   },
 }
 
 export default function ZPSPage() {
   return (
     <main>
+      <div className="section-container py-3">
+        <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Solutions', href: '/solutions/' }, { label: 'ZPS', href: '/solutions/zps/', current: true }]} className="mb-0" />
+      </div>
       {/* Section 1: Hero */}
       <Hero
         eyebrow="Zimasa Payer Solution"

@@ -4,6 +4,7 @@ import Hero from '@/components/sections/Hero'
 import SectionHeader from '@/components/sections/SectionHeader'
 import CtaBand from '@/components/sections/CtaBand'
 import Button from '@/components/ui/Button'
+import Breadcrumbs from '@/components/seo/Breadcrumbs'
 
 export const metadata: Metadata = {
   title: 'ZHEP — Member Health Engagement Platform | Zimasa',
@@ -13,13 +14,15 @@ export const metadata: Metadata = {
     url: 'https://www.zimasahealth.com/solutions/zhep/',
     title: 'ZHEP — Member Health Engagement Platform | Zimasa',
     description: 'ZHEP is Zimasa\'s member-facing Health Engagement OS. Four health tracks, two engagement engines, verified Active Days. White-label ready for payers and employers.',
-    images: [{ url: '/images/og-zhep.jpg', width: 1200, height: 630 }],
   },
 }
 
 export default function ZHEPPage() {
   return (
     <main>
+      <div className="section-container py-3">
+        <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Solutions', href: '/solutions/' }, { label: 'ZHEP', href: '/solutions/zhep/', current: true }]} className="mb-0" />
+      </div>
       {/* Section 1: Hero */}
       <Hero
         eyebrow="Zimasa Health Engagement Platform"

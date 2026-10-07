@@ -16,7 +16,6 @@ export const metadata: Metadata = {
     url: 'https://www.zimasahealth.com',
     title: 'Zimasa | Health Engagement OS for Payers & Employers',
     description: 'Built for Africa. White-label ready. Measurable results. The Health Engagement OS connecting payers and employers to a vetted healthcare provider network.',
-    images: [{ url: '/images/og-default.jpg', width: 1200, height: 630 }],
   },
 }
 
@@ -38,7 +37,7 @@ export default function HomePage() {
         <div className="section-container max-w-narrow mx-auto">
           <SectionHeader headline="What Is Active Days?" align="center" />
           <p className="text-body-lg text-body text-center mb-8">
-            Active Days measures verified health engagement — one day per member where they completed at least one action (logged steps, attended a class, completed a screening). This metric matters because it predicts program ROI and member retention.
+            Active Days measures verified health engagement — one day per member where they completed at least one action (logged steps, attended a class, completed a screening). This metric matters because it predicts programme ROI and member retention.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center mb-12">
             <div>

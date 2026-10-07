@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getAllBlogPosts, getBlogCategories, getCategoryLabel } from '@/lib/insights'
 import Button from '@/components/ui/Button'
+import Breadcrumbs from '@/components/seo/Breadcrumbs'
 
 export const metadata: Metadata = {
   title: 'Insights & Zimasa Blog — Latest Articles on Health Engagement',
@@ -11,7 +12,6 @@ export const metadata: Metadata = {
     url: 'https://www.zimasahealth.com/insights/',
     title: 'Insights & Zimasa Blog — Latest Articles on Health Engagement',
     description: 'Read the latest insights on health engagement, member activation, and building wellness programs for African markets.',
-    images: [{ url: '/images/og-insights.jpg', width: 1200, height: 630 }],
   },
 }
 
@@ -24,6 +24,7 @@ export default function InsightsPage() {
       {/* Hero Section */}
       <section className="section-padding border-t-8 border-navy bg-surface">
         <div className="section-container max-w-narrow mx-auto">
+          <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Insights', href: '/insights/', current: true }]} className="mb-4" />
           <div className="mb-8">
             <p className="eyebrow mb-4">Insights</p>
             <h1 className="font-display text-h2 text-dark mb-6">Zimasa Insights</h1>

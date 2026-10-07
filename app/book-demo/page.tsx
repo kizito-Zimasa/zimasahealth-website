@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import BookDemoForm from '@/components/forms/BookDemoForm'
+import Breadcrumbs from '@/components/seo/Breadcrumbs'
 
 export const metadata: Metadata = {
   title: 'Book a Demo — See ZHEP in Action | Zimasa',
@@ -9,7 +10,6 @@ export const metadata: Metadata = {
     url: 'https://www.zimasahealth.com/book-demo/',
     title: 'Book a Demo — See ZHEP in Action | Zimasa',
     description: 'Book a 30-minute demo of the Zimasa Health Engagement OS. We\'ll show you the platform, a sample 90-day programme design, and your first activation forecast.',
-    images: [{ url: '/images/og-book-demo.jpg', width: 1200, height: 630 }],
   },
 }
 
@@ -21,6 +21,7 @@ export default function BookDemoPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Left Column - Form */}
             <div className="lg:col-span-2">
+              <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Book a Demo', href: '/book-demo/', current: true }]} className="mb-4" />
               <h1 className="font-display text-h2 text-dark mb-3">Book Your 30-Minute Demo</h1>
               <p className="text-body-lg text-body mb-8">Tell us about your organisation. We'll show you the platform, a sample programme design, and your first activation forecast.</p>
               <BookDemoForm />

@@ -3,6 +3,7 @@ import Hero from '@/components/sections/Hero'
 import SectionHeader from '@/components/sections/SectionHeader'
 import CtaBand from '@/components/sections/CtaBand'
 import Button from '@/components/ui/Button'
+import Breadcrumbs from '@/components/seo/Breadcrumbs'
 
 export const metadata: Metadata = {
   title: 'Who We Help — Payers, Employers & Providers | Zimasa',
@@ -12,13 +13,15 @@ export const metadata: Metadata = {
     url: 'https://www.zimasahealth.com/who-we-help/',
     title: 'Who We Help — Payers, Employers & Providers | Zimasa',
     description: 'Zimasa serves health insurers and TPAs, employers and HR teams, and healthcare providers across East Africa. See how each buyer benefits from the ZHEP platform.',
-    images: [{ url: '/images/og-who-we-help.jpg', width: 1200, height: 630 }],
   },
 }
 
 export default function WhoWeHelpPage() {
   return (
     <main>
+      <div className="section-container py-3">
+        <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Who We Help', href: '/who-we-help/', current: true }]} className="mb-0" />
+      </div>
       <Hero
         eyebrow="Buyer Personas"
         headline="Built for the People Making Population Health Decisions"

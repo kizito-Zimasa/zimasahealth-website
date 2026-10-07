@@ -5,6 +5,7 @@ import SectionHeader from '@/components/sections/SectionHeader'
 import CtaBand from '@/components/sections/CtaBand'
 import Button from '@/components/ui/Button'
 import Badge from '@/components/ui/Badge'
+import Breadcrumbs from '@/components/seo/Breadcrumbs'
 
 export const metadata: Metadata = {
   title: 'Zimasa Go — Free Health Engagement for Members | Zimasa',
@@ -14,13 +15,15 @@ export const metadata: Metadata = {
     url: 'https://www.zimasahealth.com/zimasa-go/',
     title: 'Zimasa Go — Free Health Engagement for Members | Zimasa',
     description: 'Zimasa Go is free for members and employees. Track steps, join squads, compete in challenges, and earn rewards. Start in under five minutes — no employer needed.',
-    images: [{ url: '/images/og-zimasa-go.jpg', width: 1200, height: 630 }],
   },
 }
 
 export default function ZimasaGoPage() {
   return (
     <main>
+      <div className="section-container py-3">
+        <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Zimasa Go', href: '/zimasa-go/', current: true }]} className="mb-0" />
+      </div>
       {/* Section 1: Hero */}
       <Hero
         eyebrow="Members & Employees"

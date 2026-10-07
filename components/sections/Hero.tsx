@@ -1,4 +1,5 @@
 // components/sections/Hero.tsx
+import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import Button from '@/components/ui/Button'
 
@@ -9,6 +10,7 @@ interface HeroProps {
   primaryCta: { label: string; href: string }
   secondaryCta?: { label: string; href: string }
   backgroundVariant?: 'green' | 'navy'
+  image?: { src: string; alt: string; priority?: boolean }
 }
 
 export default function Hero({
@@ -18,10 +20,31 @@ export default function Hero({
   primaryCta,
   secondaryCta,
   backgroundVariant = 'green',
+  image,
 }: HeroProps) {
   return (
     <section className={cn('hero-section', backgroundVariant === 'navy' ? 'bg-hero-navy' : 'bg-hero-green')}>
-      <div className="section-container text-center">
+      {image && (
+        <>
+          <Image
+            src={image.src}
+            alt={image.alt}
+            fill
+            priority={image.priority}
+            sizes="100vw"
+            className="object-cover"
+            style={{ zIndex: 0 }}
+          />
+          <div
+            className={cn(
+              'absolute inset-0',
+              backgroundVariant === 'navy' ? 'hero-overlay-navy' : 'hero-overlay-green'
+            )}
+            style={{ zIndex: 1 }}
+          />
+        </>
+      )}
+      <div className="section-container text-center" style={{ position: 'relative', zIndex: 2 }}>
         {eyebrow && <p className="eyebrow text-pale-green">{eyebrow}</p>}
         <h1 className="font-display text-display text-white max-w-narrow mx-auto mb-6">
           {headline}

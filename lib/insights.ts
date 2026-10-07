@@ -9,6 +9,7 @@ export interface BlogPost {
   excerpt: string
   date: string
   author: string
+  heroImage?: string
   content: string
 }
 
@@ -17,6 +18,7 @@ export interface BlogFrontmatter {
   excerpt: string
   date: string
   author: string
+  heroImage?: string
 }
 
 const BLOG_DIR = path.join(process.cwd(), 'content', 'blog')
@@ -52,6 +54,7 @@ export function getBlogPostsByCategory(category: string): BlogPost[] {
       excerpt: data.excerpt || '',
       date: data.date || '',
       author: data.author || '',
+      heroImage: data.heroImage || undefined,
       content,
     }
   })
@@ -87,6 +90,7 @@ export function getBlogPost(category: string, slug: string): BlogPost | null {
     excerpt: data.excerpt || '',
     date: data.date || '',
     author: data.author || '',
+    heroImage: data.heroImage || undefined,
     content,
   }
 }

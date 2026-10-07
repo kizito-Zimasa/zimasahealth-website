@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getBlogCategories, getBlogPostsByCategory, getCategoryLabel } from '@/lib/insights'
 import Button from '@/components/ui/Button'
+import Breadcrumbs from '@/components/seo/Breadcrumbs'
 
 interface InsightsCategoryPageProps {
   params: Promise<{ category: string }>
@@ -19,7 +20,6 @@ export async function generateMetadata({ params }: InsightsCategoryPageProps): P
       url: `https://www.zimasahealth.com/insights/${category}/`,
       title: `${label} — Zimasa Blog`,
       description: `Articles about ${label.toLowerCase()}`,
-      images: [{ url: '/images/og-blog.jpg', width: 1200, height: 630 }],
     },
   }
 }
@@ -42,10 +42,15 @@ export default async function BlogCategoryPage({ params }: InsightsCategoryPageP
       {/* Hero Section */}
       <section className="section-padding border-t-8 border-navy bg-surface">
         <div className="section-container max-w-narrow mx-auto">
+          <Breadcrumbs
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Insights', href: '/insights/' },
+              { label, href: `/insights/${category}/`, current: true },
+            ]}
+            className="mb-4"
+          />
           <div className="mb-8">
-            <Link href="/insights/" className="text-green hover:underline text-sm font-medium mb-4 inline-block">
-              ← Back to Blog
-            </Link>
             <p className="eyebrow mb-4">Category</p>
             <h1 className="font-display text-h2 text-dark mb-6">{label}</h1>
             <p className="text-body-lg text-body">

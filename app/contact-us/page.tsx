@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import ContactUsForm from '@/components/forms/ContactUsForm'
+import Breadcrumbs from '@/components/seo/Breadcrumbs'
 
 export const metadata: Metadata = {
   title: 'Contact Us — Let\'s Talk | Zimasa',
@@ -9,7 +10,6 @@ export const metadata: Metadata = {
     url: 'https://www.zimasahealth.com/contact-us/',
     title: 'Contact Us — Let\'s Talk | Zimasa',
     description: 'Get in touch with the Zimasa team. We\'ll respond within 24 business hours. Sales, partnerships, press, and general inquiries welcome.',
-    images: [{ url: '/images/og-contact.jpg', width: 1200, height: 630 }],
   },
 }
 
@@ -21,6 +21,7 @@ export default function ContactUsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Left Column - Form */}
             <div className="lg:col-span-2">
+              <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Contact Us', href: '/contact-us/', current: true }]} className="mb-4" />
               <h1 className="font-display text-h2 text-dark mb-3">Get in Touch</h1>
               <p className="text-body-lg text-body mb-8">Tell us about your project, question, or partnership opportunity. We respond within 24 business hours.</p>
               <ContactUsForm />

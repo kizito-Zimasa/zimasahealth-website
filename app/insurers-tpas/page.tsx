@@ -5,6 +5,7 @@ import SectionHeader from '@/components/sections/SectionHeader'
 import CtaBand from '@/components/sections/CtaBand'
 import Button from '@/components/ui/Button'
 import Badge from '@/components/ui/Badge'
+import Breadcrumbs from '@/components/seo/Breadcrumbs'
 
 export const metadata: Metadata = {
   title: 'Insurers & TPAs — Health Engagement That Moves the Needle | Zimasa',
@@ -14,13 +15,15 @@ export const metadata: Metadata = {
     url: 'https://www.zimasahealth.com/insurers-tpas/',
     title: 'Insurers & TPAs — Health Engagement That Moves the Needle | Zimasa',
     description: 'Zimasa gives health insurers, TPAs, and medical schemes measurable member engagement in 90 days. Cohort dashboards, white-label programmes, PHI-avoidant architecture.',
-    images: [{ url: '/images/og-insurers-tpas.jpg', width: 1200, height: 630 }],
   },
 }
 
 export default function InsurersTPAsPage() {
   return (
     <main>
+      <div className="section-container py-3">
+        <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Insurers & TPAs', href: '/insurers-tpas/', current: true }]} className="mb-0" />
+      </div>
       {/* Section 1: Hero */}
       <Hero
         eyebrow="For Insurers & TPAs"

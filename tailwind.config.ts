@@ -24,6 +24,7 @@ const config: Config = {
         'cream':        '#FFFBFA',
 
         // Neutrals
+        'white':        '#FFFFFF',
         'dark':         '#222429',
         'body':         '#686666',
         'muted':        '#9E9C9C',

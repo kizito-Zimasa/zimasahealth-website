@@ -5,74 +5,153 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Spec 07_SEO-Spec.md §URL Conventions: all URLs use a trailing slash.
+  // Next.js then auto-301s the non-trailing-slash variant to the canonical form.
+  trailingSlash: true,
+
   turbopack: {
     root: __dirname,
   },
 
-  /* Redirects for SEO and legacy URLs */
+  /* Redirects — translation of Docs/Final/03_Redirects.md (LOCKED).
+     Keep ordering stable; do not de-duplicate by destination — Next.js matches
+     the first applicable source. */
   async redirects() {
     return [
-      // Legacy WordPress URLs to new Next.js structure
+      // ─── WordPress system & legacy entry points ─────────────────
       { source: '/index.php', destination: '/', permanent: true },
       { source: '/index.html', destination: '/', permanent: true },
-      { source: '/wp-admin', destination: '/', permanent: true },
+      { source: '/wp-admin/', destination: '/', permanent: true },
       { source: '/wp-login.php', destination: '/', permanent: true },
+      { source: '/wp-content/:path*', destination: '/', permanent: true },
       { source: '/wp-json/:path*', destination: '/', permanent: true },
       { source: '/wordpress/:path*', destination: '/', permanent: true },
+      { source: '/xmlrpc.php', destination: '/', permanent: true },
+      { source: '/feed/', destination: '/insights/', permanent: true },
 
-      // Legacy blog paths to new insights structure
-      { source: '/blog/:slug', destination: '/insights/playbook/:slug', permanent: true },
-      { source: '/post/:slug', destination: '/insights/playbook/:slug', permanent: true },
-      { source: '/article/:slug', destination: '/insights/playbook/:slug', permanent: true },
-      { source: '/blog/:path*', destination: '/insights/:path*', permanent: true },
+      // ─── Home page variants ────────────────────────────────────
+      { source: '/home/', destination: '/', permanent: true },
+      { source: '/home1/', destination: '/', permanent: true },
+      { source: '/home2/', destination: '/', permanent: true },
+      { source: '/home3/', destination: '/', permanent: true },
+      { source: '/home4/', destination: '/', permanent: true },
+      { source: '/home5/', destination: '/', permanent: true },
 
-      // Product/solution aliases
-      { source: '/platform', destination: '/solutions', permanent: true },
-      { source: '/zhep-platform', destination: '/solutions/zhep', permanent: true },
-      { source: '/health-engagement-os', destination: '/solutions/zhep', permanent: true },
-      { source: '/payers-solution', destination: '/insurers-tpas', permanent: true },
-      { source: '/for-payers', destination: '/insurers-tpas', permanent: true },
-      { source: '/for-insurers', destination: '/insurers-tpas', permanent: true },
+      // ─── About page variants ───────────────────────────────────
+      { source: '/about-3/', destination: '/about/', permanent: true },
+      { source: '/about-4/', destination: '/about/', permanent: true },
+      { source: '/about-6/', destination: '/about/', permanent: true },
+      { source: '/about21/', destination: '/about/', permanent: true },
+      { source: '/about1h12/', destination: '/about/', permanent: true },
+      // Defensive about aliases (not in WP migration spec)
+      { source: '/company/', destination: '/about/', permanent: true },
+      { source: '/team/', destination: '/about/', permanent: true },
+      { source: '/our-story/', destination: '/about/', permanent: true },
+      { source: '/mission/', destination: '/about/', permanent: true },
 
-      // Audience path aliases
-      { source: '/for-members', destination: '/', permanent: true },
-      { source: '/for-employers', destination: '/employers', permanent: true },
-      { source: '/employer-wellness', destination: '/employers', permanent: true },
-      { source: '/for-providers', destination: '/healthcare-providers', permanent: true },
-      { source: '/provider-network', destination: '/healthcare-providers', permanent: true },
-      { source: '/for-partner', destination: '/healthcare-providers', permanent: true },
+      // ─── Solutions ─────────────────────────────────────────────
+      { source: '/our-solutions/', destination: '/solutions/', permanent: true },
+      { source: '/zimasa-health-engagement-platform/', destination: '/solutions/zhep/', permanent: true },
+      { source: '/zhep/', destination: '/solutions/zhep/', permanent: true },
+      { source: '/payers-solution/', destination: '/insurers-tpas/', permanent: true },
+      { source: '/gym-management/', destination: '/solutions/', permanent: true },
+      { source: '/care-disease-management/', destination: '/solutions/', permanent: true },
+      { source: '/hr-solution/', destination: '/employers/', permanent: true },
+      // Defensive solution aliases
+      { source: '/platform/', destination: '/solutions/', permanent: true },
+      { source: '/zhep-platform/', destination: '/solutions/zhep/', permanent: true },
+      { source: '/health-engagement-os/', destination: '/solutions/zhep/', permanent: true },
 
-      // Freemium product aliases
-      { source: '/free-tier', destination: '/zimasa-go', permanent: true },
-      { source: '/zimasa-lite', destination: '/zimasa-go', permanent: true },
-      { source: '/member-app', destination: '/zimasa-go', permanent: true },
+      // ─── Who We Help & audience aliases ────────────────────────
+      { source: '/who-we-serve/', destination: '/who-we-help/', permanent: true },
+      { source: '/for-employers/', destination: '/who-we-help/', permanent: true },
+      { source: '/for-payers/', destination: '/insurers-tpas/', permanent: true },
+      { source: '/for-insurers/', destination: '/insurers-tpas/', permanent: true },
+      { source: '/for-providers/', destination: '/healthcare-providers/', permanent: true },
+      { source: '/provider-network/', destination: '/healthcare-providers/', permanent: true },
+      { source: '/employer-wellness/', destination: '/employers/', permanent: true },
+      { source: '/for-members/', destination: '/zimasa-go/', permanent: true },
 
-      // Company info aliases
-      { source: '/company', destination: '/about', permanent: true },
-      { source: '/team', destination: '/about', permanent: true },
-      { source: '/our-story', destination: '/about', permanent: true },
-      { source: '/mission', destination: '/about', permanent: true },
+      // ─── Contact & demo ────────────────────────────────────────
+      { source: '/contact/', destination: '/contact-us/', permanent: true },
+      { source: '/contact3/', destination: '/contact-us/', permanent: true },
+      { source: '/get-in-touch/', destination: '/contact-us/', permanent: true },
+      { source: '/demo/', destination: '/book-demo/', permanent: true },
+      { source: '/request-demo/', destination: '/book-demo/', permanent: true },
+      { source: '/schedule-demo/', destination: '/book-demo/', permanent: true },
+      { source: '/signup/', destination: '/get-started/', permanent: true },
+      { source: '/register/', destination: '/get-started/', permanent: true },
+      { source: '/enroll/', destination: '/get-started/', permanent: true },
 
-      // Legal and support pages
-      { source: '/policy/privacy', destination: '/privacy-centre', permanent: true },
-      { source: '/legal/privacy', destination: '/privacy-centre', permanent: true },
-      { source: '/privacy-policy', destination: '/privacy-centre', permanent: true },
-      { source: '/policy/terms', destination: '/terms', permanent: true },
-      { source: '/legal/terms', destination: '/terms', permanent: true },
-      { source: '/tos', destination: '/terms', permanent: true },
-      { source: '/contact', destination: '/contact-us', permanent: true },
-      { source: '/get-in-touch', destination: '/contact-us', permanent: true },
+      // ─── Free-tier aliases ─────────────────────────────────────
+      { source: '/free-tier/', destination: '/zimasa-go/', permanent: true },
+      { source: '/zimasa-lite/', destination: '/zimasa-go/', permanent: true },
+      { source: '/member-app/', destination: '/zimasa-go/', permanent: true },
 
-      // CTA aliases
-      { source: '/demo', destination: '/book-demo', permanent: true },
-      { source: '/schedule-demo', destination: '/book-demo', permanent: true },
-      { source: '/request-demo', destination: '/book-demo', permanent: true },
-      { source: '/signup', destination: '/get-started', permanent: true },
-      { source: '/register', destination: '/get-started', permanent: true },
-      { source: '/enroll', destination: '/get-started', permanent: true },
+      // ─── Legal ─────────────────────────────────────────────────
+      { source: '/privacy-policy/', destination: '/privacy-centre/', permanent: true },
+      { source: '/policy/privacy/', destination: '/privacy-centre/', permanent: true },
+      { source: '/legal/privacy/', destination: '/privacy-centre/', permanent: true },
+      { source: '/terms-of-service/', destination: '/terms/', permanent: true },
+      { source: '/policy/terms/', destination: '/terms/', permanent: true },
+      { source: '/legal/terms/', destination: '/terms/', permanent: true },
+      { source: '/tos/', destination: '/terms/', permanent: true },
 
-      // Catch trailing slashes (handled by Next.js, but explicit for clarity)
-      { source: '/:path+/', destination: '/:path+', permanent: false },
+      // ─── Blog hub ──────────────────────────────────────────────
+      { source: '/blog/', destination: '/insights/', permanent: true },
+
+      // ─── Blog: WP /insights/{slug}/ permalinks (no category) ───
+      {
+        source: '/insights/from-processing-claims-to-preventing-them-why-i-changed-what-im-building/',
+        destination: '/insights/zimasa-updates/from-processing-claims-to-preventing-them/',
+        permanent: true,
+      },
+      {
+        source: '/insights/from-processing-claims-to-preventing-them-why-i-changed-what-im-building-copy/',
+        destination: '/insights/zimasa-updates/introducing-zimasa-health-engagement-os/',
+        permanent: true,
+      },
+      {
+        source: '/insights/empowering-africas-health-and-wellness-providers/',
+        destination: '/insights/playbook/',
+        permanent: true,
+      },
+
+      // ─── Blog: WP category-path canonical URLs ─────────────────
+      {
+        source: '/health-engagement-series/from-processing-claims-to-preventing-them-why-i-changed-what-im-building/',
+        destination: '/insights/zimasa-updates/from-processing-claims-to-preventing-them/',
+        permanent: true,
+      },
+      {
+        source: '/health-engagement-series/from-processing-claims-to-preventing-them-why-i-changed-what-im-building-copy/',
+        destination: '/insights/zimasa-updates/introducing-zimasa-health-engagement-os/',
+        permanent: true,
+      },
+      {
+        source: '/health-engagement-series/why-we-need-a-health-engagement-platform-now/',
+        destination: '/insights/playbook/half-trillion-problem-kenya-health-spending/',
+        permanent: true,
+      },
+      {
+        source: '/health-engagement-series/most-kenyan-households-are-one-medical-crisis-away-from-the-auctioneers-hammer-heres-why-thats-your-problem/',
+        destination: '/insights/playbook/one-medical-crisis-kenyan-households-financial-resilience/',
+        permanent: true,
+      },
+      {
+        source: '/health-engagement-playbook/empowering-africas-health-and-wellness-providers/',
+        destination: '/insights/playbook/',
+        permanent: true,
+      },
+
+      // ─── Blog: WP category & author archives ───────────────────
+      { source: '/category/health-engagement-series/', destination: '/insights/', permanent: true },
+      { source: '/category/health-engagement-playbook/', destination: '/insights/playbook/', permanent: true },
+      { source: '/category/employers-n-hr/', destination: '/insights/employers-hr/', permanent: true },
+      { source: '/category/payers-n-schemes/', destination: '/insights/payers-schemes/', permanent: true },
+      { source: '/category/providers/', destination: '/insights/playbook/', permanent: true },
+      { source: '/author/kizito-makatiani/', destination: '/insights/', permanent: true },
+      { source: '/author/eunice-muthoni/', destination: '/insights/', permanent: true },
     ];
   },
 

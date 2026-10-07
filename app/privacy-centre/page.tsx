@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Breadcrumbs from '@/components/seo/Breadcrumbs'
 
 export const metadata: Metadata = {
   title: 'Privacy Centre — Your Data, Your Control | Zimasa',
@@ -8,7 +9,6 @@ export const metadata: Metadata = {
     url: 'https://www.zimasahealth.com/privacy-centre/',
     title: 'Privacy Centre — Your Data, Your Control | Zimasa',
     description: 'Zimasa\'s privacy-first approach. We don\'t store protected health information. Full transparency on data handling, member control, and compliance standards.',
-    images: [{ url: '/images/og-privacy.jpg', width: 1200, height: 630 }],
   },
 }
 
@@ -17,6 +17,7 @@ export default function PrivacyCentrePage() {
     <main>
       <section className="section-padding border-t-8 border-green bg-surface">
         <div className="section-container max-w-narrow mx-auto">
+          <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Privacy Centre', href: '/privacy-centre/', current: true }]} className="mb-4" />
           <div className="mb-8">
             <p className="eyebrow mb-4">Privacy & Data</p>
             <h1 className="font-display text-h2 text-dark mb-6">Privacy Centre</h1>

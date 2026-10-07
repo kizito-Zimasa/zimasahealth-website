@@ -5,6 +5,7 @@ import SectionHeader from '@/components/sections/SectionHeader'
 import CtaBand from '@/components/sections/CtaBand'
 import Button from '@/components/ui/Button'
 import Badge from '@/components/ui/Badge'
+import Breadcrumbs from '@/components/seo/Breadcrumbs'
 
 export const metadata: Metadata = {
   title: 'Employers Solution — Workforce Wellness & Zimasa Go | Zimasa',
@@ -14,13 +15,15 @@ export const metadata: Metadata = {
     url: 'https://www.zimasahealth.com/employers/',
     title: 'Employers Solution — Workforce Wellness & Zimasa Go | Zimasa',
     description: 'Zimasa Go is free for your workforce — steps tracking, challenges, leaderboards, and an employer dashboard. Upgrade to the full programme when you\'re ready.',
-    images: [{ url: '/images/og-employers.jpg', width: 1200, height: 630 }],
   },
 }
 
 export default function EmployersPage() {
   return (
     <main>
+      <div className="section-container py-3">
+        <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Employers', href: '/employers/', current: true }]} className="mb-0" />
+      </div>
       {/* Section 1: Hero */}
       <Hero
         eyebrow="For Employers & HR Teams"
@@ -28,7 +31,7 @@ export default function EmployersPage() {
         subheadline="Zimasa Go is free for your team — no procurement, no contract. Employees track steps, join challenges, and build habits. You see aggregate Active Days from day one."
         primaryCta={{ label: 'Get Started Free', href: '/get-started/' }}
         secondaryCta={{ label: 'See the Full Programme', href: '#full-programme' }}
-        backgroundVariant="navy"
+        backgroundVariant="green"
       />
 
       {/* Section 2: Two Paths */}

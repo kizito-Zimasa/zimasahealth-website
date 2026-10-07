@@ -5,6 +5,7 @@ import SectionHeader from '@/components/sections/SectionHeader'
 import CtaBand from '@/components/sections/CtaBand'
 import Button from '@/components/ui/Button'
 import Badge from '@/components/ui/Badge'
+import Breadcrumbs from '@/components/seo/Breadcrumbs'
 
 export const metadata: Metadata = {
   title: 'Solutions — Zimasa Health Engagement OS',
@@ -14,13 +15,15 @@ export const metadata: Metadata = {
     url: 'https://www.zimasahealth.com/solutions/',
     title: 'Solutions — Zimasa Health Engagement OS',
     description: 'ZHEP and the Payers Solution: two engagement products built for African health markets. White-label ready, PHI-avoidant, measurable in 90 days.',
-    images: [{ url: '/images/og-solutions.jpg', width: 1200, height: 630 }],
   },
 }
 
 export default function SolutionsPage() {
   return (
     <main>
+      <div className="section-container py-3">
+        <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Solutions', href: '/solutions/', current: true }]} className="mb-0" />
+      </div>
       {/* Section 1: Hero */}
       <Hero
         eyebrow="What We Build"

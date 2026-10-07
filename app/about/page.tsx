@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { CheckCircle, MapPin, Lock } from 'lucide-react'
+import Hero from '@/components/sections/Hero'
 import SectionHeader from '@/components/sections/SectionHeader'
+import Breadcrumbs from '@/components/seo/Breadcrumbs'
 
 export const metadata: Metadata = {
   title: 'About Zimasa — Built for Africa\'s Health Engagement Challenge',
@@ -10,26 +12,26 @@ export const metadata: Metadata = {
     url: 'https://www.zimasahealth.com/about/',
     title: 'About Zimasa — Built for Africa\'s Health Engagement Challenge',
     description: 'Zimasa is a Nairobi-based health engagement technology company. We build the engagement infrastructure that connects payers, employers, and members to measurable health outcomes.',
-    images: [{ url: '/images/og-about.jpg', width: 1200, height: 630 }],
   },
 }
 
 export default function AboutPage() {
   return (
     <main>
-      <section className="section-padding border-t-8 border-green bg-surface">
-        <div className="section-container max-w-narrow mx-auto">
-          <div className="mb-8">
-            <p className="eyebrow mb-4">About Zimasa</p>
-            <h1 className="font-display text-h2 text-dark mb-6">We Changed What We Were Building</h1>
-            <p className="text-body-lg text-body">
-              Zimasa started as a claims processing business. After spending years inside health insurance operations in East Africa, our founder concluded that the real problem wasn't processing claims faster — it was preventing them.
-            </p>
-          </div>
-        </div>
-      </section>
+      <div className="section-container py-3">
+        <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'About', href: '/about/', current: true }]} className="mb-0" />
+      </div>
+      <Hero
+        eyebrow="About Zimasa"
+        headline="We Changed What We Were Building"
+        subheadline="Zimasa started as a claims processing business. After spending years inside health insurance operations in East Africa, our founder concluded that the real problem wasn't processing claims faster — it was preventing them."
+        primaryCta={{ label: 'Book a Demo', href: '/book-demo/' }}
+        secondaryCta={{ label: 'Read Our Story', href: '#our-story' }}
+        backgroundVariant="navy"
+        image={{ src: '/images/hero/about-hero.png', alt: 'Kizito Makatiani, founder of Zimasa' }}
+      />
 
-      <section className="section-padding bg-white">
+      <section id="our-story" className="section-padding bg-white">
         <div className="section-container max-w-narrow mx-auto">
           <SectionHeader
             eyebrow="Origin"
