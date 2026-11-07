@@ -23,6 +23,13 @@ export const metadata: Metadata = {
   },
 }
 
+const tracks = [
+  { name: 'MOVE', colour: 'text-green', desc: 'Movement habits and physical activity — walking, hiking, dancing, yoga, gyms, classes and more.', photos: [{ src: '/images/cards/track-move-1.jpg', alt: 'Friends hiking together on a forest trail' }, { src: '/images/cards/track-move-2.jpg', alt: 'An outdoor group dance-fitness class in a park' }, { src: '/images/cards/track-move-3.jpg', alt: 'Three people holding a yoga pose on a lawn' }, { src: '/images/cards/track-move-4.jpg', alt: 'Two people on exercise bikes at a gym' }] },
+  { name: 'NOURISH', colour: 'text-orange', desc: 'Nutrition habits and lifestyle routines — what we eat, how we prepare it, meal plans and food education.', photos: [{ src: '/images/cards/track-nourish-1.jpg', alt: 'Two women exchanging fresh greens at a market stall' }, { src: '/images/cards/track-nourish-2.jpg', alt: 'A woman chopping vegetables in her kitchen beside an older relative' }, { src: '/images/cards/track-nourish-3.jpg', alt: 'A family preparing a healthy breakfast together' }, { src: '/images/cards/track-nourish-4.jpg', alt: 'A woman drinking water from a bottle at home' }] },
+  { name: 'CARE', colour: 'text-blue', desc: 'Preventive actions and mental wellbeing — health screenings, physiotherapy, therapy and dietitian sessions.', photos: [{ src: '/images/cards/track-care-1.jpg', alt: 'A clinician checking a man’s blood pressure' }, { src: '/images/cards/track-care-2.jpg', alt: 'A physiotherapist in his treatment room' }, { src: '/images/cards/track-care-3.jpg', alt: 'A woman meditating with her eyes closed' }, { src: '/images/cards/track-care-4.jpg', alt: 'A counselling conversation in a calm room' }] },
+  { name: 'LEARN', colour: 'text-navy', desc: 'The knowledge we need for our wellbeing — health education, habit-building programmes and financial wellbeing foundations.', photos: [{ src: '/images/cards/track-learn-1.jpg', alt: 'A facilitator leading a workshop at a flipchart' }, { src: '/images/cards/track-learn-2.jpg', alt: 'A man reading at his desk' }, { src: '/images/cards/track-learn-3.jpg', alt: 'Hands working out a budget with a calculator and notebook' }, { src: '/images/cards/track-learn-4.jpg', alt: 'A woman taking notes while learning online' }] },
+]
+
 export default function HomePage() {
   return (
     <main>
@@ -44,28 +51,22 @@ export default function HomePage() {
           <p className="text-body-lg text-body text-center mb-8">
             An Active Day is a calendar day on which a member completes at least one health action. Several actions on the same day still count as one Active Day. Every Active Day is verified — logged steps, an attended class, a completed screening — not self-reported.
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center mb-12">
-            <div>
-              <Image src="/images/cards/track-move.jpg" alt="A man cycling along a rural road" width={800} height={800} sizes="(min-width: 768px) 180px, 45vw" className="block w-full h-auto rounded-[var(--radius-card)] mb-4" />
-              <p className="font-display text-h3 text-green mb-2">MOVE</p>
-              <p className="text-body text-body text-sm">Gyms, classes, run clubs, steps</p>
+        </div>
+        {/* DRAFT-COPY 2026-11: Track descriptions from Knowledge Vault v1.23 §2 — founder review */}
+        <div className="section-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          {tracks.map((t) => (
+            <div key={t.name} className="card overflow-hidden">
+              <div className="-mx-8 -mt-8 mb-6 grid grid-cols-2 gap-0.5">
+                {t.photos.map((ph) => (
+                  <Image key={ph.src} src={ph.src} alt={ph.alt} width={480} height={480} sizes="(min-width: 1024px) 150px, (min-width: 640px) 25vw, 50vw" className="block w-full h-auto" />
+                ))}
+              </div>
+              <p className={`font-display text-h3 ${t.colour} mb-2`}>{t.name}</p>
+              <p className="text-body text-body text-sm">{t.desc}</p>
             </div>
-            <div>
-              <Image src="/images/cards/track-nourish.jpg" alt="Two women exchanging fresh greens at a market stall" width={800} height={800} sizes="(min-width: 768px) 180px, 45vw" className="block w-full h-auto rounded-[var(--radius-card)] mb-4" />
-              <p className="font-display text-h3 text-orange mb-2">NOURISH</p>
-              <p className="text-body text-body text-sm">Nutrition habits, meal plans</p>
-            </div>
-            <div>
-              <Image src="/images/cards/track-care.jpg" alt="A woman writing in a journal on her sofa at home" width={800} height={800} sizes="(min-width: 768px) 180px, 45vw" className="block w-full h-auto rounded-[var(--radius-card)] mb-4" />
-              <p className="font-display text-h3 text-blue mb-2">CARE</p>
-              <p className="text-body text-body text-sm">Expert sessions, screenings and follow-through</p>
-            </div>
-            <div>
-              <Image src="/images/cards/track-learn.jpg" alt="A facilitator writing on a flipchart during a session" width={800} height={800} sizes="(min-width: 768px) 180px, 45vw" className="block w-full h-auto rounded-[var(--radius-card)] mb-4" />
-              <p className="font-display text-h3 text-navy mb-2">LEARN</p>
-              <p className="text-body text-body text-sm">Education & habit pathways</p>
-            </div>
-          </div>
+          ))}
+        </div>
+        <div className="section-container max-w-narrow mx-auto">
           <p className="text-center text-body">
             <strong>Community Engine</strong> brings members together via challenges, teams, and leaderboards.
             <br />
