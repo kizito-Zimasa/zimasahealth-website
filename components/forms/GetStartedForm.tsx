@@ -14,9 +14,9 @@ interface FormErrors {
   workforceSize?: string;
 }
 
-export default function GetStartedForm() {
+export default function GetStartedForm({ initialPath = 'member' }: { initialPath?: FormPath }) {
   const [formData, setFormData] = useState({
-    path: 'member' as FormPath,
+    path: initialPath,
     name: '',
     email: '',
     employerCode: '',

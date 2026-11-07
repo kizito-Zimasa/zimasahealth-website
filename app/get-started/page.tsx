@@ -13,7 +13,13 @@ export const metadata: Metadata = {
   },
 }
 
-export default function GetStartedPage() {
+export default async function GetStartedPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
+  // "I'm an Employer" links use ?path=employer to open the employer tab.
+  const initialPath = (await searchParams).path === 'employer' ? 'employer' : 'member'
   return (
     <main>
       {/* Breadcrumb */}
@@ -32,7 +38,7 @@ export default function GetStartedPage() {
       {/* Path Selector & Form */}
       <section className="section-padding bg-white">
         <div className="section-container max-w-4xl">
-          <GetStartedForm />
+          <GetStartedForm initialPath={initialPath} />
           {/* DRAFT-COPY 2026-10: Founder review */}
           <p className="text-center text-body-sm text-muted mt-8">
             Looking for a full programme with Health Tracks, provider access and aggregate reporting? Full programmes are available through your insurer, broker or scheme.

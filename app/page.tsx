@@ -1,16 +1,18 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import { Activity, ShieldCheck, Users, Building2, Stethoscope, Briefcase, Lock, BadgeCheck, MapPin, CheckCircle, Zap, HeartPulse } from 'lucide-react'
+import { Building2, Stethoscope, Briefcase, Users, Route, BellRing, UsersRound, Award, Lock, BadgeCheck, MapPin, Activity, ShieldCheck } from 'lucide-react'
 import Hero from '@/components/sections/Hero'
-import StatsStrip from '@/components/sections/StatsStrip'
 import SectionHeader from '@/components/sections/SectionHeader'
 import FeatureCard from '@/components/sections/FeatureCard'
 import CtaBand from '@/components/sections/CtaBand'
 import Button from '@/components/ui/Button'
-import Badge from '@/components/ui/Badge'
+
+// DRAFT-COPY 2026-11: homepage rewrite after the 5 Nov Commercial Growth Review — founder review
+const HERO_COPY =
+  'Zimasa helps insurers, employers and healthcare providers keep people active and on top of their health all year round — and shows the organisations paying for it who is taking part.'
 
 const SITE_DESCRIPTION =
-  'Zimasa is the Health Engagement OS for insurers, TPAs and providers in East Africa — activating members, making follow-through measurable, and proving engagement with verified Active Days.'
+  'Zimasa is the Health Engagement OS for East Africa — one platform that helps insurers, employers and healthcare providers keep people active and on top of their health all year round, and shows sponsors who is taking part.'
 
 export const metadata: Metadata = {
   title: { absolute: 'Zimasa | Health Engagement OS for insurers, TPAs and providers' },
@@ -23,11 +25,26 @@ export const metadata: Metadata = {
   },
 }
 
+const howItWorks = [
+  { icon: Route, title: 'Programmes', desc: 'Simple programmes people join through their insurer, employer or healthcare provider — or on their own.' },
+  { icon: BellRing, title: 'Nudges', desc: 'Timely reminders that prompt the next healthy step, so good intentions turn into action.' },
+  { icon: UsersRound, title: 'Community', desc: 'Squads and challenges with friends, family and colleagues keep people going together.' },
+  { icon: Award, title: 'Recognition', desc: 'Streaks, milestones and rewards celebrate progress and help habits stick.' },
+]
+
 const tracks = [
   { name: 'MOVE', colour: 'text-green', desc: 'Movement habits and physical activity — walking, hiking, dancing, yoga, gyms, classes and more.', photos: [{ src: '/images/cards/track-move-1.jpg', alt: 'Friends hiking together on a forest trail' }, { src: '/images/cards/track-move-2.jpg', alt: 'An outdoor group dance-fitness class in a park' }, { src: '/images/cards/track-move-3.jpg', alt: 'Three people holding a yoga pose on a lawn' }, { src: '/images/cards/track-move-4.jpg', alt: 'Two people on exercise bikes at a gym' }] },
   { name: 'NOURISH', colour: 'text-orange', desc: 'Nutrition habits and lifestyle routines — what we eat, how we prepare it, meal plans and food education.', photos: [{ src: '/images/cards/track-nourish-1.jpg', alt: 'Two women exchanging fresh greens at a market stall' }, { src: '/images/cards/track-nourish-2.jpg', alt: 'A woman chopping vegetables in her kitchen beside an older relative' }, { src: '/images/cards/track-nourish-3.jpg', alt: 'A family preparing a healthy breakfast together' }, { src: '/images/cards/track-nourish-4.jpg', alt: 'A woman drinking water from a bottle at home' }] },
   { name: 'CARE', colour: 'text-blue', desc: 'Preventive actions and mental wellbeing — health screenings, physiotherapy, therapy and dietitian sessions.', photos: [{ src: '/images/cards/track-care-1.jpg', alt: 'A clinician checking a man’s blood pressure' }, { src: '/images/cards/track-care-2.jpg', alt: 'A physiotherapist in his treatment room' }, { src: '/images/cards/track-care-3.jpg', alt: 'A woman meditating with her eyes closed' }, { src: '/images/cards/track-care-4.jpg', alt: 'A counselling conversation in a calm room' }] },
   { name: 'LEARN', colour: 'text-navy', desc: 'The knowledge we need for our wellbeing — health education, habit-building programmes and financial wellbeing foundations.', photos: [{ src: '/images/cards/track-learn-1.jpg', alt: 'A facilitator leading a workshop at a flipchart' }, { src: '/images/cards/track-learn-2.jpg', alt: 'A man reading at his desk' }, { src: '/images/cards/track-learn-3.jpg', alt: 'Hands working out a budget with a calculator and notebook' }, { src: '/images/cards/track-learn-4.jpg', alt: 'A woman taking notes while learning online' }] },
+]
+
+// Illustrative only — not client data. A programme offered to 500 members.
+const INVITED = 500
+const sponsorView = [
+  { label: 'Joined the programme', value: 320 },
+  { label: 'Active in the first 30 days', value: 230 },
+  { label: 'Still active at 60 days', value: 190 },
 ]
 
 export default function HomePage() {
@@ -37,331 +54,205 @@ export default function HomePage() {
       <Hero
         eyebrow="The Health Engagement OS"
         headline="Health that shows up."
-        subheadline={SITE_DESCRIPTION}
+        subheadline={HERO_COPY}
         primaryCta={{ label: 'Book a Demo', href: '/book-demo/' }}
         secondaryCta={{ label: 'Get Started Free', href: '/get-started/' }}
         backgroundVariant="green"
         image={{ src: '/images/hero/home-hero.jpg', alt: 'Three friends walking together along a tree-lined path in Homa Bay, Kenya', position: '45% 50%', priority: true }}
       />
 
-      {/* Section 2A: Active Days Definition */}
+      {/* Section 2: What Zimasa does — value first, then the four Tracks */}
       <section className="section-padding bg-white">
-        <div className="section-container max-w-narrow mx-auto">
-          <SectionHeader headline="What Is an Active Day?" align="center" />
-          <p className="text-body-lg text-body text-center mb-8">
-            An Active Day is a calendar day on which a member completes at least one health action. Several actions on the same day still count as one Active Day. Every Active Day is verified — logged steps, an attended class, a completed screening — not self-reported.
-          </p>
-        </div>
-        {/* DRAFT-COPY 2026-11: Track descriptions from Knowledge Vault v1.23 §2 — founder review */}
-        <div className="section-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {tracks.map((t) => (
-            <div key={t.name} className="card overflow-hidden">
-              <div className="-mx-8 -mt-8 mb-6 grid grid-cols-2 gap-0.5">
-                {t.photos.map((ph) => (
-                  <Image key={ph.src} src={ph.src} alt={ph.alt} width={480} height={480} sizes="(min-width: 1024px) 150px, (min-width: 640px) 25vw, 50vw" className="block w-full h-auto" />
-                ))}
+        <div className="section-container">
+          <SectionHeader
+            eyebrow="What Zimasa Does"
+            headline="Healthier Habits, Built Into Everyday Life"
+            subheadline="Zimasa is a Health Engagement OS: one platform that runs everything needed to help people stay healthy — programmes, reminders, community, rewards and reporting — so insurers, employers and providers don't have to piece it together themselves."
+            align="center"
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            {howItWorks.map(({ icon: Icon, title, desc }) => (
+              <div key={title} className="text-center">
+                <div className="w-[64px] h-[64px] rounded-full bg-green/10 flex items-center justify-center mx-auto mb-4">
+                  <Icon size={32} className="text-green" />
+                </div>
+                <h3 className="font-heading text-h4 text-dark mb-2">{title}</h3>
+                <p className="text-body text-body text-sm">{desc}</p>
               </div>
-              <p className={`font-display text-h3 ${t.colour} mb-2`}>{t.name}</p>
-              <p className="text-body text-body text-sm">{t.desc}</p>
-            </div>
-          ))}
-        </div>
-        <div className="section-container max-w-narrow mx-auto">
-          <p className="text-center text-body">
-            <strong>Community Engine</strong> brings members together via challenges, teams, and leaderboards.
-            <br />
-            <strong>Rewards Engine</strong> sustains engagement with streaks, levels, recognition and partner perks.
-          </p>
+            ))}
+          </div>
+
+          <p className="font-heading text-h4 text-dark text-center mb-8">Four areas of everyday health</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {tracks.map((t) => (
+              <div key={t.name} className="card overflow-hidden">
+                <div className="-mx-8 -mt-8 mb-6 grid grid-cols-2 gap-0.5">
+                  {t.photos.map((ph) => (
+                    <Image key={ph.src} src={ph.src} alt={ph.alt} width={480} height={480} sizes="(min-width: 1024px) 150px, (min-width: 640px) 25vw, 50vw" className="block w-full h-auto" />
+                  ))}
+                </div>
+                <p className={`font-display text-h3 ${t.colour} mb-2`}>{t.name}</p>
+                <p className="text-body text-body text-sm">{t.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Section 2: Method Strip (no figures — approved proof language only) */}
-      <StatsStrip
-        stats={[
-          { value: 'Verified', label: 'Active Days' },
-          { value: '30 · 60 · 90', label: 'Day activation reporting' },
-          { value: '4', label: 'Health tracks' },
-          { value: 'n ≥ 25', label: 'Minimum reporting cohort' },
-        ]}
-      />
-
-      {/* DRAFT-COPY 2026-10: Founder review */}
-      {/* Section 3: Audience Self-Identification — order: Insurers & TPAs → Providers → Employers → Members */}
+      {/* Section 3: Active Days, simply — with an illustrative sponsor view */}
       <section className="section-padding bg-surface">
+        <div className="section-container grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <p className="eyebrow">Active Days</p>
+            <h2 className="font-display text-h2 text-dark mb-6">Progress You Can See</h2>
+            <p className="text-body-lg text-body mb-4">
+              An <strong>Active Day</strong> is any day someone does something good for their health — a walk, a class, a screening. It counts only when it&apos;s confirmed, not just self-reported.
+            </p>
+            <p className="text-body-lg text-body">
+              Organisations that sponsor a programme see how many people joined and how many are still taking part after 30 and 60 days — as group totals, never individual health details.
+            </p>
+          </div>
+
+          <figure className="card bg-white m-0" aria-labelledby="sponsor-view-title">
+            <p id="sponsor-view-title" className="font-heading text-h4 text-dark mb-1">What a sponsor sees</p>
+            <p className="text-body text-sm mb-6">Illustrative example — a programme offered to {INVITED} members. Not client data.</p>
+            <ul className="space-y-5 list-none p-0 m-0">
+              {sponsorView.map((row) => {
+                const pct = Math.round((row.value / INVITED) * 100)
+                return (
+                  <li key={row.label} title={`${row.label}: ${row.value} of ${INVITED} members (${pct}%)`}>
+                    <div className="flex justify-between text-sm mb-2">
+                      <span className="text-dark">{row.label}</span>
+                      <span className="text-dark font-semibold">{row.value} <span className="text-body font-normal">({pct}%)</span></span>
+                    </div>
+                    <div className="h-3 rounded-full bg-green/10" aria-hidden="true">
+                      <div className="h-3 rounded-full bg-green" style={{ width: `${pct}%` }} />
+                    </div>
+                  </li>
+                )
+              })}
+            </ul>
+            <p className="text-body text-sm mt-6">Plus <strong className="text-dark">5,400 Active Days</strong> logged across the group by day 60.</p>
+          </figure>
+        </div>
+      </section>
+
+      {/* Section 4: Who it's for — a map to the audience pages. Order: Insurers & TPAs → Providers → Employers → Individuals */}
+      <section className="section-padding bg-white">
         <div className="section-container">
           <SectionHeader
-            eyebrow="Who Are You Here For?"
-            headline="Zimasa Is Built for Four Audiences"
+            eyebrow="Who It's For"
+            headline="Find Your Way In"
             align="center"
           />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
             <FeatureCard
               icon={Building2}
               eyebrow="Insurers & TPAs"
-              headline="Wellness that continues after screening."
-              body="Activate members year-round, lift screening completion, support appropriate follow-through, and extend selected cohorts into care continuity — with ZHEP for Payers. Aggregate 30/60/90 reporting on verified Active Days."
-              cta={{ label: 'See ZHEP for Payers', href: '/insurers-tpas/' }}
+              headline="Keep members engaged all year — not just at screening."
+              body="Run wellness programmes members actually use, and see the results for your schemes."
+              cta={{ label: 'For Insurers & TPAs', href: '/insurers-tpas/' }}
             />
             <FeatureCard
               icon={Stethoscope}
               eyebrow="Clinics, Diagnostics, Dietitians, Gyms & More"
               headline="Be the provider members keep coming back to."
-              body="Join Zimasa's curated provider network and use ZCare to keep members on agreed care pathways between visits — with follow-through you can see."
-              cta={{ label: 'Join the Network', href: '/healthcare-providers/' }}
+              body="Join Zimasa's provider network and help patients stick to the plan you agreed, between visits."
+              cta={{ label: 'For Healthcare Providers', href: '/healthcare-providers/' }}
             />
             <FeatureCard
               icon={Briefcase}
               eyebrow="Employers & HR Teams"
-              headline="Give your team a wellness habit they'll actually use."
-              body="Share Zimasa GO with your team free via an invite link — no procurement, no IT, no contract. Full programmes are available through your insurer, broker or scheme."
-              cta={{ label: 'See the Employer Path', href: '/employers/' }}
+              headline="A wellness benefit your team will actually use."
+              body="Share Zimasa GO with your team for free today. Full programmes come through your insurer, broker or scheme."
+              cta={{ label: 'For Employers', href: '/employers/' }}
             />
             <FeatureCard
               icon={Users}
-              eyebrow="Individual Members"
-              headline="Start tracking Active Days — free, today."
-              body="Steps, squads of up to five, public challenges and share cards. No employer needed. Free to start."
-              cta={{ label: 'Get Started Free', href: '/zimasa-go/' }}
+              eyebrow="Individuals"
+              headline="Build healthy habits — free, today."
+              body="Track your steps, join a squad and take on challenges with Zimasa GO. No employer needed."
+              cta={{ label: 'Explore Zimasa GO', href: '/zimasa-go/' }}
+            />
+          </div>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Button variant="primary" href="/book-demo/">Book a Demo</Button>
+            <Button variant="outline" href="/get-started/">Get Started Free</Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 5: Our two solutions — short, links to product pages */}
+      <section className="section-padding bg-surface">
+        <div className="section-container">
+          <SectionHeader
+            eyebrow="What We Build"
+            headline="Two Solutions. Use Either, or Both."
+            align="center"
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <FeatureCard
+              icon={Activity}
+              eyebrow="Health Engagement"
+              headline="ZHEP — Zimasa Health Engagement Platform"
+              body="Runs health programmes for members, with community, rewards and reporting — plus ZCare, which helps patients follow the plan agreed with their provider. Works alongside a payer's existing systems."
+              cta={{ label: 'Explore ZHEP', href: '/solutions/zhep/' }}
+            />
+            <FeatureCard
+              icon={ShieldCheck}
+              eyebrow="Payer Administration"
+              headline="ZPS — Zimasa Payer Solution"
+              body="Software for insurers, schemes and TPAs to run their administration — members, benefits, providers and claims — in one place. You remain the insurer and the decision-maker."
+              cta={{ label: 'Explore ZPS', href: '/solutions/zps/' }}
             />
           </div>
         </div>
       </section>
 
-      {/* DRAFT-COPY 2026-10: Founder review */}
-      {/* Section 4: Solutions Overview — two products: ZHEP (incl. ZCare) and ZPS */}
+      {/* Section 6: Zimasa GO — free to start, member and employer sign-up routes */}
       <section className="section-padding bg-white">
-        <div className="section-container">
-          <SectionHeader
-            eyebrow="What We Build"
-            headline="Two Solutions. One Engagement Model."
-            subheadline="ZHEP activates members and makes follow-through measurable. ZPS runs payer administration. Use either — or both."
-            align="center"
-          />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="card">
-              <Badge variant="green" className="mb-4">Health Engagement</Badge>
-              <Activity size={40} className="text-green mb-4" />
-              <h3 className="font-heading text-h4 text-dark mb-3">ZHEP — Zimasa Health Engagement Platform</h3>
-              <p className="text-body text-body mb-4">Four Tracks — MOVE, NOURISH, CARE and LEARN — with the Community and Rewards Engines, provider bookings, verified Active Days and 30/60/90 reporting. Integrates with a payer&apos;s existing core administration system — no replacement needed.</p>
-              <div className="flex items-start gap-3 mb-6 p-4 rounded-lg bg-surface">
-                <HeartPulse size={24} className="text-blue flex-shrink-0 mt-1" />
-                <p className="text-body text-body text-sm">
-                  <strong>Includes ZCare — care continuity on ZHEP.</strong> ZCare operationalises agreed care pathways and makes follow-through measurable between visits and after screening.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-6">
-                <a href="/solutions/zhep/" className="font-ui text-label text-green uppercase tracking-wider hover:text-blue">Explore ZHEP →</a>
-                <a href="/solutions/zhep/zcare/" className="font-ui text-label text-blue uppercase tracking-wider hover:text-green">About ZCare →</a>
-              </div>
-            </div>
-
-            <div className="card">
-              <Badge variant="navy" className="mb-4">Payer Administration</Badge>
-              <ShieldCheck size={40} className="text-navy mb-4" />
-              <h3 className="font-heading text-h4 text-dark mb-3">ZPS — Zimasa Payer Solution</h3>
-              <p className="text-body text-body mb-6">Payer administration software for insurers, schemes and TPAs: schemes and products, member enrolment and eligibility, benefits and limits, provider networks, preauthorisation, claims processing and adjudication, provider payments, reporting and compliance. Your team runs its administration on ZPS; you remain the insurer and the decision-maker.</p>
-              <a href="/solutions/zps/" className="font-ui text-label text-navy uppercase tracking-wider hover:text-blue">Explore ZPS →</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Section 5: How It Works */}
-      <section className="section-padding bg-surface">
-        <div className="section-container">
-          <SectionHeader
-            eyebrow="The Engagement Model"
-            headline="Verified Active Days. 30/60/90 Reporting."
-            align="center"
-          />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="flex justify-center mb-4">
-                <div className="w-[80px] h-[80px] rounded-icon bg-green/10 flex items-center justify-center">
-                  <Users size={40} className="text-green" />
-                </div>
-              </div>
-              <h4 className="font-heading text-h4 text-dark mb-3">Step 1 — Enrol</h4>
-              <p className="text-body text-body">Members join through their insurer, scheme or programme. They choose their health tracks and set their baseline.</p>
-            </div>
-
-            <div className="text-center">
-              <div className="flex justify-center mb-4">
-                <div className="w-[80px] h-[80px] rounded-icon bg-orange/10 flex items-center justify-center">
-                  <Zap size={40} className="text-orange" />
-                </div>
-              </div>
-              <h4 className="font-heading text-h4 text-dark mb-3">Step 2 — Engage</h4>
-              <p className="text-body text-body">The Community Engine runs challenges, squads and leaderboards. The Rewards Engine recognises progress with streaks, levels, recognition and partner perks.</p>
-            </div>
-
-            <div className="text-center">
-              <div className="flex justify-center mb-4">
-                <div className="w-[80px] h-[80px] rounded-icon bg-blue/10 flex items-center justify-center">
-                  <CheckCircle size={40} className="text-blue" />
-                </div>
-              </div>
-              <h4 className="font-heading text-h4 text-dark mb-3">Step 3 — Verify</h4>
-              <p className="text-body text-body">Every activity is verified — gym check-ins, screenings, expert sessions. We report Active Days, not self-reported data.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Section 6: Buyer Personas */}
-      <section className="section-padding bg-white">
-        <div className="section-container">
-          <SectionHeader
-            eyebrow="Buyer Personas"
-            headline="Built for the People Making Population Health Decisions"
-            align="center"
-          />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="card">
-              <Building2 size={40} className="text-green mb-4" />
-              <p className="eyebrow mb-2">CMO / Head of Wellness / Medical Team</p>
-              <h4 className="font-heading text-h4 text-dark mb-3">Engagement evidence before renewal</h4>
-              <p className="text-body text-body mb-6">See which cohorts are engaging, which tracks drive activation, and leading-indicator movement by cohort, reported at 30/60/90 days.</p>
-              <a href="/insurers-tpas/" className="font-ui text-label text-green uppercase tracking-wider hover:text-blue">ZHEP for Payers →</a>
-            </div>
-
-            {/* DRAFT-COPY 2026-10: Founder review */}
-            <div className="card">
-              <Stethoscope size={40} className="text-orange mb-4" />
-              <p className="eyebrow mb-2">Practice owners, clinic leads</p>
-              <h4 className="font-heading text-h4 text-dark mb-3">Follow-through between visits</h4>
-              <p className="text-body text-body mb-6">Join the Zimasa provider network and use ZCare to keep members on agreed care pathways — reminders, bookings and follow-through sessions — with follow-through you can see.</p>
-              <a href="/healthcare-providers/" className="font-ui text-label text-orange uppercase tracking-wider hover:text-blue">Join the Network →</a>
-            </div>
-
-            {/* DRAFT-COPY 2026-10: Founder review */}
-            <div className="card">
-              <Briefcase size={40} className="text-blue mb-4" />
-              <p className="eyebrow mb-2">HR Director / CFO</p>
-              <h4 className="font-heading text-h4 text-dark mb-3">A wellness benefit people use</h4>
-              <p className="text-body text-body mb-6">Start free with Zimasa GO. Full programmes, with aggregate Active Days reporting, are available through your insurer, broker or scheme. Aggregate reporting only (n ≥ 25); individual results never go to employers.</p>
-              <a href="/employers/" className="font-ui text-label text-blue uppercase tracking-wider hover:text-green">For Employers →</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* DRAFT-COPY 2026-10: Founder review */}
-      {/* Section 7: Zimasa GO Freemium CTA */}
-      <section className="section-padding bg-surface">
-        <div className="section-container max-w-narrow mx-auto">
-          <SectionHeader
-            eyebrow="Start Free"
-            headline="Zimasa GO — Free to Start"
-            subheadline="No contract. No credit card. Steps, squads, public challenges and share cards — free for members. Employers can share Zimasa GO with their team via an invite link; reporting comes through the full programme, available through your insurer, broker or scheme."
-            align="center"
-          />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-            <div className="flex items-start gap-4">
-              <Activity size={24} className="text-green flex-shrink-0 mt-1" />
-              <div>
-                <h4 className="font-heading text-h4 text-dark">Steps & activity tracking</h4>
-              </div>
-            </div>
-            <div className="flex items-start gap-4">
-              <Users size={24} className="text-green flex-shrink-0 mt-1" />
-              <div>
-                <h4 className="font-heading text-h4 text-dark">Squads of up to five</h4>
-              </div>
-            </div>
-            <div className="flex items-start gap-4">
-              <Activity size={24} className="text-green flex-shrink-0 mt-1" />
-              <div>
-                <h4 className="font-heading text-h4 text-dark">Public challenges & leaderboards</h4>
-              </div>
-            </div>
-            <div className="flex items-start gap-4">
-              <Activity size={24} className="text-green flex-shrink-0 mt-1" />
-              <div>
-                <h4 className="font-heading text-h4 text-dark">Share cards</h4>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-            <div className="text-center">
-              <p className="font-heading text-h4 text-dark mb-4">I&apos;m a Member</p>
-              <Button href="/get-started/" variant="primary" className="w-full justify-center">
-                Get Started Free
-              </Button>
-            </div>
-            <div className="text-center">
-              <p className="font-heading text-h4 text-dark mb-4">I&apos;m an Employer</p>
-              <Button href="/employers/" variant="secondary" className="w-full justify-center">
-                Share With My Team
-              </Button>
-            </div>
-          </div>
-          <p className="text-center text-body text-sm">Already in a company programme? <a href="https://app.zimasahealth.com" className="text-green hover:underline">Sign in at app.zimasahealth.com</a></p>
-        </div>
-      </section>
-
-      {/* DRAFT-COPY 2026-10: Founder review */}
-      {/* Section 8: First Customer Cohort */}
-      <section className="section-padding bg-light-green">
         <div className="section-container max-w-narrow mx-auto text-center">
-          <p className="eyebrow mb-2">First Customer Cohort — 2026</p>
-          <h2 className="font-display text-h2 text-dark mb-6">Start With a Controlled Go-to-Market</h2>
-          <p className="text-body-lg text-dark mb-8">A defined cohort, an agreed programme, and a 90-Day Growth Review. Built for insurers, TPAs and providers ready to put engagement evidence on the table.</p>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8 text-left md:text-center">
-            <div>
-              <h4 className="font-heading text-dark mb-2">A defined cohort</h4>
-            </div>
-            <div>
-              <h4 className="font-heading text-dark mb-2">An agreed programme</h4>
-            </div>
-            <div>
-              <h4 className="font-heading text-dark mb-2">30/60/90 Active Days reporting</h4>
-            </div>
-            <div>
-              <h4 className="font-heading text-dark mb-2">Input on the platform roadmap</h4>
-            </div>
+          <p className="eyebrow">Start Free</p>
+          <h2 className="font-display text-h2 text-dark mb-4">Zimasa GO — Free to Start</h2>
+          <p className="text-body-lg text-body mb-8">
+            Track your steps, join a squad of up to five and take on challenges. No contract, no credit card.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4 mb-6">
+            <Button variant="primary" href="/get-started/?path=member">I&apos;m a Member</Button>
+            <Button variant="secondary" href="/get-started/?path=employer">I&apos;m an Employer</Button>
           </div>
-
-          <Button href="/book-demo/" variant="primary">Discuss a Controlled Go-to-Market</Button>
+          <p className="text-body text-sm">Already in a company programme? <a href="https://app.zimasahealth.com" className="text-green hover:underline">Sign in at app.zimasahealth.com</a></p>
         </div>
       </section>
 
-      {/* Section 9: Trust & Credentials */}
-      <section className="section-padding bg-white">
+      {/* Section 7: Why trust Zimasa */}
+      <section className="section-padding bg-surface">
         <div className="section-container">
-          <SectionHeader
-            eyebrow="Why Zimasa"
-            headline="Built on Verified Engagement, Not Vanity Metrics"
-            align="center"
-          />
+          <SectionHeader eyebrow="Why Zimasa" headline="Built to Be Trusted" align="center" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
               <Lock size={48} className="text-green mx-auto mb-4" />
-              <h4 className="font-heading text-h4 text-dark mb-3">Privacy-Governed by Design</h4>
-              <p className="text-body text-body">In employer, payer and freemium contexts, Zimasa stores verification of engagement events, not clinical data. Provider contexts may handle regulated health data only under governance conditions. Aligned with the Kenya Data Protection Act, 2019. Zimasa is registered with the Office of the Data Protection Commissioner (ODPC) as a Data Controller and Data Processor.</p>
+              <h3 className="font-heading text-h4 text-dark mb-3">Privacy First</h3>
+              <p className="text-body text-body">Sponsors see group totals, not personal health details. Zimasa is registered with Kenya&apos;s Office of the Data Protection Commissioner. <a href="/privacy-centre/" className="text-green hover:underline">Privacy Centre</a></p>
             </div>
-
             <div className="text-center">
               <BadgeCheck size={48} className="text-orange mx-auto mb-4" />
-              <h4 className="font-heading text-h4 text-dark mb-3">Vetted Provider Network</h4>
-              <p className="text-body text-body">Providers are vetted before they join the Zimasa network. Members book with credentialed clinics, diagnostics, gyms, dietitians, therapists and labs.</p>
+              <h3 className="font-heading text-h4 text-dark mb-3">Vetted Providers</h3>
+              <p className="text-body text-body">Clinics, labs, gyms, dietitians and therapists are checked before they join the Zimasa network.</p>
             </div>
-
             <div className="text-center">
               <MapPin size={48} className="text-blue mx-auto mb-4" />
-              <h4 className="font-heading text-h4 text-dark mb-3">Kenya-First</h4>
-              <p className="text-body text-body">Kenya-first, built for East Africa. Programmes are designed around the Kenyan health market and the insurers, TPAs and providers who serve it.</p>
+              <h3 className="font-heading text-h4 text-dark mb-3">Kenya-First</h3>
+              <p className="text-body text-body">Built for the Kenyan health market and East Africa — with the insurers, providers and employers who serve it.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Section 10: CTA Band */}
+      {/* Section 8: CTA Band */}
       <CtaBand
         headline="Health That Shows Up — See It in 30 Minutes"
-        subtext="Book a 30-minute demo. We'll show you the platform, a sample 90-day programme design and 30/60/90 reporting."
+        subtext="Book a 30-minute demo and we'll show you how a programme runs and what you'd see after 30 and 60 days."
         primaryCta={{ label: 'Book a Demo', href: '/book-demo/' }}
         secondaryCta={{ label: 'Get Started Free', href: '/get-started/' }}
       />
