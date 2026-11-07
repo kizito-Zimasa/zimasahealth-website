@@ -106,7 +106,7 @@ export default function HomePage() {
             <p className="eyebrow">Active Days</p>
             <h2 className="font-display text-h2 text-dark mb-6">Progress You Can See</h2>
             <p className="text-body-lg text-body mb-4">
-              An <strong>Active Day</strong> is any day someone does something good for their health — a walk, a class, a screening. It counts only when it&apos;s confirmed, not just self-reported.
+              An <strong>Active Day</strong>{' '}is any day someone does something good for their health — a walk, a class, a screening. It counts only when it&apos;s confirmed, not just self-reported.
             </p>
             <p className="text-body-lg text-body">
               Organisations that sponsor a programme see how many people joined and how many are still taking part after 30 and 60 days — as group totals, never individual health details.
@@ -152,6 +152,7 @@ export default function HomePage() {
               headline="Keep members engaged all year — not just at screening."
               body="Run wellness programmes members actually use, and see the results for your schemes."
               cta={{ label: 'For Insurers & TPAs', href: '/insurers-tpas/' }}
+              image={{ src: '/images/hero/payers-hero.jpg', alt: 'A hand pointing to the next step on a printed nutrition plan', position: '40% 50%' }}
             />
             <FeatureCard
               icon={Stethoscope}
@@ -159,6 +160,7 @@ export default function HomePage() {
               headline="Be the provider members keep coming back to."
               body="Join Zimasa's provider network and help patients stick to the plan you agreed, between visits."
               cta={{ label: 'For Healthcare Providers', href: '/healthcare-providers/' }}
+              image={{ src: '/images/hero/providers-hero.jpg', alt: 'A clinician holding a patient’s hands in reassurance', position: '45% 50%' }}
             />
             <FeatureCard
               icon={Briefcase}
@@ -166,6 +168,7 @@ export default function HomePage() {
               headline="A wellness benefit your team will actually use."
               body="Share Zimasa GO with your team for free today. Full programmes come through your insurer, broker or scheme."
               cta={{ label: 'For Employers', href: '/employers/' }}
+              image={{ src: '/images/hero/employers-hero.jpg', alt: 'Four colleagues doing a side stretch together outdoors', position: '50% 60%' }}
             />
             <FeatureCard
               icon={Users}
@@ -173,6 +176,7 @@ export default function HomePage() {
               headline="Build healthy habits — free, today."
               body="Track your steps, join a squad and take on challenges with Zimasa GO. No employer needed."
               cta={{ label: 'Explore Zimasa GO', href: '/zimasa-go/' }}
+              image={{ src: '/images/hero/members-hero.jpg', alt: 'A man resting on the grass after exercise, checking his phone', position: '50% 40%' }}
             />
           </div>
           <div className="flex flex-wrap justify-center gap-4">
@@ -211,17 +215,23 @@ export default function HomePage() {
 
       {/* Section 6: Zimasa GO — free to start, member and employer sign-up routes */}
       <section className="section-padding bg-white">
-        <div className="section-container max-w-narrow mx-auto text-center">
-          <p className="eyebrow">Start Free</p>
-          <h2 className="font-display text-h2 text-dark mb-4">Zimasa GO — Free to Start</h2>
-          <p className="text-body-lg text-body mb-8">
-            Track your steps, join a squad of up to five and take on challenges. No contract, no credit card.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4 mb-6">
-            <Button variant="primary" href="/get-started/?path=member">I&apos;m a Member</Button>
-            <Button variant="secondary" href="/get-started/?path=employer">I&apos;m an Employer</Button>
+        <div className="section-container grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <p className="eyebrow">Start Free</p>
+            <h2 className="font-display text-h2 text-dark mb-4">Zimasa GO — Free to Start</h2>
+            <p className="text-body-lg text-body mb-8">
+              Track your steps, join a squad of up to five and take on challenges. No contract, no credit card.
+            </p>
+            <div className="flex flex-wrap gap-4 mb-6">
+              <Button variant="primary" href="/get-started/?path=member">I&apos;m a Member</Button>
+              <Button variant="secondary" href="/get-started/?path=employer">I&apos;m an Employer</Button>
+            </div>
+            <p className="text-body text-sm">Already in a company programme? <a href="https://app.zimasahealth.com" className="text-green hover:underline">Sign in at app.zimasahealth.com</a></p>
           </div>
-          <p className="text-body text-sm">Already in a company programme? <a href="https://app.zimasahealth.com" className="text-green hover:underline">Sign in at app.zimasahealth.com</a></p>
+          <div className="grid grid-cols-2 gap-4">
+            <Image src="/images/cards/go-squads.jpg" alt="Three friends putting their hands together in a park" width={800} height={800} sizes="(min-width: 1024px) 25vw, 50vw" className="block w-full h-auto rounded-[var(--radius-card)]" />
+            <Image src="/images/cards/go-active-days.jpg" alt="Two people checking their fitness watches after exercise" width={800} height={800} sizes="(min-width: 1024px) 25vw, 50vw" className="block w-full h-auto rounded-[var(--radius-card)] mt-12" />
+          </div>
         </div>
       </section>
 

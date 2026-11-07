@@ -192,7 +192,7 @@ export default function ZimasaGoPage() {
           </div>
 
           <p className="text-center text-body text-sm mt-8 max-w-2xl mx-auto">
-            <strong>Note:</strong> If your employer or health scheme uses Zimasa, you may already have access to the full programme. Zimasa GO is your independent starting point if they don&apos;t — yet.
+            <strong>Note:</strong>{' '}If your employer or health scheme uses Zimasa, you may already have access to the full programme. Zimasa GO is your independent starting point if they don&apos;t — yet.
           </p>
         </div>
       </section>
