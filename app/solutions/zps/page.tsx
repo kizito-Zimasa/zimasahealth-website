@@ -46,6 +46,7 @@ export default function ZPSPage() {
         primaryCta={{ label: 'Book a Demo', href: '/book-demo/' }}
         secondaryCta={{ label: 'Contact Us', href: '/contact-us/' }}
         backgroundVariant="navy"
+        image={{ src: '/images/hero/zps-hero.jpg', alt: 'Two colleagues working through a task together at a laptop', position: '60% 50%', priority: true }}
       />
 
       {/* DRAFT-COPY 2026-10: Founder review */}

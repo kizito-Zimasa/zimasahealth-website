@@ -53,6 +53,7 @@ export default function HealthcareProvidersPage() {
         primaryCta={{ label: 'Apply to Join the Network', href: APPLY_HREF }}
         secondaryCta={{ label: 'Explore ZCare', href: ZCARE_HREF }}
         backgroundVariant="green"
+        image={{ src: '/images/hero/providers-hero.jpg', alt: 'A clinician holding a patient’s hands in reassurance during a consultation', position: '45% 50%', priority: true }}
       />
 
       {/* DRAFT-COPY 2026-10: Founder review */}

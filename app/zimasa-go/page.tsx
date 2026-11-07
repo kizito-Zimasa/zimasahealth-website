@@ -32,6 +32,7 @@ export default function ZimasaGoPage() {
         primaryCta={{ label: 'Get Started Free', href: '/get-started/?path=member' }}
         secondaryCta={{ label: 'Bring Zimasa GO to My Workplace', href: '/get-started/?path=employer' }}
         backgroundVariant="green"
+        image={{ src: '/images/hero/members-hero.jpg', alt: 'A man resting on the grass after exercise, checking his phone', position: '50% 40%', priority: true }}
       />
 
       {/* Section 2: What Is Zimasa GO */}

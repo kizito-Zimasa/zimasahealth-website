@@ -53,6 +53,7 @@ export default function ZCarePage() {
         primaryCta={{ label: 'Book a Demo', href: '/book-demo/' }}
         secondaryCta={{ label: 'Explore ZHEP', href: '/solutions/zhep/' }}
         backgroundVariant="green"
+        image={{ src: '/images/hero/zcare-hero.jpg', alt: 'A clinician talking a patient through next steps after a blood-pressure check in a clinic', position: '15% 50%', priority: true }}
       />
 
       {/* DRAFT-COPY 2026-10: Founder review */}

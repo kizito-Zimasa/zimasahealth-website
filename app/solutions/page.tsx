@@ -34,6 +34,7 @@ export default function SolutionsPage() {
         subheadline="ZHEP, the Zimasa Health Engagement Platform — with ZCare care continuity — activates members and makes follow-through measurable. ZPS, the Zimasa Payer Solution, runs payer administration. Use either, or both."
         primaryCta={{ label: 'Book a Demo', href: '/book-demo/' }}
         backgroundVariant="navy"
+        image={{ src: '/images/hero/solutions-hero.jpg', alt: 'A team gathered around a tablet during a programme planning discussion', position: '30% 40%', priority: true }}
       />
 
       {/* DRAFT-COPY 2026-10: Founder review */}

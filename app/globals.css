@@ -145,13 +145,18 @@ h6 {
   color: var(--color-green);
 }
 
-a {
-  color: var(--color-green);
-  text-decoration: none;
-}
+/* Kept in the base layer so component classes (.btn-*, nav links) can set their
+   own colour; an unlayered rule here beats every @layer rule and turned all
+   button-links' text green. */
+@layer base {
+  a {
+    color: var(--color-green);
+    text-decoration: none;
+  }
 
-a:hover {
-  color: var(--color-blue);
+  a:hover {
+    color: var(--color-blue);
+  }
 }
 
 @layer components {

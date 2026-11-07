@@ -65,6 +65,7 @@ export default function InsurersTPAsPage() {
         primaryCta={{ label: 'Book a Demo', href: '/book-demo/' }}
         secondaryCta={{ label: 'Discuss a Controlled Go-to-Market', href: '/contact-us/' }}
         backgroundVariant="navy"
+        image={{ src: '/images/hero/payers-hero.jpg', alt: 'A hand pointing to the next step on a printed nutrition plan during a follow-up conversation', position: '40% 50%', priority: true }}
       />
 
       {/* DRAFT-COPY 2026-10: Founder review */}

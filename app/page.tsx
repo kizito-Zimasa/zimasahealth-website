@@ -33,6 +33,7 @@ export default function HomePage() {
         primaryCta={{ label: 'Book a Demo', href: '/book-demo/' }}
         secondaryCta={{ label: 'Get Started Free', href: '/get-started/' }}
         backgroundVariant="green"
+        image={{ src: '/images/hero/home-hero.jpg', alt: 'Three friends walking together along a tree-lined path in Homa Bay, Kenya', position: '45% 50%', priority: true }}
       />
 
       {/* Section 2A: Active Days Definition */}

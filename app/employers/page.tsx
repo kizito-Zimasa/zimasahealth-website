@@ -32,6 +32,7 @@ export default function EmployersPage() {
         primaryCta={{ label: 'Get Started Free', href: '/get-started/' }}
         secondaryCta={{ label: 'See the Full Programme', href: '#full-programme' }}
         backgroundVariant="green"
+        image={{ src: '/images/hero/employers-hero.jpg', alt: 'Four colleagues doing a side stretch together on an outdoor terrace', position: '50% 60%', priority: true }}
       />
 
       {/* DRAFT-COPY 2026-10: Founder review */}

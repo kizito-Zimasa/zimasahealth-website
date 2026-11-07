@@ -10,7 +10,9 @@ interface HeroProps {
   primaryCta: { label: string; href: string }
   secondaryCta?: { label: string; href: string }
   backgroundVariant?: 'green' | 'navy'
-  image?: { src: string; alt: string; priority?: boolean }
+  /** `position` is a CSS object-position (e.g. '40% 50%') that keeps the subject
+   *  in frame when the hero is cropped to a narrow (mobile) or wide viewport. */
+  image?: { src: string; alt: string; priority?: boolean; position?: string }
 }
 
 export default function Hero({
@@ -30,10 +32,12 @@ export default function Hero({
             src={image.src}
             alt={image.alt}
             fill
-            priority={image.priority}
+            // Next 16 deprecates `priority`; heroes are above the fold, so load eagerly.
+            loading={image.priority ? 'eager' : undefined}
+            fetchPriority={image.priority ? 'high' : undefined}
             sizes="100vw"
             className="object-cover"
-            style={{ zIndex: 0 }}
+            style={{ zIndex: 0, objectPosition: image.position ?? '50% 50%' }}
           />
           <div
             className={cn(
