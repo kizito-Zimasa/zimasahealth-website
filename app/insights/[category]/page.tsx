@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import { getBlogCategories, getBlogPostsByCategory, getCategoryLabel } from '@/lib/insights'
 import Button from '@/components/ui/Button'
 import Breadcrumbs from '@/components/seo/Breadcrumbs'
@@ -86,7 +87,17 @@ export default async function BlogCategoryPage({ params }: InsightsCategoryPageP
                 href={`/insights/${category}/${post.slug}/`}
                 className="group"
               >
-                <article className="card h-full flex flex-col hover:shadow-lg transition-shadow">
+                <article className="card overflow-hidden h-full flex flex-col hover:shadow-lg transition-shadow">
+                  {post.heroImage && (
+                    <Image
+                      src={post.heroImage}
+                      alt=""
+                      width={1100}
+                      height={550}
+                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                      className="-mx-8 -mt-8 mb-6 block aspect-[2/1] w-[calc(100%+4rem)] max-w-none object-cover"
+                    />
+                  )}
                   <div className="mb-4">
                     <p className="text-sm font-medium text-green mb-2">{label}</p>
                     <h3 className="font-heading text-h4 text-dark group-hover:text-green transition-colors">
