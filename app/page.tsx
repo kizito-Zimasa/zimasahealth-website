@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { Activity, ShieldCheck, Users, Building2, Stethoscope, Briefcase, Lock, BadgeCheck, MapPin, CheckCircle, Zap, HeartPulse } from 'lucide-react'
 import Hero from '@/components/sections/Hero'
 import StatsStrip from '@/components/sections/StatsStrip'
@@ -45,18 +46,22 @@ export default function HomePage() {
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center mb-12">
             <div>
+              <Image src="/images/cards/track-move.jpg" alt="A man cycling along a rural road" width={800} height={800} sizes="(min-width: 768px) 180px, 45vw" className="block w-full h-auto rounded-[var(--radius-card)] mb-4" />
               <p className="font-display text-h3 text-green mb-2">MOVE</p>
               <p className="text-body text-body text-sm">Gyms, classes, run clubs, steps</p>
             </div>
             <div>
+              <Image src="/images/cards/track-nourish.jpg" alt="Two women exchanging fresh greens at a market stall" width={800} height={800} sizes="(min-width: 768px) 180px, 45vw" className="block w-full h-auto rounded-[var(--radius-card)] mb-4" />
               <p className="font-display text-h3 text-orange mb-2">NOURISH</p>
               <p className="text-body text-body text-sm">Nutrition habits, meal plans</p>
             </div>
             <div>
+              <Image src="/images/cards/track-care.jpg" alt="A woman writing in a journal on her sofa at home" width={800} height={800} sizes="(min-width: 768px) 180px, 45vw" className="block w-full h-auto rounded-[var(--radius-card)] mb-4" />
               <p className="font-display text-h3 text-blue mb-2">CARE</p>
               <p className="text-body text-body text-sm">Expert sessions, screenings and follow-through</p>
             </div>
             <div>
+              <Image src="/images/cards/track-learn.jpg" alt="A facilitator writing on a flipchart during a session" width={800} height={800} sizes="(min-width: 768px) 180px, 45vw" className="block w-full h-auto rounded-[var(--radius-card)] mb-4" />
               <p className="font-display text-h3 text-navy mb-2">LEARN</p>
               <p className="text-body text-body text-sm">Education & habit pathways</p>
             </div>

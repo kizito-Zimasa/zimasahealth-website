@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { Footprints, Users, Trophy, Share2, UserPlus, Link2, BarChart2 } from 'lucide-react'
 import Hero from '@/components/sections/Hero'
 import SectionHeader from '@/components/sections/SectionHeader'
@@ -17,6 +18,12 @@ export const metadata: Metadata = {
     description: 'Zimasa GO is free to start. Track steps, join a squad of up to five, take on public challenges and share your milestones. Start in under five minutes — no employer needed.',
   },
 }
+
+const goMoments = [
+  { src: '/images/cards/go-active-days.jpg', alt: 'Two people checking their fitness watches after exercise', caption: 'Every health action builds your Active Days.' },
+  { src: '/images/cards/go-squads.jpg', alt: 'Three friends putting their hands together in a park', caption: 'Bring a squad of up to five.' },
+  { src: '/images/cards/go-family.jpg', alt: 'Two adults walking hand in hand with a small child across a field', caption: 'Friends, family, colleagues — move together.' },
+]
 
 export default function ZimasaGoPage() {
   return (
@@ -48,6 +55,23 @@ export default function ZimasaGoPage() {
             <br /><br />
             No gym membership required. No employer needed. Just you, your squad and a goal.
           </p>
+
+          {/* DRAFT-COPY 2026-11: captions for founder review */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
+            {goMoments.map((m) => (
+              <figure key={m.src} className="m-0">
+                <Image
+                  src={m.src}
+                  alt={m.alt}
+                  width={800}
+                  height={800}
+                  sizes="(min-width: 640px) 33vw, 100vw"
+                  className="block w-full h-auto rounded-[var(--radius-card)]"
+                />
+                <figcaption className="mt-3 text-center text-sm text-body">{m.caption}</figcaption>
+              </figure>
+            ))}
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="card">
