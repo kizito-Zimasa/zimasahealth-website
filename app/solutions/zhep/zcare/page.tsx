@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { Route, BellRing, CalendarCheck, Users, BarChart2, Stethoscope, Building2, Layers, Lock, Unlink } from 'lucide-react'
 import Hero from '@/components/sections/Hero'
 import SectionHeader from '@/components/sections/SectionHeader'
@@ -27,6 +28,12 @@ const capabilities = [
   { icon: CalendarCheck, title: 'Follow-through sessions', desc: 'Follow-through sessions keep the pathway moving between visits and after screening.' },
   { icon: Users, title: 'Care-team visibility', desc: 'With member consent, the care team sees programme progress — who is on track and who needs a nudge.' },
   { icon: BarChart2, title: 'Measurable follow-through', desc: 'Follow-through is verified and reported, so it can be seen, not assumed.' },
+]
+
+const continuityMoments = [
+  { src: '/images/cards/zcare-screening.jpg', alt: 'A nurse fitting a blood-pressure cuff', caption: 'A screening identifies a need.' },
+  { src: '/images/cards/zcare-care-plan.jpg', alt: 'A clinician writing up a care plan on a clipboard', caption: 'A plan is agreed in the clinic.' },
+  { src: '/images/cards/zcare-care-team.jpg', alt: 'Two clinicians reviewing information together at a laptop', caption: 'The care team needs to see what happens next.' },
 ]
 
 export default function ZCarePage() {
@@ -71,6 +78,22 @@ export default function ZCarePage() {
           <p className="text-body-lg text-body">
             A consultation ends with a plan: a follow-up test, a review in six weeks, a change in routine. Between visits, that plan depends on the member remembering, booking and showing up — and the care team rarely sees whether it happened. After a screening, the same gap opens: the need is identified, but the next step is left to chance.
           </p>
+        </div>
+        {/* DRAFT-COPY 2026-11: captions for founder review */}
+        <div className="section-container mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {continuityMoments.map((m) => (
+            <figure key={m.src} className="m-0">
+              <Image
+                src={m.src}
+                alt={m.alt}
+                width={800}
+                height={800}
+                sizes="(min-width: 640px) 33vw, 100vw"
+                className="block w-full h-auto rounded-[var(--radius-card)]"
+              />
+              <figcaption className="mt-3 text-center text-sm text-body">{m.caption}</figcaption>
+            </figure>
+          ))}
         </div>
       </section>
 

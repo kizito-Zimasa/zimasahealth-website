@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { Network, Route, Stethoscope, Microscope, Apple, Brain, Activity, Dumbbell, BadgeCheck, Lock } from 'lucide-react'
+import Image from 'next/image'
+import { Network, Route, BadgeCheck, Lock } from 'lucide-react'
 import Hero from '@/components/sections/Hero'
 import SectionHeader from '@/components/sections/SectionHeader'
 import FeatureCard from '@/components/sections/FeatureCard'
@@ -23,12 +24,12 @@ const APPLY_HREF = '/contact-us/?enquiry=provider'
 const ZCARE_HREF = '/solutions/zhep/zcare/'
 
 const providerCategories = [
-  { icon: Stethoscope, title: 'Clinics and Doctors', desc: 'Primary care clinics and doctors delivering consultations and follow-through sessions for members of Zimasa programmes.' },
-  { icon: Microscope, title: 'Diagnostics and Screening', desc: 'Laboratories and screening providers delivering wellness checks and preventive screening packages.' },
-  { icon: Apple, title: 'Dietitians and Nutrition', desc: 'Registered dietitians and nutritionists supporting the NOURISH Track and agreed care pathways.' },
-  { icon: Brain, title: 'Mental Health', desc: 'Licensed therapists and counsellors delivering sessions within the CARE Track.' },
-  { icon: Activity, title: 'Physiotherapy', desc: 'Registered physiotherapists supporting movement, recovery and follow-through sessions.' },
-  { icon: Dumbbell, title: 'Gyms and Movement', desc: 'Gyms, fitness centres and movement providers delivering the MOVE Track.' },
+  { image: '/images/cards/provider-clinic.jpg', alt: 'A clinician explaining an X-ray to a patient', title: 'Clinics and Doctors', desc: 'Primary care clinics and doctors delivering consultations and follow-through sessions for members of Zimasa programmes.' },
+  { image: '/images/cards/provider-diagnostics.jpg', alt: 'A laboratory technician working with sample tubes at a lab bench', title: 'Diagnostics and Screening', desc: 'Laboratories and screening providers delivering wellness checks and preventive screening packages.' },
+  { image: '/images/cards/provider-dietitian.jpg', alt: 'A dietitian writing a weekly meal plan with a client beside a bowl of fruit', title: 'Dietitians and Nutrition', desc: 'Registered dietitians and nutritionists supporting the NOURISH Track and agreed care pathways.' },
+  { image: '/images/cards/provider-counselling.jpg', alt: 'A counsellor and client in conversation in a calm room', title: 'Mental Health', desc: 'Licensed therapists and counsellors delivering sessions within the CARE Track.' },
+  { image: '/images/cards/provider-physio.jpg', alt: 'A physiotherapist guiding an older man through an arm-raise exercise', title: 'Physiotherapy', desc: 'Registered physiotherapists supporting movement, recovery and follow-through sessions.' },
+  { image: '/images/cards/provider-gym.jpg', alt: 'A small group doing lunges together in an indoor fitness studio', title: 'Gyms and Movement', desc: 'Gyms, fitness centres and movement providers delivering the MOVE Track.' },
 ]
 
 const steps = [
@@ -121,9 +122,16 @@ export default function HealthcareProvidersPage() {
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {providerCategories.map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="card">
-                <Icon size={40} className="text-green mb-4" />
+            {providerCategories.map(({ image, alt, title, desc }) => (
+              <div key={title} className="card overflow-hidden">
+                <Image
+                  src={image}
+                  alt={alt}
+                  width={800}
+                  height={800}
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                  className="-mx-8 -mt-8 mb-6 block aspect-[4/3] w-[calc(100%+4rem)] max-w-none object-cover"
+                />
                 <h4 className="font-heading text-h4 text-dark mb-3">{title}</h4>
                 <p className="text-body text-body">{desc}</p>
               </div>
